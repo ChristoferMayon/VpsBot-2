@@ -1,7 +1,3 @@
-// ===============================
-// 🔐 Server.js — versão ESM compatível com Railway
-// ===============================
-
 import express from "express";
 import http from "http";
 import https from "https";
@@ -10,80 +6,79 @@ import axios from "axios";
 import path from "path";
 import fs from "fs";
 import morgan from "morgan";
+import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { rateLimit } from "express-rate-limit";
-
-import * as userdb from "./db.js";
-import * as instore from "./instance_store.js"; // ajuste conforme seu nome de arquivo real
-
+import userdb from "./db.js";
+import instore from "./instance_store.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 
-// ===============================
-// ⚙️ Configuração inicial
-// ===============================
-
+// ------------------------------------------------------
+// Configurações básicas
+// ------------------------------------------------------
 const app = express();
+const PORT = process.env.PORT || 3000;
+const USE_HTTPS = process.env.ENFORCE_HTTPS === "true";
+const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL || `http://localhost:${PORT}`;
+const DB_FILE = process.env.DB_FILE || "./data/data.json";
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Segurança básica
-if (helmet) app.use(helmet());
+app.use(cors({ origin: process.env.CORS_ORIGIN?.split(",") || "*" }));
 app.use(morgan("dev"));
-app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(",") || "*",
-  credentials: true
-}));
+if (helmet) app.use(helmet());
 
-// Rate Limit — proteção contra abuso
-const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minuto
-  max: 120 // até 120 requisições por IP/min
+// ------------------------------------------------------
+// Rate limit e segurança
+// ------------------------------------------------------
+app.use(
+  rateLimit({
+    windowMs: 60 * 1000,
+    max: 100,
+    message: { error: "Muitas requisições, tente novamente em instantes." },
+  })
+);
+
+// ------------------------------------------------------
+// Rotas de exemplo (adicione as suas abaixo)
+// ------------------------------------------------------
+app.get("/", (req, res) => {
+  res.json({
+    status: "✅ Servidor ativo!",
+    baseUrl: PUBLIC_BASE_URL,
+  });
 });
-app.use(limiter);
 
-// ===============================
-// 🔑 Inicialização do Banco e Usuários
-// ===============================
+// ------------------------------------------------------
+// Inicialização do servidor
+// ------------------------------------------------------
+if (USE_HTTPS) {
+  const certDir = path.join(process.cwd(), "cert");
+  const keyPath = path.join(certDir, "privkey.pem");
+  const certPath = path.join(certDir, "fullchain.pem");
 
-userdb.init();
-
-// ===============================
-// 🔐 Autenticação JWT
-// ===============================
-
-function generateToken(user) {
-  const payload = { id: user.id, username: user.username, role: user.role };
-  const secret = process.env.JWT_SECRET || "change_me";
-  return jwt.sign(payload, secret, { expiresIn: "7d" });
+  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+    const httpsOptions = {
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    };
+    https.createServer(httpsOptions, app).listen(PORT, () => {
+      console.log(`🚀 HTTPS ativo em ${PUBLIC_BASE_URL}`);
+    });
+  } else {
+    console.error("⚠️ Certificados HTTPS não encontrados. Executando em HTTP.");
+    http.createServer(app).listen(PORT, () => {
+      console.log(`🚀 HTTP ativo em ${PUBLIC_BASE_URL}`);
+    });
+  }
+} else {
+  http.createServer(app).listen(PORT, () => {
+    console.log(`🚀 Servidor ativo em ${PUBLIC_BASE_URL}`);
+  });
 }
 
-// ===============================
-// 🌐 Rotas básicas
-// ===============================
-
-app.get("/", (req, res) => {
-  res.json({ status: "ok", message: "API do painel online 🚀" });
-});
-
-// Exemplo de rota de login
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const user = userdb.findUserByUsername(username);
-  if (!user) return res.status(401).json({ error: "Usuário não encontrado" });
-
-  const valid = bcrypt.compareSync(String(password), user.password_hash);
-  if (!valid) return res.status(401).json({ error: "Senha incorreta" });
-
-  const token = generateToken(user);
-  res.json({ token, role: user.role });
-});
-
-// ===============================
-// 🌍 Inicialização do servidor
-// ===============================
 
 const PORT = process.env.PORT || 3000;
 
