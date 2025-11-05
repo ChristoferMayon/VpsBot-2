@@ -1,20 +1,109 @@
-const express = require('express');
-const http = require('http');
-const https = require('https');
-const cors = require('cors');
-const axios = require('axios');
-const path = require('path');
-const fs = require('fs');
-const morgan = require('morgan');
-// Rate limit para proteger contra abuso de requisições
-const { rateLimit } = require('express-rate-limit');
-// Harden HTTP headers
-let helmet;
-try { helmet = require('helmet'); } catch (_) { helmet = null; }
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const userdb = require('./db');
-const instore = require('./instance_store');
+// ===============================
+// 🔐 Server.js — versão ESM compatível com Railway
+// ===============================
+
+import express from "express";
+import http from "http";
+import https from "https";
+import cors from "cors";
+import axios from "axios";
+import path from "path";
+import fs from "fs";
+import morgan from "morgan";
+import helmet from "helmet";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { rateLimit } from "express-rate-limit";
+
+import * as userdb from "./db.js";
+import * as instore from "./instance_store.js"; // ajuste conforme seu nome de arquivo real
+
+import dotenv from "dotenv";
+dotenv.config();
+
+// ===============================
+// ⚙️ Configuração inicial
+// ===============================
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Segurança básica
+if (helmet) app.use(helmet());
+app.use(morgan("dev"));
+app.use(cors({
+  origin: process.env.CORS_ORIGIN?.split(",") || "*",
+  credentials: true
+}));
+
+// Rate Limit — proteção contra abuso
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minuto
+  max: 120 // até 120 requisições por IP/min
+});
+app.use(limiter);
+
+// ===============================
+// 🔑 Inicialização do Banco e Usuários
+// ===============================
+
+userdb.init();
+
+// ===============================
+// 🔐 Autenticação JWT
+// ===============================
+
+function generateToken(user) {
+  const payload = { id: user.id, username: user.username, role: user.role };
+  const secret = process.env.JWT_SECRET || "change_me";
+  return jwt.sign(payload, secret, { expiresIn: "7d" });
+}
+
+// ===============================
+// 🌐 Rotas básicas
+// ===============================
+
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "API do painel online 🚀" });
+});
+
+// Exemplo de rota de login
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = userdb.findUserByUsername(username);
+  if (!user) return res.status(401).json({ error: "Usuário não encontrado" });
+
+  const valid = bcrypt.compareSync(String(password), user.password_hash);
+  if (!valid) return res.status(401).json({ error: "Senha incorreta" });
+
+  const token = generateToken(user);
+  res.json({ token, role: user.role });
+});
+
+// ===============================
+// 🌍 Inicialização do servidor
+// ===============================
+
+const PORT = process.env.PORT || 3000;
+
+// HTTPS opcional (se certificados existirem)
+let server;
+if (process.env.ENFORCE_HTTPS === "true" && fs.existsSync("cert.pem") && fs.existsSync("key.pem")) {
+  const credentials = {
+    key: fs.readFileSync("key.pem", "utf8"),
+    cert: fs.readFileSync("cert.pem", "utf8")
+  };
+  server = https.createServer(credentials, app);
+  console.log("[HTTPS] Certificados encontrados. Servidor iniciado em modo seguro.");
+} else {
+  server = http.createServer(app);
+}
+
+server.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+});
+
 // Initialize instance store file on startup
 instore.readStore();
 const dotenvPath = path.join(__dirname, '.env');
