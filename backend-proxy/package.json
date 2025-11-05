@@ -2,6 +2,7 @@
   "name": "whatsapp-carousel-proxy",
   "version": "1.0.0",
   "description": "Proxy para enviar mensagens de carrossel via Z-API.",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -11,15 +12,5 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^4.19.2",
-    "express-rate-limit": "^8.2.1",
-    "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.1",
-    "socket.io": "^4.8.1"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  }
-}
+    "dotenv": "^16.
+
