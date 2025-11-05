@@ -6,46 +6,10 @@
   <title>Painel de QR Code</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-    /* Paleta branca para alta legibilidade, igual ao index */
-    body, body * { color: #ffffff !important; }
-    h1, h2, h3, h4, .font-semibold { color: #ffffff !important; }
-    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.6) !important; }
-    a { color: #ffffff !important; }
-
-    /* SweetAlert customizado com fundo verde (igual ao index.html) */
-    .swal2-container .swal-red-custom.swal2-popup,
-    .swal-red-custom .swal2-popup,
-    .swal2-popup.swal-red-custom {
-      background-color: #16a34a !important; /* Fundo verde forte */
-      background: #16a34a !important;
-      border: 2px solid #dc2626 !important; /* Borda vermelha */
-      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3) !important;
-    }
-    .swal-red-custom .swal2-title,
-    .swal2-popup.swal-red-custom .swal2-title {
-      color: #ffffff !important; /* Título branco */
-      font-weight: bold !important;
-    }
-    .swal-red-custom .swal2-content,
-    .swal2-popup.swal-red-custom .swal2-content {
-      color: #ffffff !important; /* Texto branco */
-    }
-    .swal-red-custom .swal2-confirm,
-    .swal2-popup.swal-red-custom .swal2-confirm {
-      background-color: #dc2626 !important; /* Botão vermelho */
-      border: none !important;
-      color: #ffffff !important;
-      font-weight: bold !important;
-    }
-    .swal-red-custom .swal2-confirm:hover,
-    .swal2-popup.swal-red-custom .swal2-confirm:hover {
-      background-color: #b91c1c !important; /* Hover mais escuro */
-    }
-  </style>
+  <link rel="stylesheet" href="/css/app.css">
+  
 </head>
-<body class="min-h-screen flex items-center justify-center p-6" style="background:#000 url('/image/OIG3.jpg') center / cover no-repeat fixed;">
+<body class="min-h-screen flex items-center justify-center p-6 app-bg">
   <div class="bg-white/10 backdrop-blur-xl p-8 rounded-xl shadow-xl w-full max-w-3xl transition-transform duration-300 hover:scale-[1.01] border border-white/20">
     <div class="flex justify-center items-center mb-6">
       <img src="https://raw.githubusercontent.com/ChristoferMayon/images/2e372f3644d8e31ebcf4af2d1a2b7c70af0ae478/WhatsApp%20Image%202025-06-27%20at%2021.56.04.jpeg" 
@@ -93,18 +57,18 @@
 
     <div id="qr-status" class="mt-4 p-3 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm"></div>
     <div class="mt-3">
-      <button id="btnGoSend" class="px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700" style="display:none;">Ir para envio de mensagens</button>
+      <button id="btnGoSend" class="px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700 is-hidden">Ir para envio de mensagens</button>
     </div>
 
     <div class="mt-4">
       <h3 class="text-xl font-semibold mb-2">QR Code</h3>
       <div class="flex flex-col items-center justify-center min-h-[240px] border border-white/20 bg-white/10 text-slate-200 rounded-xl shadow-inner p-4">
-        <img id="qr-image" alt="QR Code" class="max-w-full h-auto" style="display:none;" />
+        <img id="qr-image" alt="QR Code" class="max-w-full h-auto is-hidden" />
         <div id="qr-placeholder" class="text-sm text-white/60">QR Code não gerado ainda.</div>
       </div>
     </div>
 
-    <div class="mt-6" id="paircode-section" style="display:none;">
+    <div class="mt-6 is-hidden" id="paircode-section">
       <h3 class="text-xl font-semibold mb-2">Paircode</h3>
       <div class="flex gap-2 items-center">
         <input id="paircodeDisplay" type="text" readonly class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-xl text-white" />
@@ -119,7 +83,7 @@
     </div>
   </div>
 
-  <script>
+  <!--
     // SweetAlert2 adicionado para alertas de sucesso
     const logsEl = document.getElementById('logs');
     const qrImage = document.getElementById('qr-image');
@@ -180,10 +144,11 @@
     // Helper: alerta de sucesso e redirecionamento para envio (sem esperar webhook)
     function handleAuthSuccessRedirect() {
       if (connectedAlertShown) return;
-      const userInitiated = (() => {
-        try { return redirectOnConnect || (localStorage.getItem('redirectOnConnect') === '1'); } catch (_) { return redirectOnConnect; }
-      })();
-      if (!userInitiated) return;
+      // Não exigir ação prévia: sempre notificar e redirecionar após conexão
+      try {
+        if (qrImage) { qrImage.style.display = 'none'; qrImage.src = ''; }
+        if (qrPlaceholder) qrPlaceholder.style.display = '';
+      } catch (_) {}
       // Só redirecionar após o QR desaparecer
       if (!isQrGone()) {
         try { statusEl.textContent = '✅ Conectado. Aguarde o QR desaparecer...'; } catch (_) {}
@@ -194,8 +159,9 @@
       connectedAlertShown = true;
       try { stopInstanceSse(); } catch (_) {}
       try { localStorage.setItem('justAuthenticated', '1'); } catch (_) {}
-      const go = () => { window.location.href = '/index.html?tab=carousel'; };
+      const go = () => { try { if (window.qrFlowLog) qrFlowLog('qr.flow.redirect', { page: 'qr.html', target: 'carousel' }); } catch (_) {} window.location.href = '/index.html?tab=carousel'; };
       if (window.Swal && typeof Swal.fire === 'function') {
+        try { if (window.qrFlowLog) qrFlowLog('qr.flow.alert.trigger', { page: 'qr.html', method: 'sse_or_poll' }); } catch (_) {}
         Swal.fire({
           icon: 'success',
           title: 'Conectado ao WhatsApp',
@@ -205,6 +171,7 @@
           customClass: { popup: 'swal-red-custom' }
         }).then(go);
       } else {
+        try { if (window.qrFlowLog) qrFlowLog('qr.flow.alert.missing', { page: 'qr.html' }); } catch (_) {}
         try { alert('WhatsApp autenticado com sucesso.'); } catch (_) {}
         go();
       }
@@ -972,7 +939,7 @@
     // Auto-inicialização desativada: usuário controla criação/conexão e geração de QR
     // ensureInstanceAndStart();
     // startSse();
-  </script>
+  -->
   <!-- Painel de detalhes da instância (UAZAI) -->
   <section id="instance-info" style="margin:16px 0; display:none; border:1px solid #e5e7eb; padding:12px; border-radius:8px;">
     <h3 style="margin:0 0 8px; font-size:16px;">Detalhes da Instância</h3>
@@ -993,7 +960,7 @@
       </div>
     </div>
   </section>
-  <script>
+  <!--
     // Renderiza informações da instância usando o modelo UAZAI
     function renderInstanceInfo(payload) {
       try {
@@ -1091,10 +1058,12 @@
         container.style.display = hasAny ? '' : 'none';
       } catch (e) { try { log('Erro renderInstanceInfo', e?.message || String(e)); } catch (_) {} }
     }
-  </script>
+  -->
   <!-- Socket.IO client -->
   <script src="/socket.io/socket.io.js"></script>
-  <script>
+<script src="/js/common_auth.js"></script>
+<script src="/js/qr.js"></script>
+  <!--
     (async function initRealtimeWebhookListener(){
       try {
         const authToken = (localStorage.getItem('authToken') || '').trim();
@@ -1138,8 +1107,8 @@
         console.warn('[Socket.IO:init] falhou:', e?.message || String(e));
       }
     })();
-  </script>
-  <script>
+  -->
+  <!--
     // Navegação das abas: mantém QR ativo; outras abas levam ao painel index
     try {
       const tabs = document.querySelectorAll('#main-tabs .tab-btn');
@@ -1153,6 +1122,6 @@
       });
     } catch (_) {}
     // Auto-conexão por querystring desativada: usuário controla explicitamente as ações
-  </script>
+  -->
 </body>
 </html>

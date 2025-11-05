@@ -42,6 +42,9 @@ function authHeaders(options = {}) {
   // Authorization: usa admin quando solicitado e disponível; caso contrário usa o token selecionado
   if (useAdmin && adminToken) {
     headers['admintoken'] = adminToken;
+    // Alguns servidores UAZAPI exigem cabeçalhos específicos para token de cliente admin
+    headers['Client-Token'] = adminToken;
+    headers['X-Client-Token'] = adminToken;
     headers['Authorization'] = `Bearer ${adminToken}`;
   } else {
     headers['Authorization'] = `Bearer ${tokenForHeader}`;
@@ -581,7 +584,14 @@ module.exports = {
       '/admin/instance/qr',
       '/admin/status/qrcode',
       '/admin/get/qr',
-      '/admin/qr'
+      '/admin/qr',
+      // Tentativas comuns com placeholder
+      '/admin/session/:name/qr',
+      '/admin/sessions/:name/qr',
+      '/admin/session/:name/qrcode',
+      '/admin/sessions/:name/qrcode',
+      '/admin/session/:name/qr-code',
+      '/admin/sessions/:name/qr-code'
     ];
   const candidates = useAdmin ? [...adminCandidates, ...normalCandidates] : normalCandidates;
   let lastError;
@@ -593,46 +603,62 @@ module.exports = {
     const ovQrForce = String(process.env.UAZAPI_ADMIN_QR_FORCE || process.env.UAZAPI_QR_FORCE || '').toLowerCase() === 'true';
     if (ovQrPath) {
       try {
-        let path = expandPathWithInstance(ovQrPath, options.instance);
-        let url = `${base}${path}`;
-        if (ovQrMethod === 'GET') {
-          const params = new URLSearchParams();
-          if (options.force || ovQrForce) params.set('force', 'true');
-          if (options.instance) {
-            for (const k of ovQrKeys) params.set(k, options.instance);
+        const path = expandPathWithInstance(ovQrPath, options.instance);
+        const baseUrl = `${base}${path}`;
+        const preferredOrder = ovQrMethod === 'POST' ? ['POST', 'GET'] : ['GET', 'POST'];
+        let lastErr;
+        for (const method of preferredOrder) {
+          try {
+            if (method === 'GET') {
+              let url = baseUrl;
+              const params = new URLSearchParams();
+              if (options.force || ovQrForce) params.set('force', 'true');
+              if (options.instance) {
+                for (const k of ovQrKeys) params.set(k, options.instance);
+              }
+              const qs = params.toString();
+              if (qs) url += (url.includes('?') ? '&' : '?') + qs;
+              lastTriedUrl = url;
+              console.log('[uazapi.getQrCode] Override GET:', url, 'admin=', useAdmin);
+              const response = await axios.get(url, { headers });
+              console.log('[uazapi.getQrCode] Override GET sucesso:', url, 'admin=', useAdmin);
+              return response.data;
+            } else {
+              const url = baseUrl;
+              const payload = {};
+              if (options.force || ovQrForce) payload.force = true;
+              if (options.instance) {
+                for (const k of ovQrKeys) payload[k] = options.instance;
+              }
+              lastTriedUrl = `${url} [OVERRIDE ${method}]`;
+              console.log('[uazapi.getQrCode] Override', method, url, 'admin=', useAdmin);
+              const response = await axios.post(url, payload, { headers });
+              console.log('[uazapi.getQrCode] Override sucesso', method, url, 'admin=', useAdmin);
+              return response.data;
+            }
+          } catch (errTry) {
+            lastErr = errTry;
+            if (errTry.response) {
+              console.error('[uazapi.getQrCode] Falha override:', lastTriedUrl, { status: errTry.response.status, data: errTry.response.data });
+            } else {
+              console.error('[uazapi.getQrCode] Erro de rede override:', lastTriedUrl, errTry.message);
+            }
           }
-          const qs = params.toString();
-          if (qs) url += (url.includes('?') ? '&' : '?') + qs;
-          lastTriedUrl = url;
-          console.log('[uazapi.getQrCode] Override GET:', url, 'admin=', useAdmin);
-          const response = await axios.get(url, { headers });
-          console.log('[uazapi.getQrCode] Override GET sucesso:', url, 'admin=', useAdmin);
-          return response.data;
-        } else {
-          const payload = {};
-          if (options.force || ovQrForce) payload.force = true;
-          if (options.instance) {
-            for (const k of ovQrKeys) payload[k] = options.instance;
-          }
-          lastTriedUrl = `${url} [OVERRIDE ${ovQrMethod}]`;
-          console.log('[uazapi.getQrCode] Override', ovQrMethod, url, 'admin=', useAdmin);
-          const response = await axios.post(url, payload, { headers });
-          console.log('[uazapi.getQrCode] Override sucesso', ovQrMethod, url, 'admin=', useAdmin);
-          return response.data;
         }
+        // se todas tentativas do override falharam, segue para candidatos padrão
+        lastError = lastErr;
       } catch (errOvQr) {
         lastError = errOvQr;
         if (errOvQr.response) {
-          console.error('[uazapi.getQrCode] Falha override:', lastTriedUrl, { status: errOvQr.response.status, data: errOvQr.response.data });
+          console.error('[uazapi.getQrCode] Falha override (setup):', errOvQr.response.status, errOvQr.response.data);
         } else {
-          console.error('[uazapi.getQrCode] Erro de rede override:', lastTriedUrl, errOvQr.message);
+          console.error('[uazapi.getQrCode] Erro de rede override (setup):', errOvQr.message);
         }
-        // prossegue para candidatos padrão
       }
     }
   for (const path of candidates) {
       try {
-        const url = `${base}${path}`;
+        const url = `${base}${expandPathWithInstance(path, options.instance)}`;
         // 1) GET: inclui múltiplas chaves de query para instância
         const params = new URLSearchParams();
         if (options.force) params.set('force', 'true');
@@ -657,7 +683,7 @@ module.exports = {
         }
         // 2) POST: se instância foi informada, tenta variações de chave no corpo
         if (options.instance) {
-          const url = `${base}${path}`;
+          const url = `${base}${expandPathWithInstance(path, options.instance)}`;
           for (const key of ['instance', 'name', 'session', 'sessionId', 'instanceName', 'keys']) {
             try {
               const payload = {};

@@ -1,10 +1,16 @@
 const express = require('express');
 const http = require('http');
+const https = require('https');
 const cors = require('cors');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
+// Rate limit para proteger contra abuso de requisições
+const { rateLimit } = require('express-rate-limit');
+// Harden HTTP headers
+let helmet;
+try { helmet = require('helmet'); } catch (_) { helmet = null; }
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const userdb = require('./db');
@@ -15,7 +21,81 @@ const dotenvPath = path.join(__dirname, '.env');
 require('dotenv').config({ path: dotenvPath });
 
 const app = express();
-const server = http.createServer(app);
+// Desabilita cabeçalho de identificação do framework
+app.disable('x-powered-by');
+// Confiar no proxy (para req.secure e cookies secure atrás de proxy)
+app.set('trust proxy', 1);
+// Aplica Helmet se disponível
+if (helmet) {
+// Helmet com CSP: permitir somente fontes necessárias
+app.use(helmet());
+// HSTS para forçar HTTPS por ~180 dias
+app.use(helmet.hsts({ maxAge: 15552000, includeSubDomains: true, preload: true }));
+// Bloquear framing e reduzir vazamento de referência
+app.use(helmet.frameguard({ action: 'deny' }));
+app.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
+app.use(helmet.contentSecurityPolicy({
+  useDefaults: true,
+  directives: {
+    defaultSrc: ["'self'"],
+    baseUri: ["'self'"],
+    fontSrc: ["'self'", 'https:', 'data:'],
+    formAction: ["'self'"],
+    frameAncestors: ["'self'"],
+    imgSrc: ["'self'", 'data:', 'https:'],
+    objectSrc: ["'none'"],
+    scriptSrc: ["'self'", 'https://cdn.tailwindcss.com', 'https://cdn.jsdelivr.net'],
+    // Remover inline em atributos; permitir apenas hashes para compatibilidade pontual
+    // Restaurar compatibilidade com handlers inline até migração
+    scriptSrcAttr: ["'unsafe-inline'", "'unsafe-hashes'"],
+    // Permitir estilos inline para Tailwind CDN e CSS embutido
+    styleSrc: ["'self'", "'unsafe-inline'", 'https:'],
+    connectSrc: ["'self'"],
+  }
+}));
+}
+
+// Servir versão ofuscada do JS quando habilitado por variável de ambiente
+// Isto mantém o caminho original (/js/carousel_script_new.js), mas entrega o conteúdo de public_seguro.
+const USE_OBFUSCATED_JS = String(process.env.USE_OBFUSCATED_JS || '').toLowerCase() === 'true';
+if (USE_OBFUSCATED_JS) {
+  const obfPath = path.join(__dirname, '..', 'public_seguro', 'js', 'carousel_script_new.js');
+  app.get('/js/carousel_script_new.js', (req, res, next) => {
+    try {
+      if (fs.existsSync(obfPath)) {
+        res.type('application/javascript');
+        return res.sendFile(obfPath);
+      }
+    } catch (_) {}
+    return next();
+  });
+}
+
+// Bloqueia acesso público à pasta de certificados
+app.get('/certs/*', (req, res) => {
+  return res.status(404).send('Not Found');
+});
+
+function loadHttpsOptionsIfAvailable() {
+  try {
+    const certPath = path.join(__dirname, '..', 'public', 'certs', 'cert.pem');
+    const keyPath = path.join(__dirname, '..', 'public', 'certs', 'key.pem');
+    if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
+      const cert = fs.readFileSync(certPath);
+      const key = fs.readFileSync(keyPath);
+      console.log('[HTTPS] Certificados encontrados. Inicializando HTTPS.');
+      return { key, cert };
+    }
+    console.log('[HTTPS] Certificados não encontrados. Mantendo HTTP.');
+    return null;
+  } catch (e) {
+    console.warn('[HTTPS] Falha ao carregar certificados:', e?.message || String(e));
+    return null;
+  }
+}
+
+const httpsOptions = loadHttpsOptionsIfAvailable();
+const server = httpsOptions ? https.createServer(httpsOptions, app) : http.createServer(app);
 // Socket.IO para eventos em tempo real (instance_connected:{user_id})
 let io = null;
 // Mapa user_id -> socket.id para emissão direcionada
@@ -50,28 +130,229 @@ try {
   console.warn('[Socket.IO] não inicializado:', e?.message || String(e));
 }
 const port = process.env.PORT || 3000;
+const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 const JWT_SECRET = process.env.JWT_SECRET || 'change_me_dev_secret';
+const JWT_SECRET_OLD = process.env.JWT_SECRET_OLD || '';
+const API_KEY = process.env.API_KEY || '';
+const UI_LOG_API_KEY = process.env.UI_LOG_API_KEY || '';
 // Inicializa banco de dados
 userdb.init();
 
+// Configuração de CORS por allowlist de origens via .env (CORS_ORIGIN)
+const ALLOWED_ORIGINS = String(process.env.CORS_ORIGIN || '')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
+
+// Validação de ambiente em produção
+if (String(process.env.NODE_ENV).toLowerCase() === 'production') {
+  if (!JWT_SECRET || String(JWT_SECRET).length < 24) {
+    console.error('[SECURITY] JWT_SECRET ausente ou fraco. Defina um segredo forte (>=24 chars).');
+    process.exit(1);
+  }
+  if (ALLOWED_ORIGINS.length === 0) {
+    console.error('[SECURITY] CORS_ORIGIN não definido. Configure origens permitidas na .env.');
+    process.exit(1);
+  }
+}
+
 // Middleware para habilitar CORS (permite que seu frontend se comunique com o backend)
 app.use(cors({
-    origin: '*', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: function(origin, callback) {
+    // Permite requisições sem origem (ex.: curl, mesma origem)
+    if (!origin) return callback(null, true);
+    // Se não houver allowlist, libera (útil em dev)
+    if (ALLOWED_ORIGINS.length === 0) return callback(null, true);
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-ui-log-key']
 }));
 
-app.use(express.json()); // Para parsear JSON no corpo das requisições
+// Redireciona HTTP para HTTPS quando habilitado (atrás de proxy respeita req.secure)
+app.use((req, res, next) => {
+  try {
+    const enforce = String(process.env.ENFORCE_HTTPS || '').toLowerCase() === 'true';
+    if (!enforce) return next();
+    // Se já estiver em HTTPS, segue
+    const isHttps = Boolean(req.secure || (req.protocol === 'https'));
+    if (isHttps) return next();
+    const host = req.headers.host || '';
+    const target = `https://${host}${req.url}`;
+    return res.redirect(301, target);
+  } catch (_) { return next(); }
+});
+
+// Limites de corpo para evitar payloads grandes
+app.use(express.json({ limit: '50kb' })); // Para parsear JSON no corpo das requisições
+app.use(express.urlencoded({ extended: true, limit: '50kb' }));
+// Cookies para autenticação e CSRF
+app.use(cookieParser());
+
+// Recebe logs do frontend (UI)
+// Rate limits específicos
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 10 : 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+const uiLogLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 100 : 500,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+// Limite para endpoints que alteram instâncias
+const instanceWriteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 20 : 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.post('/ui/log', authRequired, uiLogLimiter, (req, res) => {
+  try {
+    const { event, details } = req.body || {};
+    // Rejeita payloads muito grandes para logs
+    try {
+      const size = Buffer.byteLength(JSON.stringify({ event, details }), 'utf8');
+      if (size > 5 * 1024) {
+        return res.status(413).json({ error: 'Payload muito grande para log de UI' });
+      }
+    } catch (_) {}
+    const meta = {
+      ip: req.ip,
+      ua: req.headers['user-agent'],
+      referer: req.headers.referer,
+      origin: req.headers.origin,
+    };
+    try { const { logUi } = require('./logger'); logUi(String(event || 'ui.event'), { ...(details || {}), ...meta }); } catch (_) {}
+    return res.json({ success: true });
+  } catch (e) {
+    return res.status(500).json({ error: 'Falha ao registrar log de UI', details: e?.message || String(e) });
+  }
+});
+
+// Log dedicado ao fluxo de QR (desaparecimento do QR, SweetAlert, redirect)
+app.post('/ui/qr-flow-log', authRequired, uiLogLimiter, (req, res) => {
+  try {
+    const { event, details } = req.body || {};
+    // Limita payload para evitar abuso
+    try {
+      const size = Buffer.byteLength(JSON.stringify({ event, details }), 'utf8');
+      if (size > 5 * 1024) {
+        return res.status(413).json({ error: 'Payload muito grande para log QR-flow' });
+      }
+    } catch (_) {}
+    const meta = {
+      ip: req.ip,
+      ua: req.headers['user-agent'],
+      referer: req.headers.referer,
+      origin: req.headers.origin,
+      user_id: req.user?.id || null,
+      username: req.user?.username || null,
+    };
+    try { const { logQrFlow } = require('./logger'); logQrFlow(String(event || 'qr.flow.event'), { ...(details || {}), ...meta }); } catch (_) {}
+    return res.json({ success: true });
+  } catch (e) {
+    return res.status(500).json({ error: 'Falha ao registrar log QR-flow', details: e?.message || String(e) });
+  }
+});
+
+// Limite global de requisições com exceções para assets estáticos e health checks
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: process.env.NODE_ENV === 'production' ? 200 : 1000, // mais permissivo em dev
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => {
+    const p = req.path || req.url || '';
+    const isHealth = p.startsWith('/health') || p.startsWith('/readyz') || p.startsWith('/livez');
+    const isSocket = p.startsWith('/socket.io/');
+    const isStaticGet = req.method === 'GET' && (
+      p === '/' ||
+      p.endsWith('.html') ||
+      p.endsWith('.ico') ||
+      p.endsWith('.png') ||
+      p.endsWith('.jpg') ||
+      p.endsWith('.jpeg') ||
+      p.startsWith('/image/') ||
+      p.startsWith('/js/') ||
+      p.startsWith('/config/')
+    );
+    return isHealth || isSocket || isStaticGet;
+  }
+});
+app.use(limiter);
 
 // Serve os arquivos estáticos do frontend a partir de /public, usando login.html como index
+// Protege a página Admin no frontend: exige usuário autenticado com perfil admin
+// Isto impede acesso direto via /admin.html ao conteúdo sem login
+app.get(['/admin', '/admin.html'], authRequired, adminRequired, (req, res) => {
+  const adminPath = path.join(__dirname, '..', 'public', 'admin.html');
+  return res.sendFile(adminPath);
+});
+
+// Protege páginas do painel do usuário: exigem autenticação
+app.get(['/index', '/index.html'], authRequired, (req, res) => {
+  const indexPath = path.join(__dirname, '..', 'public', 'index.html');
+  return res.sendFile(indexPath);
+});
+
+app.get(['/qr', '/qr.html'], authRequired, (req, res) => {
+  const qrPath = path.join(__dirname, '..', 'public', 'qr.html');
+  return res.sendFile(qrPath);
+});
+
+// Protege a página Configure Webhook: exige autenticação (cobre variações de caminho)
+app.get([
+  '/configure_webhook',
+  '/configure_webhook.html',
+  '/configure-webhook',
+  '/configure-webhook.html'
+], authRequired, (req, res) => {
+  const cfgPath = path.join(__dirname, '..', 'public', 'configure_webhook.html');
+  return res.sendFile(cfgPath);
+});
+// Captura caminhos com barra final ou subpath e aplica a mesma proteção
+app.get(/^\/configure[_-]webhook(?:\.html)?\/?$/, authRequired, (req, res) => {
+  const cfgPath = path.join(__dirname, '..', 'public', 'configure_webhook.html');
+  return res.sendFile(cfgPath);
+});
+
 app.use(express.static(path.join(__dirname, '..', 'public'), { index: 'login.html' }));
 // Expõe a pasta de configuração (para api_config.json)
 app.use('/config', express.static(path.join(__dirname, '..', 'config')));
 
 app.use(morgan('combined'));
 
-// Logger de instância/usuário
-const { logUserInstance } = require('./logger');
+// Middleware simples para proteger rotas com uma API Key
+function requireApiKey(req, res, next) {
+  try {
+    const headerKey = req.headers['x-api-key'] || req.headers['x-apiKey'] || req.headers['x_apikey'];
+    const queryKey = req.query && (req.query.api_key || req.query.apikey || req.query.key);
+    const provided = String(headerKey || queryKey || '').trim();
+    if (!API_KEY) {
+      // Se nenhuma API_KEY estiver configurada, não bloqueia, apenas segue
+      return next();
+    }
+    if (!provided) {
+      return res.status(401).json({ error: 'API key ausente. Envie o cabeçalho x-api-key.' });
+    }
+    if (provided !== API_KEY) {
+      return res.status(403).json({ error: 'API key inválida.' });
+    }
+    return next();
+  } catch (e) {
+    return res.status(500).json({ error: 'Falha na verificação de API key', details: e?.message || String(e) });
+  }
+}
+
+// Logger de instância/usuário e de conexão
+const { logUserInstance, logConnect } = require('./logger');
 const instancedb = require('./instances_db');
 instancedb.init();
 
@@ -132,16 +413,38 @@ function getTokenFromHeader(req) {
   if (auth.startsWith('Bearer ')) return auth.slice(7);
   return null;
 }
+function getTokenFromCookies(req) {
+  try { return req.cookies && req.cookies.auth_token ? String(req.cookies.auth_token) : null; } catch (_) { return null; }
+}
+function getAuthToken(req) {
+  return getTokenFromHeader(req) || getTokenFromCookies(req);
+}
 function authRequired(req, res, next) {
   try {
-    const token = getTokenFromHeader(req);
+    const token = getAuthToken(req);
     if (!token) return res.status(401).json({ error: 'Token ausente' });
-    const payload = jwt.verify(token, JWT_SECRET);
+    let payload;
+    try {
+      payload = jwt.verify(token, JWT_SECRET);
+    } catch (e) {
+      // Suporte a rotação: tenta validar com segredo antigo
+      if (JWT_SECRET_OLD) {
+        try { payload = jwt.verify(token, JWT_SECRET_OLD); } catch (_) { /* ignore */ }
+      }
+      if (!payload) return res.status(401).json({ error: 'Token inválido', details: e.message });
+    }
     const user = userdb.findUserById(payload.id);
     if (!user) return res.status(401).json({ error: 'Usuário inválido' });
     if (!user.active) return res.status(403).json({ error: 'Usuário inativo' });
     if (userdb.isExpired(user)) return res.status(403).json({ error: 'Acesso expirado' });
     req.user = { id: user.id, username: user.username, role: user.role };
+    // Header informativo para clientes atualizarem token, se validado com segredo antigo
+    try {
+      if (JWT_SECRET_OLD) {
+        const usingOld = (() => { try { jwt.verify(token, JWT_SECRET); return false; } catch (_) { return true; } })();
+        if (usingOld) res.setHeader('X-Token-Renew', 'true');
+      }
+    } catch (_) {}
     next();
   } catch (e) {
     return res.status(401).json({ error: 'Token inválido', details: e.message });
@@ -154,36 +457,70 @@ function adminRequired(req, res, next) {
   next();
 }
 
+// --- Sanitização/validação de nomes de instância ---
+function sanitizeInstanceName(raw) {
+  const s = String(raw || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+  return s.slice(0, 32);
+}
+function isValidInstanceName(name) {
+  // Deve iniciar e terminar com alfanumérico; pode conter hífens no meio; 3-32 chars
+  return /^[a-z0-9](?:[a-z0-9-]{1,30}[a-z0-9])?$/.test(String(name || ''));
+}
+
 // --- Auth routes ---
-app.post('/admin/login', async (req, res) => {
+app.post('/admin/login', authLimiter, async (req, res) => {
   try {
     const { username, password } = req.body || {};
+    try { const { logAuth } = require('./logger'); logAuth('admin.login.request', { ip: req.ip, origin: req.headers.origin, referer: req.headers.referer, protocol: req.protocol, body: { username, password } }); } catch (_) {}
     if (!username || !password) return res.status(400).json({ error: 'Informe username e password' });
     const user = userdb.findUserByUsername(String(username));
     if (!user || user.role !== 'admin') return res.status(401).json({ error: 'Credenciais inválidas' });
     const ok = bcrypt.compareSync(String(password), user.password_hash);
-    if (!ok) return res.status(401).json({ error: 'Credenciais inválidas' });
+    if (!ok) { try { const { logAuth } = require('./logger'); logAuth('admin.login.fail', { username, reason: 'password_mismatch' }); } catch (_) {} ; return res.status(401).json({ error: 'Credenciais inválidas' }); }
     const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '12h' });
-    res.json({ success: true, token, user: { id: user.id, username: user.username, role: user.role } });
+    try { const { logAuth } = require('./logger'); logAuth('admin.login.success', { id: user.id, username: user.username }); } catch (_) {}
+    // Set auth cookie and CSRF cookie
+    const isHttps = Boolean(req.secure || (req.protocol === 'https'));
+    res.cookie('auth_token', token, { httpOnly: true, secure: isHttps, sameSite: 'strict', path: '/' });
+    ensureCsrfCookie(req, res);
+    res.json({ success: true, user: { id: user.id, username: user.username, role: user.role } });
   } catch (error) {
+    try { const { logAuth } = require('./logger'); logAuth('admin.login.error', { message: error.message }); } catch (_) {}
     res.status(500).json({ error: 'Falha no login admin', details: error.message });
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login', authLimiter, async (req, res) => {
   try {
     const { username, password } = req.body || {};
+    try { const { logAuth } = require('./logger'); logAuth('user.login.request', { ip: req.ip, origin: req.headers.origin, referer: req.headers.referer, protocol: req.protocol, body: { username, password } }); } catch (_) {}
     if (!username || !password) return res.status(400).json({ error: 'Informe username e password' });
     const user = userdb.findUserByUsername(String(username));
-    if (!user) return res.status(401).json({ error: 'Credenciais inválidas' });
+    if (!user) { try { const { logAuth } = require('./logger'); logAuth('user.login.fail', { username, reason: 'user_not_found' }); } catch (_) {} ; return res.status(401).json({ error: 'Credenciais inválidas' }); }
     const ok = bcrypt.compareSync(String(password), user.password_hash);
-    if (!ok) return res.status(401).json({ error: 'Credenciais inválidas' });
-    if (!user.active) return res.status(403).json({ error: 'Usuário inativo' });
-    if (userdb.isExpired(user)) return res.status(403).json({ error: 'Acesso expirado' });
+    if (!ok) { try { const { logAuth } = require('./logger'); logAuth('user.login.fail', { username, reason: 'password_mismatch' }); } catch (_) {} ; return res.status(401).json({ error: 'Credenciais inválidas' }); }
+    if (!user.active) { try { const { logAuth } = require('./logger'); logAuth('user.login.fail', { username, reason: 'user_inactive' }); } catch (_) {} ; return res.status(403).json({ error: 'Usuário inativo' }); }
+    if (userdb.isExpired(user)) { try { const { logAuth } = require('./logger'); logAuth('user.login.fail', { username, reason: 'access_expired' }); } catch (_) {} ; return res.status(403).json({ error: 'Acesso expirado' }); }
     const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '12h' });
-    res.json({ success: true, token, user: { id: user.id, username: user.username, role: user.role, expires_at: user.expires_at, credits: Number(user.credits || 0), instance_name: user.instance_name || null } });
+    try { const { logAuth } = require('./logger'); logAuth('user.login.success', { id: user.id, username: user.username }); } catch (_) {}
+    // Set auth cookie and CSRF cookie
+    const isHttps = Boolean(req.secure || (req.protocol === 'https'));
+    res.cookie('auth_token', token, { httpOnly: true, secure: isHttps, sameSite: 'strict', path: '/' });
+    ensureCsrfCookie(req, res);
+    res.json({ success: true, user: { id: user.id, username: user.username, role: user.role, expires_at: user.expires_at, credits: Number(user.credits || 0), instance_name: user.instance_name || null } });
   } catch (error) {
+    try { const { logAuth } = require('./logger'); logAuth('user.login.error', { message: error.message }); } catch (_) {}
     res.status(500).json({ error: 'Falha no login', details: error.message });
+  }
+});
+
+// Logout: limpa cookie de autenticação
+app.post('/logout', authRequired, (req, res) => {
+  try {
+    res.clearCookie('auth_token', { path: '/' });
+    return res.json({ success: true });
+  } catch (e) {
+    return res.status(500).json({ error: 'Falha no logout', details: e?.message || String(e) });
   }
 });
 
@@ -511,9 +848,14 @@ app.post('/user/bind-instance', authRequired, async (req, res) => {
   try {
     const u = userdb.findUserById(req.user.id);
     if (!u) return res.status(404).json({ error: 'Usuário não encontrado' });
-    const name = (req.body && (req.body.instance || req.body.name)) ? String(req.body.instance || req.body.name).trim() : '';
+    const nameRaw = (req.body && (req.body.instance || req.body.name)) ? String(req.body.instance || req.body.name).trim() : '';
+    const name = nameRaw.replace(/\s+/g, '');
     const providedToken = (req.body && req.body.token) ? String(req.body.token).trim() : '';
     if (!name) return res.status(400).json({ error: 'Informe o nome da instância em "instance" ou "name"' });
+    // Validação de nome: letras, números, hífen e underscore; tamanho 3–64
+    if (!/^[a-zA-Z0-9_-]{3,64}$/.test(name)) {
+      return res.status(400).json({ error: 'Nome de instância inválido. Use apenas letras, números, "-" ou "_" (3–64 caracteres).' });
+    }
 
     try { logUserInstance('user.bind_instance.request', { user_id: u.id, instance_name: name, provided_token: Boolean(providedToken) }); } catch (_) {}
     try { appendBindLog('BIND_REQUEST', { user_id: u.id, instance_name: name, providedToken: Boolean(providedToken) }); } catch (_) {}
@@ -657,15 +999,19 @@ app.post('/user/connect-instance', authRequired, async (req, res) => {
     if (!u) return res.status(404).json({ error: 'Usuário não encontrado' });
     let name = String(u.instance_name || '').trim();
     let token = String(u.instance_token || '').trim() || undefined;
-    try { appendBindLog('CONNECT_REQUEST', { user_id: u.id, instance_name: name || null, has_token: Boolean(token), body_keys: Object.keys(req.body || {}) }); } catch (_) {}
+    try {
+      appendBindLog('CONNECT_REQUEST', { user_id: u.id, instance_name: name || null, has_token: Boolean(token), body_keys: Object.keys(req.body || {}) });
+      logConnect('CONNECT_REQUEST', { user_id: u.id, instance_name: name || null, has_token: Boolean(token), body_keys: Object.keys(req.body || {}) });
+    } catch (_) {}
 
     // Criar instância apenas sob demanda (clique do usuário)
     if (!name) {
       if (!provider.createInstance) return res.status(400).json({ error: 'Provider atual não suporta criação de instância' });
       const base = (u.username || 'user').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
       name = `wa-${base}-${u.id}`;
-      try { appendBindLog('CONNECT_CREATE_ATTEMPT', { user_id: u.id, instance_name: name }); } catch (_) {}
+      try { appendBindLog('CONNECT_CREATE_ATTEMPT', { user_id: u.id, instance_name: name }); logConnect('CONNECT_CREATE_ATTEMPT', { user_id: u.id, instance_name: name }); } catch (_) {}
       const created = await provider.createInstance({ instance: name, options: {} });
+      try { logConnect('CONNECT_CREATE_RESULT', { user_id: u.id, instance_name: name, created_keys: Object.keys(created || {}), status: created?.status || null }); } catch (_) {}
       token = token || extractInstanceTokenFromProvider(created) || undefined;
       const fields = { instance_name: name };
       if (token) fields.instance_token = token;
@@ -679,7 +1025,7 @@ app.post('/user/connect-instance', authRequired, async (req, res) => {
           userdb.updateUser(u.id, { instance_token: token });
           instore.updateForUser(u.id, { instance_token: token, provider: provider.name || 'uazapi' });
           try { logUserInstance('user.connect_instance.token_resolved', { user_id: u.id, instance_name: name }); } catch (_) {}
-          try { appendBindLog('CONNECT_TOKEN_RESOLVED', { user_id: u.id, instance_name: name }); } catch (_) {}
+          try { appendBindLog('CONNECT_TOKEN_RESOLVED', { user_id: u.id, instance_name: name }); logConnect('CONNECT_TOKEN_RESOLVED', { user_id: u.id, instance_name: name }); } catch (_) {}
         }
       } catch (_) {}
     }
@@ -688,7 +1034,12 @@ app.post('/user/connect-instance', authRequired, async (req, res) => {
     const phone = (req.body && req.body.phone) ? String(req.body.phone).replace(/\D/g, '') : undefined;
     let connectResp = null;
     if (provider.connectInstance) {
+      try { logConnect('CONNECT_CALL', { user_id: u.id, instance: name, has_token: Boolean(token), phone }); } catch (_) {}
       connectResp = await provider.connectInstance({ instance: name, tokenOverride: token, phone });
+      try {
+        const keys = connectResp && typeof connectResp === 'object' ? Object.keys(connectResp) : [];
+        logConnect('CONNECT_RESP_SUMMARY', { user_id: u.id, instance: name, resp_keys: keys });
+      } catch (_) {}
     }
 
     // QR direto do retorno da conexão
@@ -698,28 +1049,29 @@ app.post('/user/connect-instance', authRequired, async (req, res) => {
       connectResp?.status?.qrCode, connectResp?.status?.qrcode, connectResp?.status?.qr, connectResp?.status?.base64,
     ].filter(v => typeof v === 'string' && v.trim());
     const urlCandidates = [connectResp?.url, connectResp?.info?.url, connectResp?.status?.url].filter(v => typeof v === 'string' && v.trim());
-    if (qrCandidates.length) { try { appendBindLog('CONNECT_QR_RETURNED', { user_id: u.id, instance: name, format: 'base64', len: qrCandidates[0]?.length || 0 }); } catch (_) {} return res.json({ success: true, instance: name, format: 'base64', qr: qrCandidates[0], raw: connectResp }); }
-    if (urlCandidates.length) { try { appendBindLog('CONNECT_QR_URL', { user_id: u.id, instance: name, url: urlCandidates[0] }); } catch (_) {} return res.json({ success: true, instance: name, format: 'url', url: urlCandidates[0], raw: connectResp }); }
+    if (qrCandidates.length) { try { appendBindLog('CONNECT_QR_RETURNED', { user_id: u.id, instance: name, format: 'base64', len: qrCandidates[0]?.length || 0 }); logConnect('CONNECT_QR_RETURNED', { user_id: u.id, instance: name, format: 'base64' }); } catch (_) {} return res.json({ success: true, instance: name, format: 'base64', qr: qrCandidates[0], raw: connectResp }); }
+    if (urlCandidates.length) { try { appendBindLog('CONNECT_QR_URL', { user_id: u.id, instance: name, url: urlCandidates[0] }); logConnect('CONNECT_QR_URL', { user_id: u.id, instance: name, url: urlCandidates[0] }); } catch (_) {} return res.json({ success: true, instance: name, format: 'url', url: urlCandidates[0], raw: connectResp }); }
 
     // Se não veio QR, tenta forçar via getQrCode
     if (provider.getQrCode) {
       try {
+        try { logConnect('CONNECT_FORCE_QR_ATTEMPT', { user_id: u.id, instance: name }); } catch (_) {}
         const qrData = await provider.getQrCode({ force: true, instance: name, tokenOverride: token });
         const qrs = [qrData?.qrCode, qrData?.qrcode, qrData?.qr, qrData?.base64, qrData?.info?.qrCode, qrData?.info?.qrcode, qrData?.info?.qr, qrData?.info?.base64, qrData?.status?.qrCode, qrData?.status?.qrcode, qrData?.status?.qr, qrData?.status?.base64].filter(v => typeof v === 'string' && v.trim());
         const urls = [qrData?.url, qrData?.info?.url, qrData?.status?.url].filter(v => typeof v === 'string' && v.trim());
-        if (qrs.length) { try { appendBindLog('CONNECT_QR_FORCED', { user_id: u.id, instance: name, format: 'base64', len: qrs[0]?.length || 0 }); } catch (_) {} return res.json({ success: true, instance: name, format: 'base64', qr: qrs[0], raw: qrData }); }
-        if (urls.length) { try { appendBindLog('CONNECT_QR_FORCED_URL', { user_id: u.id, instance: name, url: urls[0] }); } catch (_) {} return res.json({ success: true, instance: name, format: 'url', url: urls[0], raw: qrData }); }
+        if (qrs.length) { try { appendBindLog('CONNECT_QR_FORCED', { user_id: u.id, instance: name, format: 'base64', len: qrs[0]?.length || 0 }); logConnect('CONNECT_QR_FORCED', { user_id: u.id, instance: name, format: 'base64' }); } catch (_) {} return res.json({ success: true, instance: name, format: 'base64', qr: qrs[0], raw: qrData }); }
+        if (urls.length) { try { appendBindLog('CONNECT_QR_FORCED_URL', { user_id: u.id, instance: name, url: urls[0] }); logConnect('CONNECT_QR_FORCED_URL', { user_id: u.id, instance: name, url: urls[0] }); } catch (_) {} return res.json({ success: true, instance: name, format: 'url', url: urls[0], raw: qrData }); }
       } catch (e) {
         try { logUserInstance('user.connect_instance.qr_force_error', { user_id: u.id, message: e.message }); } catch (_) {}
-        try { appendBindLog('CONNECT_QR_FORCE_ERROR', { user_id: u.id, message: e.message }); } catch (_) {}
+        try { appendBindLog('CONNECT_QR_FORCE_ERROR', { user_id: u.id, message: e.message }); logConnect('CONNECT_QR_FORCE_ERROR', { user_id: u.id, instance: name, message: e.message, status: e?.response?.status, data: e?.response?.data }); } catch (_) {}
         return res.json({ success: true, instance: name, message: 'Conexão iniciada. QR indisponível no momento.' });
       }
     }
-    try { appendBindLog('CONNECT_STARTED_NO_QR', { user_id: u.id, instance: name }); } catch (_) {}
+    try { appendBindLog('CONNECT_STARTED_NO_QR', { user_id: u.id, instance: name }); logConnect('CONNECT_STARTED_NO_QR', { user_id: u.id, instance: name }); } catch (_) {}
     return res.json({ success: true, instance: name, message: 'Conexão iniciada.' });
   } catch (error) {
     try { logUserInstance('user.connect_instance.error', { user_id: req.user?.id || null, message: error.message }); } catch (_) {}
-    try { appendBindLog('CONNECT_ERROR', { user_id: req.user?.id || null, message: error.message }); } catch (_) {}
+    try { appendBindLog('CONNECT_ERROR', { user_id: req.user?.id || null, message: error.message }); logConnect('CONNECT_ERROR', { user_id: req.user?.id || null, message: error.message, status: error?.response?.status, data: error?.response?.data }); } catch (_) {}
     console.error('[user/connect-instance] erro:', error.response?.data || error.message);
     res.status(error.response ? error.response.status : 500).json({ error: 'Falha ao conectar instância do usuário', details: error.response ? error.response.data : error.message });
   }
@@ -756,9 +1108,18 @@ app.get('/user/get-qr-code', authRequired, async (req, res) => {
 app.post('/send-simple-text', authRequired, async (req, res) => {
   const { phone, message } = req.body;
   const normalizedPhone = String(phone || '').replace(/\D/g, '');
-  console.log('[send-simple-text] Normalized phone:', normalizedPhone);
-  console.log('[send-simple-text] Message length:', message ? message.length : 0);
-  console.log('Payload recebido do frontend (Texto Simples):', JSON.stringify(req.body, null, 2));
+  // Validações básicas
+  if (!normalizedPhone || normalizedPhone.length < 10 || normalizedPhone.length > 16) {
+    return res.status(400).json({ error: 'Telefone inválido. Informe somente números (10–16 dígitos).' });
+  }
+  if (!message || typeof message !== 'string' || !message.trim()) {
+    return res.status(400).json({ error: 'Mensagem inválida. Informe texto não vazio.' });
+  }
+  if (String(process.env.NODE_ENV).toLowerCase() !== 'production') {
+    console.log('[send-simple-text] Normalized phone:', normalizedPhone);
+    console.log('[send-simple-text] Message length:', message ? message.length : 0);
+    console.log('Payload recebido do frontend (Texto Simples):', JSON.stringify(req.body, null, 2));
+  }
   try {
     // Créditos: somente usuários não-admin precisam ter créditos suficientes
     if (String(req.user.role) !== 'admin') {
@@ -845,24 +1206,51 @@ app.get('/assets/logo-unlock-center', async (req, res) => {
 // Endpoint para enviar mensagens de carrossel via Z-API
 app.post('/send-carousel-message', authRequired, async (req, res) => {
   const { phone, message, carousel, delayMessage } = req.body;
-  console.log('Payload recebido do frontend (Carrossel):', JSON.stringify(req.body, null, 2));
   const normalizedPhone = String(phone || '').replace(/\D/g, '');
-  console.log('[send-carousel-message] Normalized phone:', normalizedPhone);
+  if (!normalizedPhone || normalizedPhone.length < 10 || normalizedPhone.length > 16) {
+    return res.status(400).json({ error: 'Telefone inválido. Informe somente números (10–16 dígitos).' });
+  }
   if (!Array.isArray(carousel) || carousel.length === 0) {
     return res.status(400).json({ error: 'Carousel vazio ou inválido.' });
   }
-  console.log('[send-carousel-message] Elements count:', carousel.length);
+  // Sanitização e validação de botões e URLs
+  const isValidUrl = (u) => {
+    try {
+      const x = new URL(String(u));
+      return x.protocol === 'http:' || x.protocol === 'https:';
+    } catch (_) { return false; }
+  };
 
   const elements = carousel.map(card => {
     const buttons = (card.buttons || []).map(btn => {
-      const out = { text: btn.label };
-      if (btn.type === 'URL') { out.type = 'url'; out.url = btn.url; }
-      else if (btn.type === 'REPLY') { out.type = 'reply'; }
-      else if (btn.type === 'CALL') { out.type = 'call'; out.phone = btn.phone; }
+      const label = String(btn.label || '').trim();
+      if (!label) return null;
+      const out = { text: label };
+      if (btn.type === 'URL') {
+        const url = String(btn.url || '').trim();
+        if (!isValidUrl(url)) return null;
+        out.type = 'url';
+        out.url = url;
+      } else if (btn.type === 'REPLY') {
+        out.type = 'reply';
+      } else if (btn.type === 'CALL') {
+        const p = String(btn.phone || '').replace(/\D/g, '');
+        if (!p || p.length < 10 || p.length > 16) return null;
+        out.type = 'call';
+        out.phone = p;
+      } else {
+        return null;
+      }
       return out;
-    });
-    return { media: card.image, text: card.text, buttons };
+    }).filter(Boolean);
+    const text = String(card.text || '').trim();
+    const media = String(card.image || '').trim();
+    return { media, text, buttons };
   });
+  if (String(process.env.NODE_ENV).toLowerCase() !== 'production') {
+    console.log('[send-carousel-message] Normalized phone:', normalizedPhone);
+    console.log('[send-carousel-message] Elements count:', elements.length);
+  }
 
   try {
     // Créditos: somente usuários não-admin precisam ter créditos suficientes
@@ -925,7 +1313,7 @@ app.post('/webhook/message-status', (req, res) => {
 });
 
 // Endpoint para configurar webhook automaticamente na Z-API
-app.post('/configure-webhook', async (req, res) => {
+app.post('/configure-webhook', authRequired, adminRequired, async (req, res) => {
   try {
     const providedUrl = (req.body && req.body.publicUrl && String(req.body.publicUrl).trim()) || '';
     const publicBaseUrl = providedUrl || process.env.PUBLIC_BASE_URL;
@@ -949,12 +1337,16 @@ app.post('/configure-webhook', async (req, res) => {
 // --- FIM: Webhook de Status de Mensagem ---
 
 // --- NOVO ENDPOINT: Desconectar Instância UAZAPI ---
-app.post('/disconnect-instance', async (req, res) => {
+app.post('/disconnect-instance', authRequired, instanceWriteLimiter, async (req, res) => {
   try {
     if (!provider.disconnectInstance) {
       return res.status(400).json({ error: 'Provider atual não suporta desconexão de instância' });
     }
-    const instance = (req.body && req.body.instance) ? String(req.body.instance).trim() : '';
+    const rawInstance = (req.body && req.body.instance) ? String(req.body.instance).trim() : '';
+    const instance = sanitizeInstanceName(rawInstance);
+    if (!instance || !isValidInstanceName(instance)) {
+      return res.status(400).json({ error: 'Nome da instância inválido. Use 3–32 chars [a-z0-9-], sem começar/terminar com hífen.' });
+    }
     if (!instance) {
       return res.status(400).json({ error: 'Informe o nome da instância em "instance"' });
     }
@@ -1163,13 +1555,29 @@ app.get('/readyz', async (req, res) => {
 });
 // --- FIM HEALTH CHECKS ---
 
+// --- Exemplo de rota protegida por API Key ---
+// Esta rota demonstra como usar variáveis de ambiente (API_KEY) para proteger endpoints sensíveis.
+// Aplique este middleware nas rotas que não devem ser acessadas sem uma credencial adicional.
+app.get('/admin/secret-info', requireApiKey, (req, res) => {
+  res.json({
+    ok: true,
+    message: 'Acesso autorizado via API Key',
+    hint: 'Proteja rotas administrativas ou de manutenção usando x-api-key',
+  });
+});
+// --- Fim exemplo ---
+
 // --- NOVO ENDPOINT: Criar Instância UAZAPI ---
-app.post('/create-instance', async (req, res) => {
+app.post('/create-instance', authRequired, instanceWriteLimiter, async (req, res) => {
   try {
     if (!provider.createInstance) {
       return res.status(400).json({ error: 'Provider atual não suporta criação de instância' });
     }
-    const instance = (req.body && (req.body.instance || req.body.name)) ? String(req.body.instance || req.body.name).trim() : '';
+    const rawInstance = (req.body && (req.body.instance || req.body.name)) ? String(req.body.instance || req.body.name).trim() : '';
+    const instance = sanitizeInstanceName(rawInstance);
+    if (!instance || !isValidInstanceName(instance)) {
+      return res.status(400).json({ error: 'Nome da instância inválido. Use 3–32 chars [a-z0-9-], sem começar/terminar com hífen.' });
+    }
     const extra = (req.body && typeof req.body === 'object') ? req.body : {};
     if (!instance) {
       return res.status(400).json({ error: 'Informe o nome da instância em "instance" ou "name"' });
@@ -1214,12 +1622,16 @@ app.post('/create-instance', async (req, res) => {
 // --- FIM: Criar Instância ---
 
 // --- NOVO ENDPOINT: Conectar Instância UAZAPI ---
-app.post('/connect-instance', async (req, res) => {
+app.post('/connect-instance', authRequired, instanceWriteLimiter, async (req, res) => {
   try {
     if (!provider.connectInstance) {
       return res.status(400).json({ error: 'Provider atual não suporta conexão de instância' });
     }
-    const instance = (req.body && (req.body.instance || req.body.name)) ? String(req.body.instance || req.body.name).trim() : '';
+    const rawInstance = (req.body && (req.body.instance || req.body.name)) ? String(req.body.instance || req.body.name).trim() : '';
+    const instance = sanitizeInstanceName(rawInstance);
+    if (!instance || !isValidInstanceName(instance)) {
+      return res.status(400).json({ error: 'Nome da instância inválido. Use 3–32 chars [a-z0-9-], sem começar/terminar com hífen.' });
+    }
     const phone = req.body && req.body.phone ? String(req.body.phone).replace(/\D/g, '') : '';
     const tokenOverride = req.body && req.body.token ? String(req.body.token).trim() : undefined;
     if (!instance) {
@@ -1482,7 +1894,8 @@ app.get('*', (req, res) => {
 });
 
 server.listen(port, () => {
-    console.log(`Proxy e frontend rodando na porta ${port}`);
+    const proto = httpsOptions ? 'https' : 'http';
+    console.log(`Proxy e frontend rodando na porta ${port} (${proto})`);
 });
 
 // Interceptores do Axios para logs detalhados
@@ -1494,36 +1907,81 @@ function maskToken(token) {
 }
 
 axios.interceptors.request.use((config) => {
-  const safeHeaders = { ...config.headers };
-  if (safeHeaders['Client-Token']) safeHeaders['Client-Token'] = maskToken(safeHeaders['Client-Token']);
-  if (safeHeaders['token']) safeHeaders['token'] = maskToken(safeHeaders['token']);
-  console.log('[Axios:request]', {
-    method: config.method,
-    url: config.url,
-    headers: safeHeaders,
-    data: config.data,
-  });
+  if (String(process.env.NODE_ENV).toLowerCase() !== 'production') {
+    const safeHeaders = { ...config.headers };
+    if (safeHeaders['Client-Token']) safeHeaders['Client-Token'] = maskToken(safeHeaders['Client-Token']);
+    if (safeHeaders['token']) safeHeaders['token'] = maskToken(safeHeaders['token']);
+    console.log('[Axios:request]', {
+      method: config.method,
+      url: config.url,
+      headers: safeHeaders,
+      data: config.data,
+    });
+  }
   return config;
 }, (error) => {
-  console.error('[Axios:request:error]', error.message);
+  if (String(process.env.NODE_ENV).toLowerCase() !== 'production') {
+    console.error('[Axios:request:error]', error.message);
+  }
   return Promise.reject(error);
 });
 
 axios.interceptors.response.use((response) => {
-  console.log('[Axios:response]', {
-    status: response.status,
-    statusText: response.statusText,
-    data: response.data,
-  });
+  if (String(process.env.NODE_ENV).toLowerCase() !== 'production') {
+    console.log('[Axios:response]', {
+      status: response.status,
+      statusText: response.statusText,
+      data: response.data,
+    });
+  }
   return response;
 }, (error) => {
-  if (error.response) {
-    console.error('[Axios:response:error]', {
-      status: error.response.status,
-      data: error.response.data,
-    });
-  } else {
-    console.error('[Axios:network:error]', error.message);
+  if (String(process.env.NODE_ENV).toLowerCase() !== 'production') {
+    if (error.response) {
+      console.error('[Axios:response:error]', {
+        status: error.response.status,
+        data: error.response.data,
+      });
+    } else {
+      console.error('[Axios:network:error]', error.message);
+    }
   }
   return Promise.reject(error);
+});
+// --- CSRF (Double Submit Cookie) ---
+function ensureCsrfCookie(req, res) {
+  try {
+    const has = req.cookies && (req.cookies['XSRF-TOKEN'] || req.cookies['xsrf-token'] || req.cookies['csrf_token']);
+    if (!has) {
+      const token = crypto.randomBytes(32).toString('hex');
+      const isHttps = Boolean(req.secure || (req.protocol === 'https'));
+      res.cookie('XSRF-TOKEN', token, { httpOnly: false, secure: isHttps, sameSite: 'lax', path: '/' });
+      return token;
+    }
+    return has;
+  } catch (_) { return null; }
+}
+
+app.get('/csrf-token', (req, res) => {
+  const t = ensureCsrfCookie(req, res);
+  res.json({ csrfToken: t || (req.cookies && (req.cookies['XSRF-TOKEN'] || req.cookies['xsrf-token'] || req.cookies['csrf_token']) ) || null });
+});
+
+// Aplica verificação CSRF em métodos que alteram estado
+app.use((req, res, next) => {
+  try {
+    const method = req.method || 'GET';
+    if (!['POST', 'PUT', 'DELETE'].includes(method)) return next();
+    const p = req.path || req.url || '';
+    const exempt = ['/login', '/admin/login'];
+    if (exempt.includes(p)) return next();
+    const cookieToken = req.cookies && (req.cookies['XSRF-TOKEN'] || req.cookies['xsrf-token'] || req.cookies['csrf_token']);
+    const headerToken = req.headers['x-csrf-token'] || req.headers['x-xsrf-token'] || req.headers['csrf-token'];
+    if (!cookieToken || !headerToken || String(cookieToken) !== String(headerToken)) {
+      return res.status(403).json({ error: 'CSRF token inválido ou ausente' });
+    }
+    return next();
+  } catch (e) {
+    return res.status(400).json({ error: 'Falha na validação CSRF', details: e?.message || String(e) });
+  }
 });

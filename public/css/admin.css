@@ -1,0 +1,146 @@
+:root { --bg:#0f172a; --panel:#111827; --panel-weak:#1b2433; --muted:#6b7280; --primary:#10B981; --danger:#ef4444; --text:#e5e7eb; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; background: var(--bg); color: var(--text); }
+header { padding: 16px; background: #0b1220; border-bottom: 1px solid #1f2937; }
+header h1 { margin: 0; font-size: 20px; }
+main { padding: 16px; max-width: 1100px; margin: 0 auto; }
+.card { background: var(--panel); border: 1px solid #1f2937; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.row { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 768px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 13px; }
+input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #374151; background: #0b1220; color: var(--text); }
+button { cursor: pointer; border: 0; border-radius: 8px; padding: 10px 14px; font-weight: 600; }
+.btn { background: #1f2937; color: var(--text); }
+.btn-primary { background: var(--primary); color: #03281f; }
+.btn-danger { background: var(--danger); color: #13080a; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #1f2937; padding: 10px; text-align: left; font-size: 14px; }
+th { color: var(--muted); font-weight: 600; }
+.muted { color: var(--muted); font-size: 12px; }
+.tag { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: #0b1220; border: 1px solid #374151; }
+.tag.green { color: #16a34a; border-color: #14532d; }
+.tag.red { color: #ef4444; border-color: #7f1d1d; }
+.tag.blue { color: #3b82f6; border-color: #1e3a8a; }
+.grid { display:grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+.modal { background: var(--panel); border: 1px solid #1f2937; border-radius: 10px; padding: 16px; width: 90%; max-width: 420px; }
+
+/* Responsividade para tabela de usuários */
+@media (max-width: 767px) {
+  .users-table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .users-table { min-width: 700px; font-size: 12px; }
+  .users-table th, .users-table td { padding: 8px 6px; white-space: nowrap; }
+  .users-table .actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2px; 
+    min-width: 160px; 
+    align-items: stretch;
+  }
+  .users-table .actions button { 
+    font-size: 9px; 
+    padding: 4px 6px; 
+    white-space: nowrap; 
+    border-radius: 3px;
+    min-height: 24px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .users-table .tag { font-size: 10px; padding: 1px 6px; }
+  .users-table .muted { font-size: 10px; }
+}
+
+/* Melhorias gerais para mobile */
+@media (max-width: 480px) {
+  main { padding: 12px; }
+  .card { padding: 12px; margin-bottom: 12px; }
+  .users-table { font-size: 11px; }
+  .users-table th, .users-table td { padding: 6px 4px; }
+  .users-table .actions { 
+    min-width: 140px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .users-table .actions button { 
+    font-size: 8px; 
+    padding: 3px 4px; 
+    min-height: 22px;
+    border-radius: 2px;
+  }
+  .grid-3 { grid-template-columns: 1fr; }
+  .row-2 { grid-template-columns: 1fr; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .actions button { margin-bottom: 4px; }
+}
+
+/* Estilos adicionais para melhor UX mobile */
+@media (max-width: 767px) {
+  header { padding: 12px; }
+  header h1 { font-size: 18px; }
+  .modal { width: 95%; padding: 12px; }
+  input, select { font-size: 16px; } /* Evita zoom no iOS */
+}
+
+/* Estilos para funcionalidade de expansão dos usuários */
+.user-row { transition: background-color 0.2s ease; }
+.user-row:hover { background-color: rgba(0, 123, 255, 0.05); }
+.user-row.expanded { background-color: rgba(0, 123, 255, 0.1); }
+.expand-indicator { text-align: center; width: 40px; }
+.expand-arrow { font-size: 12px; color: #666; transition: transform 0.2s ease; }
+.user-actions-row { background-color: var(--panel-weak); }
+.user-actions-row td { white-space: normal !important; }
+.user-actions-container { padding: 15px; border-top: 1px solid #1f2937; background: var(--panel-weak); }
+.user-actions-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; align-items: stretch; }
+.user-actions-grid button { padding: 8px 12px; font-size: 12px; border-radius: 4px; min-height: 32px; transition: all 0.2s ease; white-space: nowrap; line-height: 1.2; text-align: center; min-width: 110px; }
+.user-actions-grid button.btn,
+.admin-actions button.btn { background: rgba(255,255,255,0.08); border: 1px solid #334155; color: var(--text); }
+.user-actions-grid button.btn:hover,
+.admin-actions button.btn:hover { background: rgba(255,255,255,0.12); filter: brightness(1.05); }
+
+/* Responsividade para expansão em mobile */
+@media (max-width: 767px) {
+  .user-row { cursor: pointer; }
+  .user-row:active { background-color: rgba(0, 123, 255, 0.15); }
+  .user-actions-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .user-actions-grid button { font-size: 11px; padding: 6px 8px; min-height: 28px; touch-action: manipulation; }
+  .user-actions-container { padding: 12px; }
+  .expand-indicator { width: 30px; padding: 8px; }
+  .expand-arrow { font-size: 14px; }
+  .user-row td:first-child::before { content: "👆 "; font-size: 10px; opacity: 0.6; }
+}
+
+@media (max-width: 480px) {
+  .user-actions-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+  .user-actions-grid button { font-size: 10px; padding: 5px 6px; min-height: 26px; min-width: 92px; }
+  .user-actions-container { padding: 10px; }
+}
+
+/* Layout horizontal específico para admins */
+.admin-actions { display: flex !important; flex-wrap: wrap; gap: 6px; justify-content: flex-start; align-items: stretch; }
+.admin-actions button { white-space: nowrap; min-width: 110px; font-size: 10px; padding: 4px 6px; min-height: 24px; }
+@media (max-width: 767px) { .admin-actions { gap: 4px; } .admin-actions button { min-width: 100px; font-size: 9px; padding: 4px 5px; min-height: 22px; } }
+@media (max-width: 480px) { .admin-actions { gap: 3px; } .admin-actions button { min-width: 92px; font-size: 8px; padding: 3px 4px; min-height: 20px; } }
+
+/* Melhorias específicas para botões de ação em mobile */
+@media (max-width: 480px) {
+  .users-table .actions button.btn-primary,
+  .user-actions-grid button.btn-primary { background: var(--primary); color: #03281f; font-weight: 600; }
+  .users-table .actions button.btn-danger,
+  .user-actions-grid button.btn-danger { background: var(--danger); color: #13080a; font-weight: 600; }
+  .users-table .actions button:hover,
+  .user-actions-grid button:hover { opacity: 0.8; transform: scale(0.98); }
+}
+
+/* Utilitários simples para substituir estilos inline */
+.mt-8 { margin-top: 8px; }
+.mt-10 { margin-top: 10px; }
+.mt-12 { margin-top: 12px; }
+.mt-6 { margin-top: 6px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-6 { margin-bottom: 6px; }
+.mt-0 { margin-top: 0; }
+.overflow-auto { overflow: auto; }
+.w-40px { width: 40px; }

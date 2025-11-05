@@ -389,6 +389,25 @@ function populateiPhoneModelSelect(selectElement, modelsArray) {
         option.textContent = modelData.name;
         selectElement.appendChild(option);
     });
+    // Após alterar as opções, garantir que o dropdown customizado seja atualizado
+    if (window.refreshEnhancedSelect) {
+        window.refreshEnhancedSelect(selectElement);
+    }
+    // Se nenhum modelo estiver selecionado, pré-seleciona o primeiro e aciona change
+    try {
+        const hasValue = (selectElement.value && selectElement.value.trim() !== '');
+        if (!hasValue && modelsArray && modelsArray.length > 0) {
+            selectElement.value = modelsArray[0].name;
+            selectElement.dispatchEvent(new Event('change'));
+        }
+    } catch (_) {}
+    try {
+        window.sendUiLog && window.sendUiLog('carousel.populateModelSelect', {
+            selectId: selectElement.id || null,
+            modelsCount: Array.isArray(modelsArray) ? modelsArray.length : 0,
+            selected: selectElement.value || null
+        });
+    } catch (_) {}
 }
 
 /**
@@ -551,6 +570,13 @@ window.enhanceSelect = function(selectEl) {
         optionsList.style.top = (rect.bottom + 4) + 'px';
         optionsList.style.display = 'block';
         wrapper.setAttribute('aria-expanded', 'true');
+        try {
+            window.sendUiLog && window.sendUiLog('carousel.openDropdown', {
+                selectId: selectEl.id || null,
+                optionsCount: selectEl.options ? selectEl.options.length : 0,
+                rect: { left: rect.left, top: rect.top, width: rect.width, bottom: rect.bottom }
+            });
+        } catch (_) {}
     };
 
     trigger.addEventListener('click', (e) => {
@@ -616,6 +642,16 @@ window.refreshEnhancedSelect = function(selectEl) {
     const opt = selectEl.options[selectEl.selectedIndex];
     trigger.textContent = opt ? opt.text : 'Selecionar';
     trigger.appendChild(arrow);
+};
+
+// Envio de logs de UI para diagnóstico
+window.sendUiLog = async function(event, details) {
+    try {
+        await authFetch('/ui/log', {
+            method: 'POST',
+            body: { event, details }
+        });
+    } catch (_) {}
 };
 
 // --- Funções para Gerenciar Modelos de Carrossel ---
@@ -957,6 +993,13 @@ function addCarouselCard(cardData = null) {
         if (cardLangSelect) window.enhanceSelect(cardLangSelect);
         const imageSourceSelect = document.getElementById(`card-image-source-${currentCardId}`);
         if (imageSourceSelect) window.enhanceSelect(imageSourceSelect);
+        // Garante que dropdowns customizados reflitam as opções atuais imediatamente
+        if (window.refreshEnhancedSelect) {
+            window.refreshEnhancedSelect(modelSelect);
+            window.refreshEnhancedSelect(capacitySelect);
+            window.refreshEnhancedSelect(colorSelect);
+            if (imageSourceSelect) window.refreshEnhancedSelect(imageSourceSelect);
+        }
     }
 
     return currentCardId;
@@ -985,7 +1028,7 @@ function addCardButton(cardId, buttonData = null) {
         <div class="space-y-2">
             <div>
                 <label for="button-type-${cardId}-${buttonIndex}" class="block text-sm font-medium text-white/80 mb-1">Tipo de Botão:</label>
-                <select id="button-type-${cardId}-${buttonIndex}" onchange="toggleButtonFields(${cardId}, ${buttonIndex})"
+                <select id="button-type-${cardId}-${buttonIndex}"
       class="w-full px-3 py-2 bg-transparent border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30 transition duration-150 ease-in-out shadow-sm">
                     <option value="URL">URL</option>
                     <option value="REPLY">Resposta Rápida (Quick Reply)</option>
@@ -1048,6 +1091,12 @@ function addCardButton(cardId, buttonData = null) {
     }
     
     buttonDiv.querySelector('.remove-button-btn').onclick = () => removeCardButton(buttonDiv);
+
+    // Liga o evento via JS para evitar handler inline
+    const typeSelectEl = document.getElementById(`button-type-${cardId}-${buttonIndex}`);
+    if (typeSelectEl) {
+        typeSelectEl.addEventListener('change', () => toggleButtonFields(cardId, buttonIndex));
+    }
 
     if (buttonData) {
         document.getElementById(`button-type-${cardId}-${buttonIndex}`).value = buttonData.type || 'URL';
@@ -1265,14 +1314,9 @@ async function enviarCarrossel() {
     try {
         log.innerHTML = 'Enviando sua mensagem, aguarde... <span class="loading-spinner"></span>';
         // A requisição é enviada para o seu próprio proxy (proxyCarouselUrl)
-        const authToken = localStorage.getItem('authToken');
-        const response = await fetch(proxyCarouselUrl, {
+        const response = await authFetch(proxyCarouselUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
-            },
-            body: JSON.stringify(payloadToProxy) // Envia o payload simplificado para o proxy
+            body: payloadToProxy // Envia o payload simplificado para o proxy
         });
 
         const contentType = response.headers.get('content-type') || '';

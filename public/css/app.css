@@ -1,0 +1,142 @@
+/* App CSS consolidado (migrado de index.html e qr.html) */
+html, body { height: 100%; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+:root { --green-soft: #ffffff; --green-dark: #ffffff; }
+
+/* Paleta branca para alta legibilidade em todo o painel */
+body, body * { color: #ffffff !important; }
+h1, h2, h3, h4, .font-semibold { color: #ffffff !important; }
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.6) !important; }
+a { color: #ffffff !important; }
+
+/* Exceções: campos editáveis dos cartões */
+.card-editor textarea,
+.card-editor input,
+.card-editor select { color: #ffffff !important; }
+.card-editor select { background-color: rgba(255,255,255,0.1) !important; }
+.card-editor textarea::placeholder,
+.card-editor input::placeholder { color: rgba(255,255,255,0.6) !important; }
+
+/* Botão em verde neon */
+.btn-neon { background-color: #39FF14; color: #0a0a0a !important; }
+.btn-neon:hover { filter: brightness(1.1); }
+.btn-neon:focus { outline: 2px solid rgba(0,0,0,0.2); outline-offset: 2px; }
+
+/* Selects principais */
+#countryDDI, #carouselTemplate { background-color: rgba(255,255,255,0.1) !important; }
+#countryDDI option,
+#carouselTemplate option,
+.card-editor select option {
+  background-color: rgba(255,255,255,0.1) !important;
+  color: #ffffff !important;
+}
+
+/* Custom Select utilitário */
+.custom-select { position: relative; }
+.custom-select .custom-trigger {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.1); color: #ffffff; cursor: pointer;
+}
+.custom-select .custom-options {
+  position: absolute; z-index: 50; top: calc(100% + 4px); left: 0; width: 100%;
+  max-height: 192px; overflow: auto; border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.1); backdrop-filter: blur(8px); color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+.custom-options { position: fixed; z-index: 10000; max-height: 240px; overflow: auto;
+  border: 1px solid rgba(255,255,255,0.2); background-color: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px); color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+.custom-options .option-item,
+.custom-select .option-item { padding: 8px 12px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.custom-options .option-item:hover,
+.custom-options .option-item[aria-selected="true"],
+.custom-select .option-item:hover,
+.custom-select .option-item[aria-selected="true"] { background-color: rgba(255,255,255,0.18); }
+.custom-select .hidden-select { display: none; }
+
+/* SweetAlert2 custom (verde) */
+.swal2-container .swal-red-custom.swal2-popup,
+.swal-red-custom .swal2-popup,
+.swal2-popup.swal-red-custom {
+  background-color: #16a34a !important; border: 2px solid #dc2626 !important;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3) !important;
+}
+.swal-red-custom .swal2-title,
+.swal2-popup.swal-red-custom .swal2-title { color: #ffffff !important; font-weight: bold !important; }
+.swal-red-custom .swal2-content,
+.swal2-popup.swal-red-custom .swal2-content { color: #ffffff !important; }
+.swal-red-custom .swal2-confirm,
+.swal2-popup.swal-red-custom .swal2-confirm { background-color: #dc2626 !important; border: none !important; color: #ffffff !important; font-weight: bold !important; }
+.swal-red-custom .swal2-confirm:hover,
+.swal2-popup.swal-red-custom .swal2-confirm:hover { background-color: #b91c1c !important; }
+
+/* Spinner */
+.loading-spinner {
+  display: inline-block; width: 16px; height: 16px; border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;
+  margin-left: 8px; vertical-align: middle;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Utilitário para esconder sem inline style (JS pode sobrescrever via inline style) */
+.is-hidden { display: none; }
+
+/* Real-time status banner */
+.rt-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  background: #10b981; /* emerald-500 */
+  color: #063;
+  border: 1px solid #059669; /* emerald-600 */
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+  padding: 12px 14px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+.rt-banner-text {
+  font-weight: 600;
+  color: #012d1f;
+  margin-bottom: 6px;
+}
+.rt-banner-sub {
+  font-size: 13px;
+  opacity: .85;
+  margin-bottom: 8px;
+}
+.rt-banner-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.rt-banner-close {
+  background: #065f46;
+  color: #ecfdf5;
+  border: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.rt-banner-go {
+  background: #34d399;
+  color: #064e3b;
+  border: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Fundo do app (substitui inline style do body) */
+body.app-bg { background: #000 url('/image/OIG3.jpg') center / cover no-repeat fixed; }
+
+/* Configure webhook log message types */
+.success { color: #22c55e; }
+.error { color: #ef4444; }
+.info { color: #38bdf8; }
+.warning { color: #f59e0b; }

@@ -4,12 +4,22 @@
       "id": 1,
       "user_id": 3,
       "instance_id": "admin",
-      "token": "ce53e6e9-4de5-4313-a0f1-181511ce5c3b",
+      "token": "f83396e5-331b-41ce-9979-8fe015018c1b",
       "device_name": null,
       "status": "connected",
-      "connected_at": "2025-11-04T05:59:38.677Z",
-      "updated_at": "2025-11-04T05:59:38.678Z"
+      "connected_at": "2025-11-05T00:04:53.460Z",
+      "updated_at": "2025-11-05T00:04:53.461Z"
+    },
+    {
+      "id": 2,
+      "user_id": 16,
+      "instance_id": "rhz",
+      "token": "cab00daa-db09-424b-a285-83ec693672a0",
+      "device_name": null,
+      "status": "connected",
+      "connected_at": "2025-11-05T00:06:36.134Z",
+      "updated_at": "2025-11-05T00:06:36.135Z"
     }
   ],
-  "seq": 1
+  "seq": 2
 }

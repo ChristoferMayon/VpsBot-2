@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Painel Administrativo</title>
+  <link rel="stylesheet" href="/css/admin.css">
   <style>
     :root { --bg:#0f172a; --panel:#111827; --panel-weak:#1b2433; --muted:#6b7280; --primary:#10B981; --danger:#ef4444; --text:#e5e7eb; }
     * { box-sizing: border-box; }
@@ -275,7 +276,7 @@
     <h1>Painel Administrativo</h1>
     <div class="muted">Gerencie usuários, acesso e uso do WhatsApp</div>
     <div style="margin-top:8px">
-      <button class="btn" onclick="window.location.href='/index.html'">Voltar ao Painel</button>
+      <button id="back-btn" class="btn">Voltar ao Painel</button>
     </div>
   </header>
   <main>
@@ -292,8 +293,8 @@
         </div>
       </div>
       <div class="actions" style="margin-top:10px">
-        <button class="btn-primary" onclick="adminLogin()">Entrar</button>
-        <button class="btn" onclick="adminLogout()">Sair</button>
+        <button id="admin-login-btn" class="btn-primary">Entrar</button>
+        <button id="admin-logout-btn" class="btn">Sair</button>
         <span id="admin-login-status" class="muted"></span>
       </div>
       <div class="muted" style="margin-top:8px">Dica: usuário inicial é semeado via `ADMIN_USERNAME`/`ADMIN_PASSWORD` (padrão admin/admin em dev, altere em produção).</div>
@@ -327,7 +328,7 @@
         </div>
       </div>
       <div class="actions" style="margin-top:10px">
-        <button class="btn-primary" onclick="createUser()">Adicionar</button>
+        <button id="create-user-btn" class="btn-primary">Adicionar</button>
         <span id="create-status" class="muted"></span>
       </div>
     </section>
@@ -335,7 +336,7 @@
     <section class="card">
       <h2 style="margin:0 0 8px">Usuários</h2>
       <div class="actions" style="margin-bottom:8px">
-        <button class="btn" onclick="loadUsers()">Atualizar lista</button>
+        <button id="refresh-users-btn" class="btn">Atualizar lista</button>
         <span id="list-status" class="muted"></span>
       </div>
       <div class="users-table-container" style="overflow:auto;">
@@ -365,8 +366,8 @@
       <label>Nova senha</label>
       <input id="password-modal-input" type="password" placeholder="••••••" />
       <div class="actions" style="margin-top:12px">
-        <button class="btn" onclick="closePasswordModal()">Cancelar</button>
-        <button class="btn-primary" onclick="submitPasswordModal()">Salvar</button>
+        <button id="password-cancel-btn" class="btn">Cancelar</button>
+        <button id="password-save-btn" class="btn-primary">Salvar</button>
       </div>
       <div id="password-modal-status" class="muted" style="margin-top:6px"></div>
     </div>
@@ -380,8 +381,8 @@
       <input id="credits-modal-input" type="number" min="0" step="1" value="0" />
       <div class="muted" id="credits-modal-info" style="margin-top:6px"></div>
       <div class="actions" style="margin-top:12px">
-        <button class="btn" onclick="closeCreditsModal()">Cancelar</button>
-        <button class="btn-primary" onclick="submitCreditsModal()">Salvar</button>
+        <button id="credits-cancel-btn" class="btn">Cancelar</button>
+        <button id="credits-save-btn" class="btn-primary">Salvar</button>
       </div>
       <div id="credits-modal-status" class="muted" style="margin-top:6px"></div>
     </div>
@@ -395,8 +396,8 @@
       <input id="transfer-modal-input" type="number" min="1" step="1" value="1" />
       <div class="muted" id="transfer-modal-info" style="margin-top:6px"></div>
       <div class="actions" style="margin-top:12px">
-        <button class="btn" onclick="closeTransferModal()">Cancelar</button>
-        <button class="btn-primary" onclick="submitTransferModal()">Transferir</button>
+        <button id="transfer-cancel-btn" class="btn">Cancelar</button>
+        <button id="transfer-save-btn" class="btn-primary">Transferir</button>
       </div>
       <div id="transfer-modal-status" class="muted" style="margin-top:6px"></div>
     </div>
@@ -410,8 +411,8 @@
       <input id="add-days-modal-input" type="number" min="1" max="30" step="1" value="1" />
       <div class="muted" id="add-days-modal-info" style="margin-top:6px"></div>
       <div class="actions" style="margin-top:12px">
-        <button class="btn" onclick="closeAddDaysModal()">Cancelar</button>
-        <button class="btn-primary" onclick="submitAddDaysModal()">Adicionar</button>
+        <button id="add-days-cancel-btn" class="btn">Cancelar</button>
+        <button id="add-days-save-btn" class="btn-primary">Adicionar</button>
       </div>
       <div id="add-days-modal-status" class="muted" style="margin-top:6px"></div>
     </div>
@@ -425,15 +426,16 @@
       <input id="username-modal-input" type="text" placeholder="novo-usuario" />
       <div class="muted" id="username-modal-info" style="margin-top:6px"></div>
       <div class="actions" style="margin-top:12px">
-        <button class="btn" onclick="closeUsernameModal()">Cancelar</button>
-        <button class="btn-primary" onclick="submitUsernameModal()">Salvar</button>
+        <button id="username-cancel-btn" class="btn">Cancelar</button>
+        <button id="username-save-btn" class="btn-primary">Salvar</button>
       </div>
       <div id="username-modal-status" class="muted" style="margin-top:6px"></div>
     </div>
   </div>
 
-  <script>
-    const apiBase = (window.API_BASE || (window.location.port === '3002' ? 'http://127.0.0.1:3001' : window.location.origin)).replace(/\/$/, '');
+  <script type="text/plain" data-migrated="true">
+    // Usa HTTPS para o backend na porta 3001 mesmo quando a página está em 3002
+    const apiBase = (window.API_BASE || (window.location.port === '3002' ? 'https://127.0.0.1:3001' : window.location.origin)).replace(/\/$/, '');
     function fmtDate(ts) {
       if (!ts) return '-';
       const d = new Date(Number(ts));
@@ -895,5 +897,7 @@
       }
     })();
   </script>
+<script src="/js/common_auth.js"></script>
+<script src="/js/admin.js"></script>
 </body>
 </html>

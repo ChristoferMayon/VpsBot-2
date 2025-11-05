@@ -170,3 +170,223 @@
 [2025-11-04T06:12:13.432Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
 [2025-11-04T06:12:15.023Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
 [2025-11-04T06:12:15.027Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:33:07.608Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:39:59.815Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:43:05.156Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:43:46.481Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:44:11.696Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:49:55.383Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:54:49.319Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:57:50.719Z] INIT {"message":"binding log ready"}
+[2025-11-04T06:59:00.384Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:01:13.157Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:03:48.133Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T07:03:48.142Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T07:04:04.831Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T07:04:04.836Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T07:07:24.921Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:11:59.754Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:16:49.320Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:17:40.159Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:19:03.619Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:20:00.757Z] INIT {"message":"binding log ready"}
+[2025-11-04T07:23:18.879Z] INIT {"message":"binding log ready"}
+[2025-11-04T17:25:43.500Z] INIT {"message":"binding log ready"}
+[2025-11-04T17:36:10.907Z] INIT {"message":"binding log ready"}
+[2025-11-04T17:39:31.894Z] INIT {"message":"binding log ready"}
+[2025-11-04T17:51:03.057Z] INIT {"message":"binding log ready"}
+[2025-11-04T17:51:17.382Z] INIT {"message":"binding log ready"}
+[2025-11-04T18:15:11.733Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T18:15:11.737Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T18:15:13.912Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T18:15:13.917Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T18:17:39.862Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T18:17:39.867Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T18:17:42.643Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T18:17:42.646Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T18:26:54.605Z] INIT {"message":"binding log ready"}
+[2025-11-04T18:28:42.711Z] INIT {"message":"binding log ready"}
+[2025-11-04T18:30:08.824Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T18:30:08.828Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T18:30:13.330Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T18:30:13.335Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T19:07:44.635Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:07:50.293Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:08:51.496Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T19:08:51.500Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T19:08:56.784Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T19:08:56.789Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T19:13:19.003Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:13:24.279Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:14:07.172Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T19:14:07.178Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T19:14:08.166Z] ENSURE_INSTANCE_REQUEST {"user_id":3,"has_instance":true,"body_keys":[]}
+[2025-11-04T19:14:08.173Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":false}
+[2025-11-04T19:14:08.790Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T19:14:08.797Z] CONNECT_REQUEST {"user_id":3,"instance_name":"admin","has_token":true,"body_keys":[]}
+[2025-11-04T19:14:22.279Z] CONNECT_STARTED_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-04T19:14:22.293Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":false}
+[2025-11-04T19:14:22.930Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T19:14:22.945Z] GET_QR_REQUEST {"user_id":3,"instance_name":"admin","force":"true"}
+[2025-11-04T19:14:27.847Z] GET_QR_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-04T19:27:27.925Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:27:56.078Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:30:38.694Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:32:32.650Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:37:19.268Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:40:06.909Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:40:32.715Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:46:03.961Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:48:52.268Z] INIT {"message":"binding log ready"}
+[2025-11-04T19:59:16.034Z] INIT {"message":"binding log ready"}
+[2025-11-04T20:00:50.762Z] INIT {"message":"binding log ready"}
+[2025-11-04T20:25:49.195Z] INIT {"message":"binding log ready"}
+[2025-11-04T20:40:44.035Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:40:44.040Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:40:49.298Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:40:49.307Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:41:12.820Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:41:12.822Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:41:35.573Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:41:35.577Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:41:38.694Z] ENSURE_INSTANCE_REQUEST {"user_id":3,"has_instance":true,"body_keys":[]}
+[2025-11-04T20:41:38.702Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":false}
+[2025-11-04T20:41:39.322Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:41:39.329Z] CONNECT_REQUEST {"user_id":3,"instance_name":"admin","has_token":true,"body_keys":[]}
+[2025-11-04T20:41:52.299Z] CONNECT_STARTED_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-04T20:41:52.307Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":false}
+[2025-11-04T20:41:52.929Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:41:52.943Z] GET_QR_REQUEST {"user_id":3,"instance_name":"admin","force":"true"}
+[2025-11-04T20:41:57.803Z] GET_QR_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-04T20:42:57.235Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:42:57.241Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:42:58.870Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:42:58.873Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:43:32.863Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:43:32.868Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:43:45.261Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:43:45.263Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:44:39.864Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:44:39.868Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:44:48.823Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:44:48.825Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:45:58.363Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:45:58.367Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:46:02.999Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:46:03.017Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:48:37.200Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:48:37.203Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:48:38.637Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:48:38.643Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:50:48.245Z] INIT {"message":"binding log ready"}
+[2025-11-04T20:52:30.896Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:52:30.899Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:52:32.320Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:52:32.322Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:54:20.193Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:54:20.197Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:54:28.250Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:54:28.255Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:55:59.654Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:55:59.662Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:56:06.863Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T20:56:06.867Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T20:57:30.455Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:57:30.458Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:57:31.961Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T20:57:31.966Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T20:58:48.650Z] INIT {"message":"binding log ready"}
+[2025-11-04T21:00:33.386Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:00:33.390Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:00:38.302Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:00:38.307Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:04:08.007Z] INIT {"message":"binding log ready"}
+[2025-11-04T21:04:18.782Z] INIT {"message":"binding log ready"}
+[2025-11-04T21:05:29.303Z] INIT {"message":"binding log ready"}
+[2025-11-04T21:06:06.872Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:06:06.881Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:06:09.197Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:06:09.202Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:08:07.725Z] INIT {"message":"binding log ready"}
+[2025-11-04T21:08:41.909Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:08:41.913Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:08:47.116Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:08:47.120Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:09:10.611Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:09:10.615Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T21:09:13.527Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T21:09:13.530Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:06:09.402Z] INIT {"message":"binding log ready"}
+[2025-11-04T23:09:54.070Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:09:54.077Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:09:55.730Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:09:55.732Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:11:44.672Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:11:44.677Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:11:47.915Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:11:47.920Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:13:56.725Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T23:13:56.729Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T23:14:03.442Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T23:14:03.446Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T23:22:40.513Z] INIT {"message":"binding log ready"}
+[2025-11-04T23:25:02.644Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:25:02.648Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:25:08.630Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:25:08.635Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:26:15.129Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T23:26:15.133Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T23:26:21.431Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-04T23:26:21.435Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-04T23:37:31.607Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:37:31.613Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:37:35.877Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:37:35.882Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:39:56.685Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:39:56.688Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:39:58.613Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:39:58.619Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:41:00.379Z] INIT {"message":"binding log ready"}
+[2025-11-04T23:41:39.123Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:41:39.127Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:41:40.509Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:41:40.515Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:43:53.849Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:43:53.856Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:43:54.872Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:43:54.878Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:48:06.430Z] INIT {"message":"binding log ready"}
+[2025-11-04T23:48:22.097Z] GET_QR_REQUEST {"user_id":3,"instance_name":"admin","force":"true"}
+[2025-11-04T23:48:23.285Z] GET_QR_REQUEST {"user_id":3,"instance_name":"admin","force":"true"}
+[2025-11-04T23:48:29.395Z] GET_QR_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-04T23:48:31.041Z] GET_QR_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-04T23:49:21.203Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:49:21.209Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:49:52.471Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:49:52.476Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:49:54.946Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:49:54.952Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:51:10.536Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:51:10.540Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:51:12.003Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:51:12.011Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:55:24.604Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:55:24.608Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:55:26.174Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:55:26.179Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:58:53.693Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:58:53.698Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T23:59:03.359Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-04T23:59:03.361Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-05T00:02:24.649Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-05T00:02:24.652Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-05T00:02:31.014Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-05T00:02:31.017Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-05T00:04:37.215Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-05T00:04:37.221Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-05T00:04:39.087Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-05T00:04:39.090Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-05T00:06:20.860Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-05T00:06:20.863Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-05T00:06:24.402Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
+[2025-11-05T00:06:24.408Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}

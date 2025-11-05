@@ -9,167 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { inter: ['Inter', 'system-ui', 'sans-serif'] },
-          colors: {
-            brand: {
-              50: '#E6F1FF', 100: '#CCE3FF', 200: '#99C6FF', 300: '#66A8FF', 400: '#338BFF', 500: '#006DFF',
-              600: '#0058CC', 700: '#004399', 800: '#002E66', 900: '#001933'
-            }
-          }
-        }
-      }
-    };
-  </script>
-  <style>
-    html, body { height: 100%; }
-    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-    :root { --green-soft: #ffffff; --green-dark: #ffffff; }
-    /* Cor padrão branca para toda tipografia */
-    body, body * { color: #ffffff !important; }
-    /* Títulos e elementos em destaque também brancos para máxima nitidez */
-    h1, h2, h3, h4, .font-semibold { color: #ffffff !important; }
-    /* Placeholders em branco translúcido */
-    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.6) !important; }
-    /* Links em branco */
-    a { color: #ffffff !important; }
-
-    /* EXCEÇÃO: texto editável dos cartões deve ser branco normal */
-    .card-editor textarea,
-    .card-editor input,
-    .card-editor select {
-      color: #ffffff !important;
-    }
-    /* Fundo dos selects dos cartões na cor do painel */
-    .card-editor select { background-color: rgba(255,255,255,0.1) !important; }
-    .card-editor textarea::placeholder,
-    .card-editor input::placeholder {
-      color: rgba(255,255,255,0.6) !important;
-    }
-    /* Botão Enviar Carrossel em verde neon forte com texto legível */
-    .btn-neon {
-      background-color: #39FF14; /* neon forte */
-      color: #0a0a0a !important; /* texto preto para máximo contraste */
-    }
-    .btn-neon:hover { filter: brightness(1.1); }
-    .btn-neon:focus { outline: 2px solid rgba(0,0,0,0.2); outline-offset: 2px; }
-    /* Fundo dos selects principais do painel na cor do painel */
-    #countryDDI, #carouselTemplate { background-color: rgba(255,255,255,0.1) !important; }
-    /* Cor do painel também quando abre a lista de opções dos selects */
-    #countryDDI option,
-    #carouselTemplate option,
-    .card-editor select option {
-      background-color: rgba(255,255,255,0.1) !important;
-      color: #ffffff !important;
-    }
-    /* Custom Select (para estilizar a lista aberta com a cor do painel) */
-    .custom-select { position: relative; }
-    .custom-select .custom-trigger {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background-color: rgba(255,255,255,0.1);
-      color: #ffffff;
-      cursor: pointer;
-    }
-    .custom-select .custom-options {
-      position: absolute;
-      z-index: 50;
-      top: calc(100% + 4px);
-      left: 0;
-      width: 100%;
-      max-height: 192px;
-      overflow: auto;
-      border: 1px solid rgba(255,255,255,0.2);
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-    }
-    /* Portal: quando a lista de opções é renderizada no body */
-    .custom-options {
-      position: fixed;
-      z-index: 10000;
-      max-height: 240px;
-      overflow: auto;
-      border: 1px solid rgba(255,255,255,0.2);
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-    }
-    .custom-options .option-item,
-    .custom-select .option-item {
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-    .custom-options .option-item:hover,
-    .custom-options .option-item[aria-selected="true"],
-    .custom-select .option-item:hover,
-    .custom-select .option-item[aria-selected="true"] {
-      background-color: rgba(255,255,255,0.18);
-    }
-    .custom-select .hidden-select { display: none; }
-    
-    /* SweetAlert customizado com fundo verde */
-    .swal2-container .swal-red-custom.swal2-popup,
-    .swal-red-custom .swal2-popup,
-    .swal2-popup.swal-red-custom {
-      background-color: #16a34a !important; /* Fundo verde forte */
-      background: #16a34a !important;
-      border: 2px solid #dc2626 !important; /* Borda vermelha */
-      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3) !important;
-    }
-    .swal-red-custom .swal2-title,
-    .swal2-popup.swal-red-custom .swal2-title {
-      color: #ffffff !important; /* Título branco */
-      font-weight: bold !important;
-    }
-    .swal-red-custom .swal2-content,
-    .swal2-popup.swal-red-custom .swal2-content {
-      color: #ffffff !important; /* Texto branco */
-    }
-    .swal-red-custom .swal2-confirm,
-    .swal2-popup.swal-red-custom .swal2-confirm {
-      background-color: #dc2626 !important; /* Botão vermelho */
-      border: none !important;
-      color: #ffffff !important;
-      font-weight: bold !important;
-    }
-    .swal-red-custom .swal2-confirm:hover,
-    .swal2-popup.swal-red-custom .swal2-confirm:hover {
-      background-color: #b91c1c !important; /* Hover mais escuro */
-    }
-    
-    /* Spinner de carregamento */
-    .loading-spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid #f3f3f3;
-      border-top: 2px solid #3498db;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-left: 8px;
-      vertical-align: middle;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+  <link rel="stylesheet" href="/css/app.css">
+  
 </head>
-<body class="min-h-full bg-gradient-to-br from-slate-900 via-slate-950 to-black text-slate-100" style="background:#000 url('/image/OIG3.jpg') center / cover no-repeat fixed;">
+<body class="min-h-full bg-gradient-to-br from-slate-900 via-slate-950 to-black text-slate-100 app-bg">
   <header class="sticky top-0 z-40 backdrop-blur-xl bg-white/10 border-b border-white/20">
     <div class="max-w-6xl mx-auto px-2 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between">
       <div class="flex items-center gap-2 sm:gap-3">
@@ -182,12 +25,12 @@
         </div>
       </div>
       <nav id="main-tabs" class="flex items-center gap-1 sm:gap-2 overflow-x-auto flex-nowrap ml-auto justify-end">
-      <div id="credits-badge" class="px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-none border border-sky-400/50 bg-sky-500/10 text-sky-400 text-xs sm:text-xs md:text-sm font-semibold leading-[1.2] inline-flex items-center shrink-0 transition-colors hover:bg-sky-500/20" style="display:none;">Créditos: 0</div>
+      <div id="credits-badge" class="px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-none border border-sky-400/50 bg-sky-500/10 text-sky-400 text-xs sm:text-xs md:text-sm font-semibold leading-[1.2] inline-flex items-center shrink-0 transition-colors hover:bg-sky-500/20 is-hidden">Créditos: 0</div>
           <button data-tab="carousel" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">Sender</button>
       <button data-tab="text" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">Texto</button>
       <a href="/qr.html" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">QR</a>
-         <button id="admin-tab-btn" class="shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]" style="display:none;">Admin</button>
-        <button id="logout-btn" class="shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-red-400/40 bg-red-500/20 hover:bg-red-500/30 text-red-200 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400/30 hover:shadow hover:shadow-red-500/20 active:translate-y-[1px]" style="display:none;">Sair</button>
+         <button id="admin-tab-btn" class="shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px] is-hidden">Admin</button>
+        <button id="logout-btn" class="shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-red-400/40 bg-red-500/20 hover:bg-red-500/30 text-red-200 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400/30 hover:shadow hover:shadow-red-500/20 active:translate-y-[1px] is-hidden">Sair</button>
       </nav>
     </div>
   </header>
@@ -215,7 +58,7 @@
           <h2 class="text-xl font-semibold">Série e Template</h2>
           <p class="text-sm text-white/70 mb-4">Selecione uma série usando as chips abaixo ou pelo select.</p>
           <div id="series-nav" class="flex flex-wrap gap-2 mb-3"></div>
-          <select id="carouselTemplate" onchange="loadCarouselTemplate()" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white focus:ring-2 focus:ring-white/30 focus:border-white/30">
+          <select id="carouselTemplate" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white focus:ring-2 focus:ring-white/30 focus:border-white/30">
             <option value="">-- Selecione a Série do iPhone --</option>
           </select>
           <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -234,15 +77,15 @@
       <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 shadow">
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-semibold">Cartões do Envio</h3>
-          <button class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]" onclick="addCarouselCard()">+ Adicionar Cartão</button>
+          <button id="add-carousel-card-btn" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">+ Adicionar Cartão</button>
         </div>
         <div id="carousel-cards-container" class="mt-5 space-y-6"></div>
         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
-          <button onclick="enviarCarrossel()" class="w-full py-3 btn-neon font-bold rounded-none shadow hover:brightness-110 md:col-span-2">Enviar mensagem</button>
+          <button id="send-carousel-btn" class="w-full py-3 btn-neon font-bold rounded-none shadow hover:brightness-110 md:col-span-2">Enviar mensagem</button>
           <button id="ai-validate" class="hidden w-full py-3 bg-white/10 text-white font-semibold rounded-none shadow hover:bg-white/20">Validação Inteligente</button>
         </div>
         <div id="log" class="mt-6 p-4 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm whitespace-pre-wrap overflow-x-auto"></div>
-        <div class="mt-6" style="display:none;">
+        <div class="mt-6 is-hidden">
           <details class="bg-white/5 border border-white/20 rounded-xl p-4">
             <summary class="cursor-pointer text-sm font-semibold">Documentação UAZAPI — Enviar Carrossel</summary>
             <div class="mt-3 text-sm space-y-3">
@@ -336,7 +179,7 @@
           </div>
         </div>
         <div class="mt-4">
-          <button onclick="sendSimpleText()" class="px-4 py-2 bg-emerald-600 text-white rounded-none shadow hover:bg-emerald-700">Enviar Texto</button>
+          <button id="send-text-btn" class="px-4 py-2 bg-emerald-600 text-white rounded-none shadow hover:bg-emerald-700">Enviar Texto</button>
         </div>
         <div id="textLog" class="mt-6 p-4 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm whitespace-pre-wrap overflow-x-auto"></div>
       </div>
@@ -364,12 +207,12 @@
         </div>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <button class="w-full px-4 py-2 bg-slate-200 text-slate-900 font-semibold rounded-none shadow hover:bg-white" onclick="qrCreateInstance()">Criar Instância</button>
-          <button class="w-full px-4 py-2 bg-sky-500 text-white font-semibold rounded-none shadow hover:bg-sky-600" onclick="qrConnectInstance()">Conectar Instância</button>
-          <button class="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-none shadow hover:bg-indigo-600" onclick="qrGetStatus()">Obter Status</button>
+          <button id="qr-create-btn" class="w-full px-4 py-2 bg-slate-200 text-slate-900 font-semibold rounded-none shadow hover:bg-white">Criar Instância</button>
+          <button id="qr-connect-btn" class="w-full px-4 py-2 bg-sky-500 text-white font-semibold rounded-none shadow hover:bg-sky-600">Conectar Instância</button>
+          <button id="qr-status-btn" class="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-none shadow hover:bg-indigo-600">Obter Status</button>
           <button id="btn-generate-qr" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700">Gerar QR Code</button>
           <button id="btn-force-qr" class="w-full px-4 py-2 bg-amber-500 text-white rounded-xl shadow hover:bg-amber-600">Forçar novo QR</button>
-          <button class="w-full px-4 py-2 bg-zinc-800 text-white rounded-xl shadow hover:bg-zinc-700" onclick="qrCopyPaircode()">Copiar Paircode</button>
+          <button id="qr-copy-btn" class="w-full px-4 py-2 bg-zinc-800 text-white rounded-xl shadow hover:bg-zinc-700">Copiar Paircode</button>
           <button id="btn-disconnect-instance" class="w-full px-4 py-2 bg-red-600 text-white rounded-xl shadow hover:bg-red-700">Desconectar Conta</button>
           <div class="md:col-span-3 text-xs text-white/60">Use “Desconectar Conta” para sair do WhatsApp desta instância e conectar outro número. Após desconectar, clique em “Obter QR” e escaneie com o novo telefone.</div>
         </div>
@@ -377,7 +220,7 @@
         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div>
             <div class="border border-white/20 bg-white/10 p-4 rounded-xl flex items-center justify-center min-h-[260px]">
-              <img id="qr-image" alt="QR Code" class="max-w-full h-auto" style="display:none;" />
+            <img id="qr-image" alt="QR Code" class="max-w-full h-auto is-hidden" />
               <div id="qr-placeholder" class="text-sm text-white/60">QR Code não gerado ainda.</div>
             </div>
             <div class="mt-3">
@@ -396,9 +239,25 @@
 
   <!-- Scripts -->
   <script src="/js/carousel_script_new.js"></script>
-  <script>
-    // Tabs
-    const tabs = document.querySelectorAll('#main-tabs .tab-btn');
+<script src="/js/common_auth.js"></script>
+<script src="/js/index.js"></script>
+  <!--
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
     const sections = {
       carousel: document.getElementById('tab-carousel'),
       text: document.getElementById('tab-text'),
@@ -473,11 +332,8 @@
       const badge = document.getElementById('credits-badge');
       if (!badge) return;
       const authRole = localStorage.getItem('authRole') || '';
-      const authToken = localStorage.getItem('authToken') || '';
-      const adminToken = localStorage.getItem('adminToken') || '';
-      const isAdminRole = authRole === 'admin';
-      const sessionToken = adminToken || authToken;
-      if (!sessionToken && !isAdminRole) {
+      const hasSession = Boolean(authRole);
+      if (!hasSession) {
         badge.style.display = 'none';
         return;
       }
@@ -487,16 +343,16 @@
         badge.textContent = 'Créditos: ' + cached;
         badge.style.display = 'inline-flex';
       }
-      // Atualiza via backend usando o token disponível (admin ou usuário)
+      // Atualiza via backend usando autenticação por cookie
       try {
-        if (!sessionToken) throw new Error('Sem token de sessão');
         const apiBase = (window.APP_API && window.APP_API.proxyBaseUrl) ? window.APP_API.proxyBaseUrl : window.location.origin;
-        const res = await fetch(apiBase.replace(/\/$/, '') + '/me', { headers: { 'Authorization': 'Bearer ' + sessionToken } });
+        const res = await authFetch(apiBase.replace(/\/$/, '') + '/me', { method: 'GET' });
         if (!res.ok) return;
         const data = await res.json();
         const credits = Number(data?.user?.credits || 0);
         badge.textContent = 'Créditos: ' + credits;
         try { localStorage.setItem('authCredits', String(credits)); } catch (_) {}
+        badge.style.display = 'inline-flex';
       } catch (_) {
         // Mantém o valor em cache; se não havia cache, mostra 0
         if (!cached) {
@@ -877,9 +733,17 @@
           try {
             const st = await fetch(`${__base}/user/instance-status`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
             const stData = await st.json().catch(() => ({}));
-            if (st.ok && stData && stData.status && stData.status.connected) {
+            const isConnected = Boolean(
+              stData?.connected ||
+              stData?.ready ||
+              stData?.loggedIn ||
+              (stData?.status && stData.status.connected) ||
+              (typeof stData?.status === 'string' && String(stData.status).toLowerCase() === 'connected')
+            );
+            if (st.ok && isConnected) {
               clearInterval(poll);
-              if (statusEl) statusEl.textContent = '✅ Conectado! Redirecionando para a tela de envio...';
+              try { if (window.qrFlowLog) qrFlowLog('qr.flow.poll_connected', { page: 'index.html', tries }); } catch (_) {}
+              if (statusEl) statusEl.textContent = '✅ WhatsApp conectado. Preparando envio...';
               // Atualiza campos visuais se necessário
               try {
                 const meResp = await fetch(`${__base}/me`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
@@ -889,11 +753,36 @@
                   if (instInput) instInput.value = meData.user.instance_name;
                 }
               } catch (_) {}
-              // Redireciona para a aba de envio de texto
-              activateTab('text');
+              // Oculta o QR imediatamente para evidenciar que a conexão foi concluída
+              try { if (window.qrFlowLog) qrFlowLog('qr.flow.success_triggered', { page: 'index.html', method: 'poll' }); } catch (_) {}
+              try {
+                const img = document.getElementById('qr-image');
+                const placeholderEl = document.getElementById('qr-placeholder');
+                if (img) { img.style.display = 'none'; img.src = ''; }
+                if (placeholderEl) placeholderEl.style.display = '';
+                try { if (window.qrFlowLog) qrFlowLog('qr.flow.qr_hidden', { page: 'index.html', method: 'poll' }); } catch (_) {}
+              } catch (_) {}
+              // Exibe alerta de sucesso e alterna para a aba de envio (Sender)
+              const goSender = () => { try { if (window.qrFlowLog) qrFlowLog('qr.flow.redirect_start', { page: 'index.html', target: 'carousel' }); } catch (_) {} try { activateTab('carousel'); } catch (_) { window.location.href = '/index.html?tab=carousel'; } };
+              if (window.Swal && typeof Swal.fire === 'function') {
+                try { if (window.qrFlowLog) qrFlowLog('qr.flow.pre_alert', { page: 'index.html', method: 'poll' }); } catch (_) {}
+                try { if (window.qrFlowLog) qrFlowLog('qr.flow.sweetalert_called', { page: 'index.html', type: 'success' }); } catch (_) {}
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Conectado ao WhatsApp',
+                  text: 'Conectado com sucesso. Redirecionando para envio...',
+                  timer: 1200,
+                  showConfirmButton: false,
+                  customClass: { popup: 'swal-red-custom' }
+                }).then(goSender);
+              } else {
+                try { if (window.qrFlowLog) qrFlowLog('qr.flow.sweetalert_missing', { page: 'index.html', fallback: 'alert' }); } catch (_) {}
+                try { alert('WhatsApp conectado com sucesso.'); } catch (_) {}
+                goSender();
+              }
             }
           } catch (_) {}
-          if (tries > 30) clearInterval(poll); // ~30 tentativas
+          if (tries > 30) { try { if (window.qrFlowLog) qrFlowLog('qr.flow.poll_stopped_no_connect', { page: 'index.html', tries }); } catch (_) {} ; clearInterval(poll); } // ~30 tentativas
         }, 2000);
       } catch (e) {
         qrLog(`Erro ao conectar instância: ${e.message}`);
@@ -1026,36 +915,20 @@
    // Link direto para página de QR já está no elemento <a href="/qr.html">
   </script>
 
+  -->
   <!-- Banner de status em tempo real (via Socket.IO) -->
-  <div id="rt-banner" style="
-    display:none;
-    position:fixed;
-    left:16px; right:16px; bottom:16px;
-    z-index:9999;
-    background:#10b981; /* emerald-500 */
-    color:#063;
-    border:1px solid #059669; /* emerald-600 */
-    border-radius:10px;
-    box-shadow:0 6px 18px rgba(0,0,0,.15);
-    padding:12px 14px;
-    font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  ">
-    <div id="rt-banner-text" style="font-weight:600; color:#012d1f; margin-bottom:6px;">Conectado com sucesso</div>
-    <div id="rt-banner-sub" style="font-size:13px; opacity:.85; margin-bottom:8px;">Instância conectada.</div>
-    <div style="display:flex; gap:8px; align-items:center;">
-      <button id="rt-banner-close" style="
-        background:#065f46; color:#ecfdf5; border:0; padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:600;">
-        Fechar
-      </button>
-      <button id="rt-banner-go" style="
-        background:#34d399; color:#064e3b; border:0; padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:600;">
-        Ir para envio
-      </button>
+  <div id="rt-banner" class="rt-banner is-hidden">
+    <div id="rt-banner-text" class="rt-banner-text">Conectado com sucesso</div>
+    <div id="rt-banner-sub" class="rt-banner-sub">Instância conectada.</div>
+    <div class="rt-banner-actions">
+      <button id="rt-banner-close" class="rt-banner-close">Fechar</button>
+      <button id="rt-banner-go" class="rt-banner-go">Ir para envio</button>
     </div>
   </div>
 
   <!-- Socket.IO client para eventos de conexão da instância -->
   <script src="/socket.io/socket.io.js"></script>
+  <!--
   <script>
     (function initRealtimeBanner(){
       const el = (id) => document.getElementById(id);
@@ -1126,7 +999,9 @@
       })();
     })();
   </script>
+  -->
 
+  <!--
   <script>
     // Pré-preenche o campo "Nome da Instância" com o username do usuário logado
     (async function prefillInstanceNameFromUser(){
@@ -1143,5 +1018,6 @@
       } catch (_) {}
     })();
   </script>
+  -->
 </body>
 </html>

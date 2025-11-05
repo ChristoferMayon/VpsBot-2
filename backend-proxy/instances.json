@@ -24,20 +24,20 @@
     {
       "user_id": 3,
       "instance_name": "admin",
-      "instance_token": "68ba104d-8992-4ca3-b156-e86d0bf5216e",
+      "instance_token": "f83396e5-331b-41ce-9979-8fe015018c1b",
       "provider": "uazapi",
       "connected": true,
       "status": {
         "connected": true,
-        "loggedIn": false,
+        "loggedIn": true,
         "paircode": null,
-        "qrcode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAAEtklEQVR42uyZMY7DqtfFL6Kgy92AZbaRIhJbSukOOpfeEpILbwOUDZCOAnE+XSczeq+ehOL7P4qRYv2kQXA59xyg/8b/1lAAwh02uUjULYCNOzmsBUAcBCTSgaDajYguKrrgL0S0mJJIjwIy9kAlt5sJ1FUjuqs+ueBLxv5BwDPQHIhUM8GXWSYxGmDGA9G/lp+5k15BA4Ekv5Af0dTCSR/hroBmKv1js74NAFg3nqfbdSnPvB/rdpmn27L8s2j/BpzjjtmienomXf32RCJa/nX+vguodHNrYPtoLvA54wA82rLwPA7AHhcpxpsDXyyqzE42gW1+1cPfga73yqwSXU1R2BG8ShbrSrbrYQDRwsUiXonKrONrkospNt1oEJCbw1bS5KJhkSC/IWPHysivoh0C3IhB5KIvRO5AIaKbX4v9IOAQSiJylWm+ucoqP6KvmH/E/OsAncvPaXLVg2a6+q3YptcKm151PwRAILZo5IHuog+FJl2Xkl8L9XdA9mK5v5paucxEZiPVdPVMsxsGRFcZ83SjhdAdAj1PmpH0IECmYgLUA9VAdTJr6TS5agryS+y/D6gcdb2DJnIgTkSmAI+4+ELqUwDQPE5PZAqpPfrSVdJSIsnFYQBQxLZcDV9IA0GUFoFni0EA2UbEBQ+g8sXux4qupKnRPJ9K+wGA9F4Js92jB3J0CN1iR2V0GgXMuvlCSUcH+ebCHbm5QGUmF8cACk28IeS04SJqv3Uln4rMewxAFtGAVdJYSSSf+EIWK0ru7lPADgTKyUVDAKoPRJNGBfI+CBAfZQpI46j8FGFjzk3UXr39w/cBmvW+FnQrgst5j37r0lH970L9HZC9CJwfUnKcNKp/5geqL+qttN8HVN6BrXS9H1Xk5li3rhItC/Bj1b4PYG/Eslx1edvFopoOpiRJpx8BJGdtlBtdPZ7yb+/FJg1wfov5AACIPnDXzYDJ7tGEQlp6zPyb9b4NkI1uLYUkiJV+/kVuWpT2nQUHAOKRS7HNHZX7/PYP4mF+mtrfATlznon0UbnY/UC52EfzlXL+neS3gVlHX1hJtJc2dl0kiDXZHrqNAhR2Wfem41JURvR4drHN/L5e+AjQlrvoDBlxK3FhUoi0MF5lPwBQ6WxkaZKQQLNYUU6npegWowBJB0wWTdIB3cgU1aebDyzecRSAPfiStNSDQiOzXWxydaHflPRX4MzxzKdyM0tzuV9oIjI/cxgAKInxYtV2UZgzELDUJOH30uz7QG603JnknPGz62MtfN6vlHn+ECCZt3p0K0a4KxxAn8/M22c3CiDdzup3R6BncgdKUckhFHo11hGAAiqVPt2uBs/cyATZhWBKn38k6NvAaRc3tolMKJybQeFkm1nxc6v2AaBpgBJpBFG5A5vq0/njfTa/D8iQdND0sYpdjAurNNEirtgNAs5XGIYsiiHk/VjLM6fzqudjgFi1gD7RuQu6msBJNx+Kyvso4Hx9oK5xgE/ftnX7iOKK8bKsY4A1QEyToUJ09QH5vOKY1UggiNrTdeGigHWTBuBB/1qoPwHnm5qoiUF5ZtSFLyJ8hlUnGgScrzBkH6jmBHy4zOeF6TsMDgD+G/9/xv8FAAD//8JmHy1IxBe/AAAAAElFTkSuQmCC",
+        "qrcode": null,
         "deviceName": null,
         "phoneNumber": null,
         "connectedAt": null
       },
       "created_at": "2025-10-30T00:51:57.634Z",
-      "updated_at": "2025-11-04T06:12:15.027Z",
+      "updated_at": "2025-11-05T00:04:53.459Z",
       "meta": {
         "created_raw_keys": [
           "connected",
@@ -102,6 +102,25 @@
       "status": null,
       "created_at": "2025-11-01T04:53:38.774Z",
       "updated_at": "2025-11-01T04:53:43.264Z",
+      "meta": null
+    },
+    {
+      "user_id": 16,
+      "instance_name": "rhz",
+      "instance_token": "cab00daa-db09-424b-a285-83ec693672a0",
+      "provider": "uazapi",
+      "connected": true,
+      "status": {
+        "connected": true,
+        "loggedIn": false,
+        "paircode": null,
+        "qrcode": null,
+        "deviceName": null,
+        "phoneNumber": null,
+        "connectedAt": null
+      },
+      "created_at": "2025-11-04T20:44:39.865Z",
+      "updated_at": "2025-11-05T00:06:36.132Z",
       "meta": null
     }
   ]

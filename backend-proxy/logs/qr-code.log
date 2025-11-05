@@ -870,3 +870,7 @@
 [2025-10-30T16:59:04.734Z] RAW {"keys":["connected_instances","info","status"]}
 [2025-10-30T16:59:46.354Z] REQUEST {"provider":"uazapi","force":true,"instance":"rhz"}
 [2025-10-30T16:59:52.324Z] RAW {"keys":["connected_instances","info","status"]}
+[2025-11-04T20:56:19.678Z] REQUEST {"provider":"uazapi","force":true,"instance":"rhz"}
+[2025-11-04T20:56:53.066Z] RAW {"keys":["connected_instances","info","status"]}
+[2025-11-04T20:57:42.194Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-04T20:58:09.174Z] RAW {"keys":["connected_instances","info","status"]}
