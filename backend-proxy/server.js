@@ -80,7 +80,7 @@ if (USE_HTTPS) {
 }
 
 
-const PORT = process.env.PORT || 3000;
+
 
 // HTTPS opcional (se certificados existirem)
 let server;
@@ -213,7 +213,7 @@ try {
 } catch (e) {
   console.warn('[Socket.IO] não inicializado:', e?.message || String(e));
 }
-const port = process.env.PORT || 3000;
+
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 const JWT_SECRET = process.env.JWT_SECRET || 'change_me_dev_secret';
