@@ -1,0 +1,11 @@
+{
+  "name": "painel-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node backend-proxy/server.js",
+    "install": "npm install --prefix backend-proxy"
+  },
+  "engines": {
+    "node": "18"
+  }
+}

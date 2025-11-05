@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel de QR Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    /* Paleta branca para alta legibilidade, igual ao index */
+    body, body * { color: #ffffff !important; }
+    h1, h2, h3, h4, .font-semibold { color: #ffffff !important; }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.6) !important; }
+    a { color: #ffffff !important; }
+
+    /* SweetAlert customizado com fundo verde (igual ao index.html) */
+    .swal2-container .swal-red-custom.swal2-popup,
+    .swal-red-custom .swal2-popup,
+    .swal2-popup.swal-red-custom {
+      background-color: #16a34a !important; /* Fundo verde forte */
+      background: #16a34a !important;
+      border: 2px solid #dc2626 !important; /* Borda vermelha */
+      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3) !important;
+    }
+    .swal-red-custom .swal2-title,
+    .swal2-popup.swal-red-custom .swal2-title {
+      color: #ffffff !important; /* Título branco */
+      font-weight: bold !important;
+    }
+    .swal-red-custom .swal2-content,
+    .swal2-popup.swal-red-custom .swal2-content {
+      color: #ffffff !important; /* Texto branco */
+    }
+    .swal-red-custom .swal2-confirm,
+    .swal2-popup.swal-red-custom .swal2-confirm {
+      background-color: #dc2626 !important; /* Botão vermelho */
+      border: none !important;
+      color: #ffffff !important;
+      font-weight: bold !important;
+    }
+    .swal-red-custom .swal2-confirm:hover,
+    .swal2-popup.swal-red-custom .swal2-confirm:hover {
+      background-color: #b91c1c !important; /* Hover mais escuro */
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6" style="background:#000 url('/image/OIG3.jpg') center / cover no-repeat fixed;">
+  <div class="bg-white/10 backdrop-blur-xl p-8 rounded-xl shadow-xl w-full max-w-3xl transition-transform duration-300 hover:scale-[1.01] border border-white/20">
+    <div class="flex justify-center items-center mb-6">
+      <img src="https://raw.githubusercontent.com/ChristoferMayon/images/2e372f3644d8e31ebcf4af2d1a2b7c70af0ae478/WhatsApp%20Image%202025-06-27%20at%2021.56.04.jpeg" 
+           alt="Logo Unlock iPhone" 
+           class="h-16 w-auto object-contain rounded-xl drop-shadow">
+    </div>
+    <nav class="flex items-center gap-1 sm:gap-2 mb-6 overflow-x-auto flex-nowrap w-full" id="main-tabs">
+      <button data-tab="carousel" class="tab-btn shrink-0 px-1 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-[10px] sm:text-xs md:text-sm leading-[1] whitespace-nowrap tracking-tight rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white/90">Voltar Whatsapp Sender</button>
+    </nav>
+    <p class="text-center text-white/70 mb-6">Primeiro clique em CRIAR INSTÂCIA, Aguarde gerar instancia, apos apareçer instancia, clique em CONECTAR INSTÂNCIA, aguarde gerar QR code, e conecte... e volte para o WhatsappSender...</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-200 mb-1">Número (opcional)</label>
+        <input id="phone" placeholder="5531999999999" class="w-full px-4 py-2 border border-white/20 rounded-xl bg-white/5 text-white focus:ring-sky-400 focus:border-sky-400 transition shadow-sm" />
+      </div>
+    </div>
+
+    <section id="instance-create-panel" class="mt-2 border border-white/15 rounded-xl p-3 bg-white/5">
+      <h3 class="text-lg font-semibold mb-2 text-white/90">Criar Instância (UAZAPI)</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-start">
+        <input id="instanceNameInput" placeholder="nome-da-instancia" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50" />
+        <button id="btnCreateInstance" class="px-4 py-2 bg-sky-600 text-white rounded-xl shadow hover:bg-sky-700">Criar Instância</button>
+        <div class="hidden sm:block"></div>
+        <input id="createdName" placeholder="Instância" readonly class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-xl text-white" />
+        <div class="flex gap-2">
+          <input id="createdToken" placeholder="Token" readonly class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-xl text-white" />
+          <button id="btnCopyToken" class="px-3 py-2 bg-zinc-700 text-white rounded-xl hover:bg-zinc-600">Copiar</button>
+        </div>
+        <div class="hidden sm:block"></div>
+        <button id="btnInstanceQr" class="px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700">Conectar Instância</button>
+        <button id="btnInstancePaircode" class="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700">Conectar p/ Pareamento</button>
+        <div class="text-white/70 text-sm">Use o campo "Número" acima para pareamento (E.164).</div>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+      <button id="btnGenerateQr" class="w-full py-2 bg-emerald-600 text-white font-semibold rounded-xl shadow hover:bg-emerald-700 transition">Gerar QR Code</button>
+      <button id="btnDisconnect" class="w-full py-2 bg-rose-600 text-white font-semibold rounded-xl shadow hover:bg-rose-700 transition">Desconectar</button>
+    </div>
+
+    <div class="mt-2 hidden">
+      <label class="flex items-center gap-2 text-slate-200"><input type="checkbox" id="force" /> Forçar novo QR</label>
+    </div>
+
+    <div id="qr-status" class="mt-4 p-3 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm"></div>
+    <div class="mt-3">
+      <button id="btnGoSend" class="px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700" style="display:none;">Ir para envio de mensagens</button>
+    </div>
+
+    <div class="mt-4">
+      <h3 class="text-xl font-semibold mb-2">QR Code</h3>
+      <div class="flex flex-col items-center justify-center min-h-[240px] border border-white/20 bg-white/10 text-slate-200 rounded-xl shadow-inner p-4">
+        <img id="qr-image" alt="QR Code" class="max-w-full h-auto" style="display:none;" />
+        <div id="qr-placeholder" class="text-sm text-white/60">QR Code não gerado ainda.</div>
+      </div>
+    </div>
+
+    <div class="mt-6" id="paircode-section" style="display:none;">
+      <h3 class="text-xl font-semibold mb-2">Paircode</h3>
+      <div class="flex gap-2 items-center">
+        <input id="paircodeDisplay" type="text" readonly class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-xl text-white" />
+        <button id="btnCopyPaircode" class="px-3 py-2 bg-zinc-700 text-white rounded-xl hover:bg-zinc-600">Copiar</button>
+      </div>
+      <p class="text-slate-300 text-sm mt-2">Use o Paircode no WhatsApp: Configurações → Dispositivos conectados → Conectar dispositivo → Entrar com código.</p>
+    </div>
+
+    <div class="mt-6" id="logs-section" hidden>
+      <h3 class="text-xl font-semibold mb-2">Logs</h3>
+      <pre id="logs" class="mt-2 p-4 bg-black/30 rounded-xl border border-white/20 text-slate-200 text-sm whitespace-pre-wrap overflow-x-auto shadow-inner"></pre>
+    </div>
+  </div>
+
+  <script>
+    // SweetAlert2 adicionado para alertas de sucesso
+    const logsEl = document.getElementById('logs');
+    const qrImage = document.getElementById('qr-image');
+    const qrPlaceholder = document.getElementById('qr-placeholder');
+    const pairInput = document.getElementById('paircodeDisplay');
+    const statusEl = document.getElementById('qr-status');
+    const forceEl = document.getElementById('force');
+    const phoneEl = document.getElementById('phone');
+    const instanceNameInput = document.getElementById('instanceNameInput');
+    const createdNameEl = document.getElementById('createdName');
+    const createdTokenEl = document.getElementById('createdToken');
+    let qrRendered = false;
+    let qrVisible = false;
+    let redirectOnConnect = false;
+    let waitForQrGoneTimer = null;
+    let connectedAlertShown = false;
+    let pollTimer = null;
+
+    // SSE: monitor de conexão oficial via backend
+    let sseSource = null;
+    let sseTimer = null;
+    let sseExpectedInstance = '';
+    let sseActive = false;
+    let sseConnected = false;
+    // Socket.IO: fluxo oficial via webhook
+    let socket = null;
+    let socketReady = false;
+    let webhookConnected = false;
+    let currentUserId = null;
+
+    // Fechar SSE ao sair/navegar, evitando net::ERR_ABORTED por navegação
+    try {
+      window.addEventListener('beforeunload', () => { try { stopInstanceSse(); } catch (_) {} });
+      window.addEventListener('pagehide', () => { try { stopInstanceSse(); } catch (_) {} });
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') { try { stopInstanceSse(); } catch (_) {} }
+      });
+    } catch (_) {}
+
+    // Helper: verificar se o QR sumiu (não está visível na tela)
+    function isQrGone() {
+      try { return !qrVisible || !qrImage || qrImage.style.display === 'none' || !qrImage.src; } catch (_) { return !qrVisible; }
+    }
+
+    // Pré-preenche o campo de nome de instância com o username do usuário logado
+    (async function prefillInstanceNameFromUser(){
+      try {
+        if (!instanceNameInput || (instanceNameInput.value && instanceNameInput.value.trim())) return;
+        const token = (localStorage.getItem('authToken') || '').trim();
+        if (!token) return;
+        const r = await fetch('/me', { headers: { 'Authorization': 'Bearer ' + token } });
+        const j = await r.json().catch(() => ({}));
+        const username = (j && j.user && j.user.username) ? String(j.user.username).trim() : '';
+        if (username) instanceNameInput.value = username;
+      } catch (_) {}
+    })();
+
+    // Helper: alerta de sucesso e redirecionamento para envio (sem esperar webhook)
+    function handleAuthSuccessRedirect() {
+      if (connectedAlertShown) return;
+      const userInitiated = (() => {
+        try { return redirectOnConnect || (localStorage.getItem('redirectOnConnect') === '1'); } catch (_) { return redirectOnConnect; }
+      })();
+      if (!userInitiated) return;
+      // Só redirecionar após o QR desaparecer
+      if (!isQrGone()) {
+        try { statusEl.textContent = '✅ Conectado. Aguarde o QR desaparecer...'; } catch (_) {}
+        if (waitForQrGoneTimer) clearTimeout(waitForQrGoneTimer);
+        waitForQrGoneTimer = setTimeout(handleAuthSuccessRedirect, 800);
+        return;
+      }
+      connectedAlertShown = true;
+      try { stopInstanceSse(); } catch (_) {}
+      try { localStorage.setItem('justAuthenticated', '1'); } catch (_) {}
+      const go = () => { window.location.href = '/index.html?tab=carousel'; };
+      if (window.Swal && typeof Swal.fire === 'function') {
+        Swal.fire({
+          icon: 'success',
+          title: 'Conectado ao WhatsApp',
+          text: 'Conectado ao WhatsApp. Redirecionando...',
+          timer: 1200,
+          showConfirmButton: false,
+          customClass: { popup: 'swal-red-custom' }
+        }).then(go);
+      } else {
+        try { alert('WhatsApp autenticado com sucesso.'); } catch (_) {}
+        go();
+      }
+    }
+
+    function stopInstanceSse() {
+      try { if (sseSource) sseSource.close(); } catch (_) {}
+      sseSource = null;
+      if (sseTimer) { clearTimeout(sseTimer); sseTimer = null; }
+      if (waitForQrGoneTimer) { clearTimeout(waitForQrGoneTimer); waitForQrGoneTimer = null; }
+      sseExpectedInstance = '';
+      sseActive = false;
+      sseConnected = false;
+    }
+
+    async function showConnectionSuccessWithDetails(instName) {
+      if (connectedAlertShown) return;
+      const userInitiated = (() => {
+        try { return redirectOnConnect || (localStorage.getItem('redirectOnConnect') === '1'); } catch (_) { return redirectOnConnect; }
+      })();
+      if (!userInitiated) { try { statusEl.textContent = '✅ WhatsApp conectado.'; } catch (_) {} return; }
+      if (!isQrGone()) {
+        try { statusEl.textContent = '✅ Conectado. Aguarde o QR desaparecer...'; } catch (_) {}
+        if (waitForQrGoneTimer) clearTimeout(waitForQrGoneTimer);
+        waitForQrGoneTimer = setTimeout(() => showConnectionSuccessWithDetails(instName), 800);
+        return;
+      }
+      webhookConnected = true;
+      let detailsText = '';
+      try {
+        const authToken = (localStorage.getItem('authToken') || '').trim();
+        if (authToken) {
+          const st = await fetch('/user/instance-status', { headers: { 'Authorization': 'Bearer ' + authToken } });
+          const stData = await st.json().catch(() => ({}));
+          const dName = stData?.deviceName || stData?.status?.deviceName || '';
+          const phone = stData?.phoneNumber || stData?.status?.phoneNumber || '';
+          const parts = [];
+          if (instName) parts.push(`Instância: ${instName}`);
+          if (dName) parts.push(`Dispositivo: ${dName}`);
+          if (phone) parts.push(`Número: ${phone}`);
+          detailsText = parts.join(' • ');
+        }
+      } catch (_) {}
+      if (window.Swal && typeof Swal.fire === 'function') {
+        connectedAlertShown = true;
+        Swal.fire({
+          icon: 'success',
+          title: 'Conectado ao WhatsApp',
+          text: detailsText || 'Conectado ao WhatsApp. Redirecionando...',
+          timer: 1200,
+          showConfirmButton: false,
+          customClass: { popup: 'swal-red-custom' },
+          willClose: () => { window.location.href = '/index.html?tab=carousel'; }
+        });
+      } else {
+        connectedAlertShown = true;
+        try { alert(detailsText || 'Conectado com sucesso.'); } catch (_) {}
+        window.location.href = '/index.html?tab=carousel';
+      }
+    }
+
+    function startInstanceSse({ instance, token, mode = 'named', timeoutMs = 120000 }) {
+      try { stopInstanceSse(); } catch (_) {}
+      if (!instance) return;
+      sseExpectedInstance = instance;
+      const qs = new URLSearchParams({ instance });
+      if (token) qs.set('token', token);
+      const url = `/qr-events?${qs.toString()}`;
+      try {
+        sseSource = new EventSource(url);
+        sseActive = true;
+        sseConnected = false;
+        sseSource.addEventListener('open', () => { log('SSE aberto', { instance }); });
+        sseSource.addEventListener('status', (ev) => {
+          try {
+            const data = JSON.parse(ev.data || '{}');
+            if (!data || (data.instance && data.instance !== sseExpectedInstance)) return;
+            try { renderQrFromPayload({ status: { qrcode: data.qrcode, paircode: data.paircode } }); } catch (_) {}
+            const connected = Boolean(data.connected || ['connected', 'ready'].includes(String(data.state || '').toLowerCase()));
+            if (connected) {
+              sseConnected = true;
+            }
+          } catch (_) {}
+        });
+        // Conexão via SSE não dispara sucesso/redirect; aguardamos webhook -> Socket.IO
+        sseSource.addEventListener('connected', async (ev) => {
+          try {
+            const data = JSON.parse(ev.data || '{}');
+            if (!data || (data.instance && data.instance !== sseExpectedInstance)) return;
+            sseConnected = true;
+            log('SSE sinalizou conectado, aguardando webhook em tempo real...');
+          } catch (_) {
+            // Fallback silencioso
+          }
+        });
+        sseSource.addEventListener('error', (ev) => {
+          log('SSE erro', ev?.message || String(ev));
+        });
+        sseTimer = setTimeout(() => {
+          if (sseConnected) return;
+          stopInstanceSse();
+          if (window.Swal && typeof Swal.fire === 'function') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Conexão não confirmada',
+              text: 'Tempo esgotado aguardando confirmação da Uazapi. Deseja gerar um novo QR? ',
+              showCancelButton: true,
+              confirmButtonText: 'Gerar novo QR',
+              cancelButtonText: 'Fechar'
+            }).then((r) => {
+              if (r.isConfirmed) {
+                if (mode === 'user') return generateUserQr();
+                if (mode === 'named') return generateQrForInstance();
+              }
+            });
+          } else {
+            try { alert('Tempo esgotado aguardando conexão.'); } catch (_) {}
+          }
+        }, timeoutMs);
+      } catch (e) {
+        log('Falha ao iniciar SSE', e?.message || String(e));
+      }
+    }
+
+    // Removido: ensureInstanceAndStart (fluxo autenticado cuida disso nos endpoints /user/*)
+
+    function log(title, data) {
+      const ts = new Date().toISOString();
+      const pretty = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+      logsEl.textContent = `[${ts}] ${title}\n${pretty}\n\n` + logsEl.textContent;
+    }
+
+    // Inicialização: cria botão de seguir e vincula eventos aos botões existentes
+    document.addEventListener('DOMContentLoaded', () => {
+      try { localStorage.removeItem('redirectOnConnect'); } catch (_) {}
+      // Botão para seguir após conexão
+      if (!document.getElementById('btnGoSend')) {
+        const btn = document.createElement('button');
+        btn.id = 'btnGoSend';
+        btn.textContent = 'Ir para envio de mensagens';
+        btn.style.display = 'none';
+        btn.style.marginTop = '8px';
+        btn.addEventListener('click', () => { try { stopInstanceSse(); } catch (_) {} window.location.href = '/index.html'; });
+        if (statusEl && statusEl.parentElement) {
+          statusEl.parentElement.appendChild(btn);
+        } else if (qrEl && qrEl.parentElement) {
+          qrEl.parentElement.appendChild(btn);
+        } else {
+          document.body.appendChild(btn);
+        }
+      }
+
+      const bindClick = (sel, fn) => { const el = document.querySelector(sel); if (el) el.addEventListener('click', fn); };
+      // Gerar QR Code
+      bindClick('#btnGenerateUserQr', generateUserQr);
+      bindClick('#generateUserQr', generateUserQr);
+      bindClick('#btnGenerateQr', generateUserQr);
+      bindClick('#btnGetQr', generateUserQr);
+      // Desconectar
+      bindClick('#btnDisconnect', disconnectUserInstance);
+      // Criar/usar instância pelo provedor (fluxo estilo UAZAPI)
+      bindClick('#btnCreateInstance', createNamedInstance);
+      bindClick('#btnInstanceQr', connectInstanceNamed);
+      bindClick('#btnInstancePaircode', generatePaircodeForInstance);
+      bindClick('#btnCopyToken', copyTokenToClipboard);
+      // Removido: Forçar novo QR (botões ocultos e função removida)
+      // Copiar paircode
+      const copyFn = () => {
+        const txt = (paircodeEl?.textContent || '').trim();
+        if (!txt) { log('Copiar', 'Paircode vazio'); return; }
+        navigator.clipboard.writeText(txt).then(() => log('Copiar', 'Paircode copiado!'))
+          .catch((e) => log('Erro ao copiar', e?.message || String(e)));
+      };
+      bindClick('#btnCopyPaircode', copyFn);
+      bindClick('#copyPaircode', copyFn);
+      bindClick('#btnCopy', copyFn);
+    });
+
+    // Polling autenticado do status da instância UAZAPI
+    function startPollingStatusAuth() {
+      if (typeof stopPollingStatus === 'function') stopPollingStatus();
+      window.pollTimer = setInterval(async () => {
+        try {
+          const authToken = (localStorage.getItem('authToken') || '').trim();
+          const stResp = await fetch('/user/instance-status', {
+            method: 'GET',
+            headers: { ...(authToken ? { 'Authorization': 'Bearer ' + authToken } : {}) }
+          });
+          const stData = await asJson(stResp);
+          log(`GET /user/instance-status (${stResp.status})`, stData);
+          const connected = !!(stData?.connected || stData?.ready || stData?.loggedIn || stData?.isConnected);
+          if (connected) {
+            statusEl.textContent = '✅ WhatsApp conectado com sucesso';
+            const goBtn = document.getElementById('btnGoSend');
+            if (goBtn) { goBtn.style.display = ''; }
+            if (typeof stopPollingStatus === 'function') stopPollingStatus();
+          if (!connectedAlertShown) handleAuthSuccessRedirect();
+          }
+        } catch (e) {
+          log('Polling status erro', e?.message || String(e));
+        }
+      }, 2000);
+    }
+
+    // Removidas definições duplicadas de generateUserQr/forceUserQr (unificadas mais abaixo)
+
+    // Fluxo autenticado: desconectar instância do usuário
+    async function disconnectUserInstance() {
+      try {
+        const authToken = (localStorage.getItem('authToken') || '').trim();
+        if (!authToken) { statusEl.textContent = 'Faça login para desconectar.'; return; }
+        statusEl.textContent = 'Desconectando instância...';
+
+        // Descobre o nome da instância do usuário via endpoint autenticado
+        let instanceName = '';
+        try {
+          const stResp = await fetch('/user/instance-status', { headers: { 'Authorization': 'Bearer ' + authToken } });
+          const stData = await stResp.json().catch(() => ({}));
+          instanceName = stData?.instance_name || stData?.instanceName || stData?.instance || '';
+        } catch (_) {}
+        if (!instanceName) { statusEl.textContent = 'Não foi possível identificar a instância do usuário.'; return; }
+
+        const resp = await fetch('/disconnect-instance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ instance: instanceName })
+        });
+        const data = await asJson(resp);
+        log(`POST /disconnect-instance (${resp.status})`, data);
+        if (resp.ok && data && data.success) {
+          statusEl.textContent = '🔌 Instância desconectada com sucesso.';
+          // Limpa QR e Paircode
+          try {
+            if (qrImage) { qrImage.src = ''; qrImage.style.display = 'none'; }
+            if (qrPlaceholder) qrPlaceholder.style.display = '';
+            if (pairInput) pairInput.value = '';
+          } catch (_) {}
+        } else {
+          statusEl.textContent = 'Falha ao desconectar. Verifique logs.';
+        }
+      } catch (e) {
+        log('Erro ao desconectar', e?.message || String(e));
+        statusEl.textContent = '❌ Erro ao desconectar instância.';
+      }
+    }
+
+    // Removido: SSE não autenticado. Usaremos polling autenticado de status.
+
+    function asJson(resp) {
+      const ct = resp.headers.get('content-type') || '';
+      if (ct.includes('application/json')) return resp.json();
+      return resp.text().then(t => ({ raw: t }));
+    }
+
+    // Helper: vincula uma instância ao usuário autenticado (se houver authToken)
+    async function bindInstanceToUser(name, token) {
+      try {
+        const authToken = (localStorage.getItem('authToken') || '').trim();
+        if (!authToken || !name) return; // sem login ou sem nome, não faz nada
+        const payload = token ? { instance: name, token } : { instance: name };
+        const resp = await fetch('/user/bind-instance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+          body: JSON.stringify(payload)
+        });
+        const data = await asJson(resp);
+        log(`POST /user/bind-instance (${resp.status})`, data);
+      } catch (e) {
+        log('Erro em bindInstanceToUser', e?.message || String(e));
+      }
+    }
+
+    // Removido: conexão direta por instância/token. Agora usamos /user/connect-instance.
+
+    // Removido: função não utilizada que iniciava SSE após conectar
+
+    // Removido: getStatus não autenticado (substituído por /user/instance-status no polling autenticado)
+
+    function startPollingStatus() {
+      stopPollingStatus();
+      pollTimer = setInterval(() => { getStatus().catch(() => {}); }, 2000);
+    }
+    function stopPollingStatus() {
+      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    }
+
+    // Removido: connectInstanceOnly (fluxo descontinuado)
+
+    async function getQr() {
+      const instance = instanceEl.value.trim();
+      const token = tokenEl.value.trim();
+      const force = !!forceEl.checked;
+      let url = '/get-qr-code';
+      const params = new URLSearchParams();
+      if (instance) params.set('instance', instance);
+      if (token) params.set('token', token);
+      if (force) params.set('force', 'true');
+      const qs = params.toString();
+      if (qs) url += `?${qs}`;
+      const resp = await fetch(url);
+      const data = await asJson(resp);
+      log(`GET /get-qr-code (${resp.status})`, data);
+      renderQrFromPayload(data);
+      // Não redirecionar nem marcar sucesso aqui; polling autenticado cobre confirmação
+    }
+
+    // Flag para evitar cliques duplos disparando múltiplas criações
+    let generationInProgress = false;
+
+    // Novo: fluxo autenticado para gerar QR por usuário, sob clique
+    async function generateUserQr() {
+      try { redirectOnConnect = true; localStorage.setItem('redirectOnConnect','1'); } catch (_) { redirectOnConnect = true; }
+      try {
+        if (generationInProgress) { return; }
+        generationInProgress = true;
+        const authToken = (localStorage.getItem('authToken') || '').trim();
+        if (!authToken) {
+          statusEl.textContent = 'Faça login para gerar o QR do seu usuário.';
+          log('AUTH', 'Sem authToken no navegador.');
+          return;
+        }
+
+        // Passo 1: garantir que o usuário possua uma instância vinculada
+        let expectedInstanceName = '';
+        try {
+          const ensureResp = await fetch('/user/ensure-instance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+            body: JSON.stringify({})
+          });
+          const ensureData = await asJson(ensureResp);
+          log(`POST /user/ensure-instance (${ensureResp.status})`, ensureData);
+          try {
+            const ensuredName = ensureData?.instance_name || ensureData?.instance || ensureData?.name || '';
+            if (ensuredName) expectedInstanceName = ensuredName;
+            if (ensuredName) {
+              const bindResp0 = await fetch('/user/bind-instance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+                body: JSON.stringify({ instance: ensuredName })
+              });
+              const bindData0 = await asJson(bindResp0);
+              log(`EARLY POST /user/bind-instance (${bindResp0.status})`, bindData0);
+            }
+          } catch (_) {}
+        } catch (e) { log('Erro ensure-instance', e?.message || String(e)); }
+
+        // Passo 2: iniciar conexão (pode criar instância se necessário)
+        const phone = (phoneEl.value || '').trim();
+        const connResp = await fetch('/user/connect-instance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+          body: JSON.stringify({ phone: phone ? phone.replace(/\D/g, '') : undefined })
+        });
+        const connData = await asJson(connResp);
+        log(`POST /user/connect-instance (${connResp.status})`, connData);
+
+        // Se o backend retornou o nome da instância, garantir vínculo explícito
+        try {
+          const nameFromConn = connData?.instance || connData?.name || '';
+          if (nameFromConn) expectedInstanceName = nameFromConn;
+          if (nameFromConn) {
+            const bindResp = await fetch('/user/bind-instance', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+              body: JSON.stringify({ instance: nameFromConn })
+            });
+            const bindData = await asJson(bindResp);
+            log(`POST /user/bind-instance (${bindResp.status})`, bindData);
+          }
+        } catch (e) { log('Erro bind-instance', e?.message || String(e)); }
+
+        // Renderiza QR/Paircode caso venha no retorno de conexão
+        renderQrFromPayload(connData);
+        try { renderInstanceInfo(connData); } catch (_) {}
+
+        // Passo 3: forçar um novo QR autenticado para garantir visibilidade
+        const qrUrl = new URL('/user/get-qr-code', window.location.origin);
+        qrUrl.searchParams.set('force', 'true');
+        const qrResp = await fetch(qrUrl.toString(), { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+        const qrData = await asJson(qrResp);
+        log(`GET /user/get-qr-code (${qrResp.status})`, qrData);
+        renderQrFromPayload(qrData);
+        try { renderInstanceInfo(qrData); } catch (_) {}
+
+        statusEl.textContent = '📲 Escaneie o QR no WhatsApp para conectar';
+
+        // Inicia SSE oficial para aguardar o evento de sucesso do backend
+        if (!expectedInstanceName) {
+          try {
+            const st0 = await fetch('/user/instance-status', { headers: { 'Authorization': 'Bearer ' + authToken } });
+            const st0Data = await asJson(st0);
+            expectedInstanceName = st0Data?.instance_name || st0Data?.instance || '';
+          } catch (_) {}
+        }
+        if (expectedInstanceName) {
+          startInstanceSse({ instance: expectedInstanceName, mode: 'user' });
+        }
+
+        // Passo 4: Polling de status autenticado (com auto-reparo de vínculo 400)
+        let tries = 0;
+        const poll = setInterval(async () => {
+          tries++;
+          try {
+            const stResp = await fetch('/user/instance-status', { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+            const stData = await asJson(stResp);
+            log(`GET /user/instance-status (${stResp.status})`, stData);
+            if (stResp.status === 400 && (stData?.error || '').toLowerCase().includes('vinculada')) {
+              // Tenta auto-vincular e segue o loop
+              try {
+                const ensureResp2 = await fetch('/user/ensure-instance', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken }, body: JSON.stringify({}) });
+                const ensureData2 = await asJson(ensureResp2);
+                log(`AUTO POST /user/ensure-instance (${ensureResp2.status})`, ensureData2);
+              } catch (_) {}
+            } else {
+              try { renderQrFromPayload(stData); } catch (_) {}
+              try { renderInstanceInfo(stData); } catch (_) {}
+              const connected = !!(stData?.connected || stData?.ready || stData?.loggedIn || stData?.status?.connected || stData?.status === 'connected');
+              if (stResp.ok && connected) {
+                clearInterval(poll);
+                statusEl.textContent = '✅ WhatsApp conectado. Você pode enviar mensagens.';
+                const goBtn = document.getElementById('btnGoSend');
+                if (goBtn) {
+                  goBtn.style.display = '';
+                  goBtn.onclick = () => { window.location.href = '/index.html'; };
+                }
+      if (!connectedAlertShown) handleAuthSuccessRedirect();
+              }
+            }
+          } catch (_) {}
+          if (tries > 30) clearInterval(poll);
+        }, 2000);
+      } catch (e) {
+        log('Erro em generateUserQr', e?.message || String(e));
+        statusEl.textContent = '❌ Falha ao gerar QR. Tente novamente.';
+      } finally {
+        generationInProgress = false;
+      }
+    }
+
+    async function createInstance() {
+      const instance = instanceEl.value.trim();
+      if (!instance) { log('ERRO', 'Informe o nome da instância para criar'); return; }
+      const payload = { instance };
+      // Campos extras opcionais (pode ajustar conforme necessidade do seu UAZAPI)
+      // Ex.: payload.systemName = 'unlockcenterbot'
+      const resp = await fetch('/create-instance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await asJson(resp);
+      log(`POST /create-instance (${resp.status})`, data);
+      // Tenta extrair token retornado
+      const tokenCandidates = [
+        data?.raw?.token,
+        data?.raw?.instance?.token,
+        data?.raw?.data?.token,
+        data?.raw?.result?.token
+      ].filter((v) => typeof v === 'string' && v.trim());
+      if (tokenCandidates.length) {
+        const t = tokenCandidates[0];
+        tokenEl.value = t;
+        log('TOKEN atribuído', { token: t });
+      }
+      // Não gerar QR automaticamente; o usuário controla quando solicitar o QR
+      statusEl.textContent = 'Instância criada. Clique em "Gerar QR Code" para prosseguir.';
+    }
+
+    // Removido: getQrAndStartSse (não autenticado)
+
+    // --- Nova UI: Fluxos estilo UAZAPI (instância/nome + token) ---
+    async function createNamedInstance() {
+      try {
+        const name = (instanceNameInput?.value || '').trim();
+        if (!name) { statusEl.textContent = 'Informe um nome de instância.'; return; }
+        statusEl.textContent = 'Criando instância...';
+        const resp = await fetch('/create-instance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ instance: name })
+        });
+        const data = await asJson(resp);
+        log(`POST /create-instance (${resp.status})`, data);
+        createdNameEl && (createdNameEl.value = name);
+        // Extrai token do payload bruto retornado pelo provider
+        const tokenCandidates = [
+          data?.raw?.token,
+          data?.raw?.instance?.token,
+          data?.raw?.data?.token,
+          data?.raw?.result?.token,
+          data?.token
+        ].filter(v => typeof v === 'string' && v.trim());
+        if (tokenCandidates.length && createdTokenEl) {
+          createdTokenEl.value = tokenCandidates[0];
+        }
+        // Persistência local e vínculo ao usuário autenticado
+        try {
+          localStorage.setItem('selectedInstanceName', name);
+          if (createdTokenEl?.value) localStorage.setItem('selectedInstanceToken', createdTokenEl.value.trim());
+        } catch (_) {}
+        try { await bindInstanceToUser(name, createdTokenEl?.value?.trim() || ''); } catch (_) {}
+        // Renderiza QR se a criação já retornou dados de QR/URL
+        try { renderQrFromPayload(data); } catch (_) {}
+        statusEl.textContent = 'Instância criada. Você pode gerar QR ou Paircode.';
+      } catch (e) {
+        log('Erro em createNamedInstance', e?.message || String(e));
+        statusEl.textContent = '❌ Falha ao criar instância.';
+      }
+    }
+
+    async function generateQrForInstance() {
+      try {
+        const name = (createdNameEl?.value || instanceNameInput?.value || '').trim();
+        const token = (createdTokenEl?.value || '').trim();
+        if (!name) { statusEl.textContent = 'Informe/Crie a instância primeiro.'; return; }
+        statusEl.textContent = 'Solicitando QR da instância...';
+        let url = `/get-qr-code?instance=${encodeURIComponent(name)}&force=true`;
+        if (token) url += `&token=${encodeURIComponent(token)}`;
+        const resp = await fetch(url);
+        const data = await asJson(resp);
+        log(`GET /get-qr-code (${resp.status})`, data);
+        renderQrFromPayload(data);
+        statusEl.textContent = '📲 Escaneie o QR no WhatsApp para conectar';
+        // Inicia o SSE para monitorar a confirmação oficial dessa instância
+        startInstanceSse({ instance: name, token, mode: 'named' });
+      } catch (e) {
+        log('Erro em generateQrForInstance', e?.message || String(e));
+        statusEl.textContent = '❌ Falha ao obter QR da instância.';
+      }
+    }
+
+    async function connectInstanceNamed() {
+      try { redirectOnConnect = true; localStorage.setItem('redirectOnConnect','1'); } catch (_) { redirectOnConnect = true; }
+      try {
+        const name = (createdNameEl?.value || instanceNameInput?.value || '').trim();
+        const token = (createdTokenEl?.value || '').trim();
+        const phone = (phoneEl?.value || '').replace(/\D/g, '');
+        if (!name) { statusEl.textContent = 'Informe/Crie a instância primeiro.'; return; }
+        statusEl.textContent = 'Conectando instância...';
+        // Persistência local e tentativa de vínculo ao usuário
+        try {
+          localStorage.setItem('selectedInstanceName', name);
+          if (token) localStorage.setItem('selectedInstanceToken', token);
+        } catch (_) {}
+        try { await bindInstanceToUser(name, token); } catch (_) {}
+        const body = { instance: name };
+        if (token) body.token = token;
+        if (phone) body.phone = phone;
+        const resp = await fetch('/connect-instance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        const data = await asJson(resp);
+        log(`POST /connect-instance (${resp.status})`, data);
+        try { renderQrFromPayload(data); } catch (_) {}
+
+        const pairSection = document.getElementById('paircode-section');
+        if (pairSection) pairSection.style.display = '';
+
+        // Monitorar via SSE esta instância específica até o backend confirmar "connected"
+        startInstanceSse({ instance: name, token, mode: 'named' });
+
+        // Se não veio QR/Pair imediatamente, faz polling curto do status
+        let tries = 0;
+        const poll = setInterval(async () => {
+          tries++;
+          try {
+            const sUrl = `/instance-status?instance=${encodeURIComponent(name)}${token ? `&token=${encodeURIComponent(token)}` : ''}`;
+            const sresp = await fetch(sUrl);
+            const sdata = await asJson(sresp);
+            log(`GET /instance-status (${sresp.status})`, sdata);
+            try { renderQrFromPayload(sdata); } catch (_) {}
+            // Detecta conexão e redireciona automaticamente
+            const connected = !!(sdata?.connected || sdata?.ready || sdata?.loggedIn || sdata?.status?.connected || sdata?.status === 'connected');
+            if (connected) {
+              statusEl.textContent = '✅ WhatsApp conectado.';
+              clearInterval(poll);
+      if (!connectedAlertShown) handleAuthSuccessRedirect();
+              return;
+            }
+            const pairVal = (pairInput?.value || '').trim();
+            if (pairVal) {
+              statusEl.textContent = '✅ Paircode disponível. Finalize no WhatsApp.';
+            }
+            // Se QR já foi exibido, apenas informar e continuar até conectar
+            if (qrImage && qrImage.style.display !== 'none' && qrImage.src) {
+              statusEl.textContent = '📲 QR disponível. Escaneie para conectar.';
+            }
+            if (tries > 60) clearInterval(poll);
+          } catch (_) {
+            if (tries > 60) clearInterval(poll);
+          }
+        }, 2000);
+
+      } catch (e) {
+        log('Erro em connectInstanceNamed', e?.message || String(e));
+        statusEl.textContent = '❌ Falha ao conectar instância.';
+      }
+    }
+
+    async function generatePaircodeForInstance() {
+      try { redirectOnConnect = true; localStorage.setItem('redirectOnConnect','1'); } catch (_) { redirectOnConnect = true; }
+      try {
+        const name = (createdNameEl?.value || instanceNameInput?.value || '').trim();
+        const token = (createdTokenEl?.value || '').trim();
+        const phone = (phoneEl?.value || '').replace(/\D/g, '');
+        if (!name) { statusEl.textContent = 'Informe/Crie a instância primeiro.'; return; }
+        if (!phone) { statusEl.textContent = 'Informe o telefone (E.164) para gerar paircode.'; return; }
+        statusEl.textContent = 'Solicitando pareamento (paircode)...';
+        // Persistência local e tentativa de vínculo ao usuário
+        try {
+          localStorage.setItem('selectedInstanceName', name);
+          if (token) localStorage.setItem('selectedInstanceToken', token);
+        } catch (_) {}
+        try { await bindInstanceToUser(name, token); } catch (_) {}
+        const resp = await fetch('/connect-instance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ instance: name, token, phone })
+        });
+        const data = await asJson(resp);
+        log(`POST /connect-instance (${resp.status})`, data);
+        const pairSection = document.getElementById('paircode-section');
+        if (pairSection) pairSection.style.display = '';
+        // Monitorar via SSE até confirmar conexão da instância pareada
+        startInstanceSse({ instance: name, token, mode: 'named' });
+        // Poll até conectar (mesmo após paircode aparecer)
+        let tries = 0;
+        const poll = setInterval(async () => {
+          tries++;
+          try {
+            const sUrl = `/instance-status?instance=${encodeURIComponent(name)}${token ? `&token=${encodeURIComponent(token)}` : ''}`;
+            const sresp = await fetch(sUrl);
+            const sdata = await asJson(sresp);
+            log(`GET /instance-status (${sresp.status})`, sdata);
+            try { renderQrFromPayload(sdata); } catch (_) {}
+            // Detecta conexão e redireciona automaticamente
+            const connected = !!(sdata?.connected || sdata?.ready || sdata?.loggedIn || sdata?.status?.connected || sdata?.status === 'connected');
+            if (connected) {
+              statusEl.textContent = '✅ WhatsApp conectado.';
+              clearInterval(poll);
+      if (!connectedAlertShown) handleAuthSuccessRedirect();
+              return;
+            }
+            const val = (pairInput?.value || '').trim();
+            if (val) {
+              statusEl.textContent = '✅ Paircode gerado. Conclua no WhatsApp.';
+            }
+            if (tries > 60) clearInterval(poll);
+          } catch (_) {
+            if (tries > 60) clearInterval(poll);
+          }
+        }, 2000);
+      } catch (e) {
+        log('Erro em generatePaircodeForInstance', e?.message || String(e));
+        statusEl.textContent = '❌ Falha ao gerar paircode.';
+      }
+    }
+
+    function copyTokenToClipboard() {
+      try {
+        const val = (createdTokenEl?.value || '').trim();
+        if (!val) { log('Copiar', 'Token vazio'); return; }
+        navigator.clipboard.writeText(val).then(() => log('Copiar', 'Token copiado!'))
+          .catch((e) => log('Erro ao copiar token', e?.message || String(e)));
+      } catch (e) { log('Erro copiar token', e?.message || String(e)); }
+    }
+
+    function renderQrFromPayload(payload) {
+      try {
+        // Preferir campos explícitos de formato quando presentes
+        let qr = '';
+        if (typeof payload?.format === 'string') {
+          const fmt = payload.format.toLowerCase();
+          if (fmt === 'url' && typeof payload?.url === 'string' && payload.url.trim()) {
+            qr = payload.url.trim();
+          } else if ((fmt === 'base64' || fmt === 'dataurl') && typeof payload?.qr === 'string' && payload.qr.trim()) {
+            qr = payload.qr.trim();
+          }
+        }
+        if (!qr) {
+          const info = payload?.info || {};
+          const status = payload?.status || {};
+          const candidates = [
+            payload?.qrCode, payload?.qrcode, payload?.qr, payload?.base64,
+            info?.qrCode, info?.qrcode, info?.qr, info?.base64,
+            status?.qrCode, status?.qrcode, status?.qr, status?.base64,
+            payload?.url, info?.url, status?.url, status?.qr_url,
+            status?.qr_image, status?.qr_image_base64,
+            payload?.raw?.instance?.qrcode,
+            payload?.raw?.instance?.qr_image,
+            payload?.raw?.status?.qrcode,
+            payload?.raw?.status?.qr_image,
+            payload?.raw?.qrcode,
+            payload?.raw?.data?.qrCode,
+            payload?.raw?.data?.qrcode,
+            payload?.raw?.data?.qr,
+            payload?.raw?.data?.base64,
+            payload?.raw?.data?.url,
+            payload?.raw?.data?.qr_image,
+            payload?.raw?.data?.qr_image_base64
+          ].filter((v) => typeof v === 'string' && v.trim());
+          qr = candidates.length ? candidates[0] : '';
+        }
+        const pairCandidates = [
+          payload?.paircode, payload?.status?.paircode, payload?.instance?.paircode,
+          payload?.raw?.instance?.paircode, payload?.raw?.paircode
+        ].filter((v) => typeof v === 'string' && v.trim());
+        const pair = pairCandidates.length ? pairCandidates[0] : '';
+
+        if (pair) {
+          pairInput.value = pair;
+        }
+        if (qr) {
+          let src = qr;
+          if (typeof src === 'string' && !src.startsWith('data:image') && !src.startsWith('http')) {
+            src = `data:image/png;base64,${src}`;
+          }
+          qrImage.src = src;
+          qrImage.onload = () => { log('QR: imagem carregada'); };
+          qrImage.onerror = (e) => { log('QR: falha ao carregar', e?.message || 'erro'); };
+          qrImage.style.display = '';
+          qrVisible = true;
+          if (qrPlaceholder) qrPlaceholder.style.display = 'none';
+          statusEl.textContent = 'QR atualizado. Escaneie no WhatsApp para parear.';
+          qrRendered = true;
+        } else {
+          qrImage.style.display = 'none';
+          qrVisible = false;
+          if (qrPlaceholder) qrPlaceholder.style.display = '';
+          statusEl.textContent = 'QR não encontrado no payload. Tente gerar novamente.';
+        }
+      } catch (e) {
+        log('Erro ao renderizar QR', e?.message || String(e));
+      }
+    }
+
+    (function(){
+      const el = document.getElementById('btnConnect');
+      if (el) el.addEventListener('click', (e) => { e.preventDefault(); if (typeof generateUserQr === 'function') return generateUserQr(); });
+    })();
+    (function(){
+      const el = document.getElementById('btnStatus');
+      if (el && typeof getStatus === 'function') el.addEventListener('click', getStatus);
+    })();
+    // Removido: listener de Forçar QR (botão foi escondido)
+    (function(){
+      const el = document.getElementById('btnCreate');
+      if (el && typeof createInstance === 'function') el.addEventListener('click', createInstance);
+    })();
+    // Removido: listener duplicado de Gerar QR (DOM loaded já liga o botão)
+    (function(){
+      const legacyBtn = document.getElementById('btnCopyPair');
+      if (legacyBtn) {
+        legacyBtn.addEventListener('click', () => {
+          const text = (pairInput?.value || '').trim();
+          if (!text) return;
+          try { navigator.clipboard.writeText(text); } catch (_) {}
+          log('PAIRCODE copiado', text);
+        });
+      }
+    })();
+    // Removido: botões e listeners de SSE
+
+    // Removido: lógica de abas e alternância de botões.
+
+    // Auto-inicialização desativada: usuário controla criação/conexão e geração de QR
+    // ensureInstanceAndStart();
+    // startSse();
+  </script>
+  <!-- Painel de detalhes da instância (UAZAI) -->
+  <section id="instance-info" style="margin:16px 0; display:none; border:1px solid #e5e7eb; padding:12px; border-radius:8px;">
+    <h3 style="margin:0 0 8px; font-size:16px;">Detalhes da Instância</h3>
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <img id="info-profilePic" alt="Foto do perfil" style="display:none; width:72px; height:72px; border-radius:50%; object-fit:cover; border:1px solid #ddd;" />
+      <div style="flex:1;">
+        <div id="info-status"></div>
+        <div id="info-name"></div>
+        <div id="info-profileName"></div>
+        <div id="info-business"></div>
+        <div id="info-platform"></div>
+        <div id="info-owner"></div>
+        <div id="info-id"></div>
+        <div id="info-lastDisconnect"></div>
+        <div id="info-created"></div>
+        <div id="info-updated"></div>
+        <div id="info-delays"></div>
+      </div>
+    </div>
+  </section>
+  <script>
+    // Renderiza informações da instância usando o modelo UAZAI
+    function renderInstanceInfo(payload) {
+      try {
+        const container = document.getElementById('instance-info');
+        const el = (id) => document.getElementById(id);
+        if (!container) return;
+
+        // Acha um objeto "fonte" com os campos mais ricos
+        const sources = [
+          payload,
+          payload?.status, payload?.data,
+          payload?.raw, payload?.raw?.status, payload?.raw?.data,
+        ];
+        const first = (paths) => {
+          for (const p of paths) {
+            try {
+              const v = p.split('.').reduce((acc, k) => (acc && acc[k] !== undefined ? acc[k] : undefined), payload);
+              if (typeof v === 'string' && v.trim()) return v;
+              if (typeof v === 'number') return String(v);
+              if (typeof v === 'boolean') return v ? 'true' : 'false';
+            } catch (_) {}
+          }
+          for (const src of sources) {
+            if (src && typeof src === 'object') {
+              for (const key of paths) {
+                if (src[key] !== undefined) {
+                  const v = src[key];
+                  if (typeof v === 'string' && v.trim()) return v;
+                  if (typeof v === 'number') return String(v);
+                  if (typeof v === 'boolean') return v ? 'true' : 'false';
+                }
+              }
+            }
+          }
+          return '';
+        };
+
+        const id = first(['id', 'instanceId']);
+        const name = first(['name', 'instance', 'instanceName', 'instance_name']);
+        const profileName = first(['profileName']);
+        const profilePicUrl = first(['profilePicUrl', 'profilePicURL']);
+        const isBusiness = first(['isBusiness']);
+        const platform = first(['plataform', 'platform']);
+        const systemName = first(['systemName']);
+        const owner = first(['owner']);
+        const created = first(['created', 'createdAt']);
+        const updated = first(['updated', 'updatedAt']);
+        const lastDisconnect = first(['lastDisconnect']);
+        const lastDisconnectReason = first(['lastDisconnectReason']);
+        const statusStr = first(['status', 'connection_status', 'state']);
+        const delayMin = first(['msg_delay_min', 'delayMin']);
+        const delayMax = first(['msg_delay_max', 'delayMax']);
+
+        const sEl = el('info-status');
+        const nEl = el('info-name');
+        const pnEl = el('info-profileName');
+        const picEl = el('info-profilePic');
+        const bizEl = el('info-business');
+        const pfEl = el('info-platform');
+        const owEl = el('info-owner');
+        const idEl = el('info-id');
+        const ldEl = el('info-lastDisconnect');
+        const crEl = el('info-created');
+        const upEl = el('info-updated');
+        const dlEl = el('info-delays');
+
+        // Preenche campos quando houver valor
+        if (sEl) sEl.textContent = statusStr ? `Status: ${statusStr}` : '';
+        if (nEl) nEl.textContent = name ? `Nome: ${name}` : '';
+        if (pnEl) pnEl.textContent = profileName ? `Perfil: ${profileName}` : '';
+        if (bizEl) bizEl.textContent = isBusiness ? `Business: ${isBusiness}` : '';
+        const platText = [platform, systemName].filter(Boolean).join(' / ');
+        if (pfEl) pfEl.textContent = platText ? `Plataforma: ${platText}` : '';
+        if (owEl) owEl.textContent = owner ? `Dono: ${owner}` : '';
+        if (idEl) idEl.textContent = id ? `ID: ${id}` : '';
+        const ldText = [lastDisconnect, lastDisconnectReason].filter(Boolean).join(' — ');
+        if (ldEl) ldEl.textContent = ldText ? `Última desconexão: ${ldText}` : '';
+        if (crEl) crEl.textContent = created ? `Criado: ${created}` : '';
+        if (upEl) upEl.textContent = updated ? `Atualizado: ${updated}` : '';
+        const delayText = (delayMin || delayMax) ? `Delays: ${delayMin || '?'}s - ${delayMax || '?'}s` : '';
+        if (dlEl) dlEl.textContent = delayText;
+
+        // Imagem do perfil
+        if (picEl) {
+          if (profilePicUrl) {
+            picEl.src = profilePicUrl.replace(/`/g, '');
+            picEl.style.display = '';
+          } else {
+            picEl.style.display = 'none';
+          }
+        }
+
+        // Exibe painel se houver ao menos um dado relevante
+        const hasAny = [statusStr, name, profileName, profilePicUrl, isBusiness, platform, systemName, owner, id, created, updated].some(Boolean);
+        container.style.display = hasAny ? '' : 'none';
+      } catch (e) { try { log('Erro renderInstanceInfo', e?.message || String(e)); } catch (_) {} }
+    }
+  </script>
+  <!-- Socket.IO client -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    (async function initRealtimeWebhookListener(){
+      try {
+        const authToken = (localStorage.getItem('authToken') || '').trim();
+        let uid = null;
+        if (authToken) {
+          try {
+            const r = await fetch('/me', { headers: { 'Authorization': 'Bearer ' + authToken } });
+            const j = await r.json().catch(() => ({}));
+            uid = j?.user?.id || null;
+          } catch (_) {}
+        }
+        if (!uid) {
+          console.warn('[Socket.IO] user_id não disponível; mantendo apenas SSE/polling.');
+          return;
+        }
+        try {
+          socket = io();
+          socketReady = true;
+          currentUserId = uid;
+          // registra este usuário para receber evento genérico
+          try { socket.emit('register', { user_id: uid }); } catch (_) {}
+          const evt = `instance_connected:${uid}`;
+          const handleConnected = async (payload) => {
+            try {
+              webhookConnected = true;
+              stopInstanceSse();
+              const instName = (payload && (payload.instance_id || payload.instanceName || payload.instance)) || sseExpectedInstance || '';
+              await showConnectionSuccessWithDetails(instName);
+            } catch (e) {
+              handleAuthSuccessRedirect();
+            }
+          };
+          socket.on(evt, handleConnected);
+          // também ouvir evento genérico direcionado via registro
+          socket.on('instance_connected', handleConnected);
+          console.log('[Socket.IO] ouvindo', evt);
+        } catch (e) {
+          console.warn('[Socket.IO] indisponível:', e?.message || String(e));
+        }
+      } catch (e) {
+        console.warn('[Socket.IO:init] falhou:', e?.message || String(e));
+      }
+    })();
+  </script>
+  <script>
+    // Navegação das abas: mantém QR ativo; outras abas levam ao painel index
+    try {
+      const tabs = document.querySelectorAll('#main-tabs .tab-btn');
+      tabs.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const tab = btn.getAttribute('data-tab');
+          if (tab === 'qr') return; // já estamos na página de QR
+          e.preventDefault();
+          window.location.href = '/index.html';
+        });
+      });
+    } catch (_) {}
+    // Auto-conexão por querystring desativada: usuário controla explicitamente as ações
+  </script>
+</body>
+</html>

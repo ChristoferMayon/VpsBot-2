@@ -1,0 +1,11 @@
+{
+  "user_id": "3",
+  "email": "admin",
+  "instance_data": {
+    "instanceId": "admin",
+    "token": "ce53e6e9-4de5-4313-a0f1-181511ce5c3b",
+    "connected_at": "2025-11-04T05:59:38.677Z",
+    "device_name": null,
+    "status": "connected"
+  }
+}

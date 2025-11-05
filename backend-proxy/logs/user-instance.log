@@ -1,0 +1,605 @@
+[2025-10-30T06:06:30.397Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T06:11:02.192Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T06:11:35.861Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T06:16:31.239Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T06:16:53.129Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T06:17:15.494Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T06:17:15.497Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T06:17:34.965Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:26:47.808Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:26:51.584Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:29:15.416Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:36:17.448Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:37:07.619Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:07.623Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:09.040Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:09.043Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:09.548Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:09.552Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:10.861Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:10.864Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:11.738Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:11.741Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:13.474Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:13.478Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:15.401Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:15.405Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:16.734Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:16.739Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:17.580Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:17.585Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:37:19.167Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:37:19.171Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:40:40.294Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:41:37.139Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:41:55.723Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:41:55.728Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:42:09.257Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:42:09.262Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:45:35.284Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T15:45:51.147Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T15:46:15.565Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":true}
+[2025-10-30T15:46:15.568Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T15:46:49.707Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T15:47:27.466Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T15:47:39.006Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T15:48:02.538Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T15:52:15.996Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:08:29.411Z] user.connect_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:09:59.758Z] user.connect_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:10:20.837Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T16:10:20.841Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T16:10:21.683Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T16:10:21.687Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T16:10:23.071Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T16:10:23.074Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T16:11:31.850Z] ensureUserInstance.manual_mode_skip {"user_id":6,"instance_name":null}
+[2025-10-30T16:39:00.955Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:03.071Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:05.067Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:07.078Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:09.091Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:11.063Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:17.356Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:19.681Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:21.622Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:23.253Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:25.390Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:27.341Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:29.638Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:39:49.329Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:51.428Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:53.435Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:55.431Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:57.428Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:39:59.438Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:40:05.759Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:07.887Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:09.896Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:11.761Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:13.751Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:15.756Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:17.745Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:19.821Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:21.747Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:23.784Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:26.042Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:27.763Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:29.764Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:31.780Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:33.760Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:35.772Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:37.757Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:39.760Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:41.723Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:43.716Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:45.691Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:47.777Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:49.808Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:51.815Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:53.766Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:40:55.784Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:42:53.650Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:16.462Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:16.474Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":false}
+[2025-10-30T16:44:17.224Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T16:44:19.348Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:21.344Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:23.349Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:25.346Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:27.359Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:44:33.684Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:35.821Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:37.819Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:39.676Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:41.668Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:43.656Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:45.698Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:47.711Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:49.725Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:51.673Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:53.663Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:55.653Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:44:57.991Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:00.003Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:01.681Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:03.730Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:05.854Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:07.774Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:09.711Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:11.693Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:13.674Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:15.678Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:17.704Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:19.731Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:21.745Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:23.666Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:45:47.585Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:45:47.591Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":false}
+[2025-10-30T16:45:48.322Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T16:45:50.476Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:45:52.475Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:45:54.483Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:45:56.492Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:45:58.475Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:46:04.792Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:06.971Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:09.018Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:10.806Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:12.803Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:15.085Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:16.831Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:18.849Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:20.843Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:22.758Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:24.824Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:26.809Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:28.832Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:30.831Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:32.788Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:34.783Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:36.811Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:38.869Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:40.871Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:42.754Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:44.737Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:46.854Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:48.901Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:50.933Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:52.859Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:46:54.768Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:57:52.216Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:57:52.223Z] user.bind_instance.request {"user_id":6,"instance_name":"wa-rhz1-6","provided_token":false}
+[2025-10-30T16:57:52.957Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T16:57:55.063Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:57:57.074Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:57:59.073Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:01.066Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:07.192Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:07.372Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:58:09.056Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:09.497Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T16:58:11.059Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:13.065Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:15.068Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:17.066Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:19.077Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:21.058Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:23.055Z] user.ensure_instance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true}
+[2025-10-30T16:58:29.389Z] user.ensure_instance.error {"user_id":6,"message":"Falha ao criar instância na UAZAPI: Not Found."}
+[2025-10-30T17:10:50.476Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T17:13:43.569Z] ensureUserInstance.created {"user_id":3,"instance_name":"wa-admin-3","token_saved":true,"provider":"uazapi"}
+[2025-10-30T17:16:02.431Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T17:16:13.950Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T17:16:24.690Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T17:22:47.866Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:22:47.870Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:22:50.231Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:22:50.237Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:23:59.987Z] ensureUserInstance.created {"user_id":6,"instance_name":"wa-rhz1-6","token_saved":true,"provider":"uazapi"}
+[2025-10-30T17:28:13.437Z] send_carousel.manual_mode {"user_id":6,"instance_name":null,"token_saved":false}
+[2025-10-30T17:28:48.747Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T17:28:48.754Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:28:50.325Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T17:28:50.331Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:30:38.574Z] send_carousel.manual_mode {"user_id":6,"instance_name":null,"token_saved":false}
+[2025-10-30T17:40:11.358Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:40:11.361Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:40:35.405Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:40:35.409Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:41:18.695Z] send_carousel.manual_mode {"user_id":6,"instance_name":null,"token_saved":false}
+[2025-10-30T17:41:21.171Z] send_carousel.manual_mode {"user_id":6,"instance_name":null,"token_saved":false}
+[2025-10-30T17:42:43.050Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T17:42:43.052Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:42:57.733Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T17:42:57.738Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:48:31.431Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:48:31.434Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:48:32.589Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:48:32.595Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:49:57.210Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:49:57.216Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T17:50:03.918Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T17:50:03.921Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T18:14:11.922Z] instances_db.ensure_table.created {"table":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\backend-proxy\\data.instances.table.json"}
+[2025-10-30T18:15:14.792Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T18:15:14.796Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T18:15:15.718Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz","provided_token":true}
+[2025-10-30T18:15:15.729Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T18:16:06.691Z] send_carousel.manual_mode {"user_id":6,"instance_name":null,"token_saved":false}
+[2025-10-30T18:49:26.157Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T18:49:26.165Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T18:49:32.379Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T18:49:32.383Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T18:50:20.274Z] send_carousel.manual_mode {"user_id":6,"instance_name":null,"token_saved":false}
+[2025-10-30T18:51:15.196Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T18:51:15.203Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T18:51:28.764Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T18:51:28.769Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T18:52:33.825Z] send_carousel.manual_mode {"user_id":3,"instance_name":null,"token_saved":false}
+[2025-10-30T18:53:06.622Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T18:53:06.626Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T18:53:11.697Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T18:53:11.703Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T18:59:42.625Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T18:59:42.628Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:00:24.136Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:00:24.143Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:01:07.444Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:01:07.449Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:01:21.950Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:01:21.957Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:01:29.182Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:01:29.188Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:02:08.653Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:02:08.657Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:02:09.628Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:02:09.635Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:03:44.632Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:03:44.637Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:03:45.546Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:03:45.552Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:05:35.023Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:05:35.025Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:05:36.939Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:05:36.944Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:31:03.401Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-30T19:31:03.404Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:31:25.888Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-30T19:31:25.890Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:31:42.409Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-30T19:31:42.411Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:31:56.338Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-30T19:31:56.341Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:31:57.329Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-30T19:31:57.330Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:38:47.646Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:38:47.648Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:38:50.418Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:38:50.423Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:48:24.170Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-30T19:48:25.047Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:48:32.910Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T19:48:32.919Z] user.bind_instance.updated {"user_id":3,"token_saved":false}
+[2025-10-30T19:49:01.802Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T19:49:01.806Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T19:49:02.740Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T19:49:02.745Z] user.bind_instance.updated {"user_id":6,"token_saved":false}
+[2025-10-30T19:54:23.389Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T19:54:23.395Z] user.bind_instance.updated {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T19:54:31.502Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T19:54:31.507Z] user.bind_instance.updated {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T19:56:17.951Z] send_carousel.manual_mode {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T19:57:32.967Z] send_carousel.manual_mode {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T20:04:00.002Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T20:04:00.007Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:04:16.064Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T20:04:16.070Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:05:21.957Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:06:24.440Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:07:55.023Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T20:07:55.029Z] user.bind_instance.updated {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T20:07:58.444Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T20:07:58.451Z] user.bind_instance.updated {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T20:12:54.543Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T20:12:54.549Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:12:57.334Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T20:12:57.340Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:13:31.729Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T20:13:31.734Z] user.bind_instance.updated {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T20:13:34.179Z] user.bind_instance.request {"user_id":6,"instance_name":"rhz1","provided_token":true}
+[2025-10-30T20:13:34.186Z] user.bind_instance.updated {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T20:14:32.349Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T20:14:32.357Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:14:44.118Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-30T20:14:44.121Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:16:23.936Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:16:46.669Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:17:09.056Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:17:39.448Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:18:23.623Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:19:06.005Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:19:31.600Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:20:11.824Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:20:27.111Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:20:50.153Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:22:59.612Z] user.bind_instance.request {"user_id":7,"instance_name":"bdunlocker","provided_token":true}
+[2025-10-30T20:22:59.619Z] user.bind_instance.updated {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:23:07.173Z] user.bind_instance.request {"user_id":7,"instance_name":"bdunlocker","provided_token":true}
+[2025-10-30T20:23:07.178Z] user.bind_instance.updated {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:24:25.850Z] send_carousel.manual_mode {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:26:00.070Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:26:14.783Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:27:02.794Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:27:36.250Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:28:01.225Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:28:23.256Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:28:32.973Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:28:39.675Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:28:43.661Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-30T20:31:58.026Z] send_carousel.manual_mode {"user_id":6,"instance_name":"rhz1","token_saved":true}
+[2025-10-30T20:32:43.167Z] send_carousel.manual_mode {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:33:06.105Z] send_carousel.manual_mode {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:33:28.486Z] send_carousel.manual_mode {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:33:51.182Z] send_carousel.manual_mode {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-30T20:40:02.837Z] send_carousel.manual_mode {"user_id":7,"instance_name":"bdunlocker","token_saved":true}
+[2025-10-31T01:54:37.481Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T01:54:37.486Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T01:54:39.847Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T01:54:39.853Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T01:55:43.300Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T01:56:03.288Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:12:43.154Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:12:43.158Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:12:49.423Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:12:49.429Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:15:06.506Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:15:06.510Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:15:11.121Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:15:11.143Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:16:04.105Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:17:37.381Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:17:37.385Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:17:38.960Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:17:38.962Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:18:29.433Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:18:29.438Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:18:37.767Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:18:37.772Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:21:57.711Z] user.instance_status.error {"user_id":3,"message":"Request failed with status code 401"}
+[2025-10-31T02:22:20.240Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:22:20.246Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:22:21.927Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:22:21.935Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:23:07.436Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:23:07.438Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:23:07.439Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:23:07.440Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:23:07.441Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:23:13.742Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:23:13.745Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:23:13.747Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:23:13.747Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:23:13.748Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:23:32.358Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:23:32.359Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:23:32.360Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:23:32.361Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:23:32.362Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:23:56.548Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:23:56.550Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:23:56.551Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:23:56.551Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:23:56.552Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:23:58.283Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:23:58.285Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:23:58.287Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:23:58.288Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:23:58.289Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:23:59.646Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:23:59.648Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:23:59.648Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:23:59.649Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:23:59.649Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:05.194Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:05.197Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:05.199Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:05.200Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:05.202Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:06.342Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:06.344Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:06.346Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:06.346Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:06.347Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:06.539Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:06.541Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:06.542Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:06.542Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:06.543Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:08.830Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:08.832Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:08.834Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:08.834Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:08.835Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:10.049Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:10.051Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:10.053Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:10.053Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:10.054Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:12.153Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:12.155Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:12.157Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:12.158Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:12.158Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:21.928Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:21.930Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:21.930Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:21.931Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:21.932Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:22.007Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:22.009Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:22.010Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:22.011Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:22.012Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:26.179Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:26.181Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:26.182Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:26.182Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:26.183Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:27.335Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-10-31T02:24:27.338Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:24:27.340Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:24:27.340Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:24:27.342Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:24:42.465Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T02:24:42.470Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:24:50.803Z] user.ensure_instance.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:24:50.808Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-31T02:24:51.574Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:25:04.984Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-10-31T02:25:05.659Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T02:25:13.139Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-10-31T02:25:13.141Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-10-31T02:25:13.142Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-10-31T02:25:13.143Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-10-31T02:25:13.143Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-10-31T02:26:37.323Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:06:34.095Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:06:56.007Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:07:13.746Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:07:35.926Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:07:47.838Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:08:46.875Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:09:05.707Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:09:30.616Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:09:42.875Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T03:11:12.695Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:40:37.500Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T04:40:37.504Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:40:56.834Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T04:40:56.839Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:42:02.569Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:45:25.267Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:45:38.158Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:46:11.246Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:47:50.480Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:48:11.976Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:48:37.118Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:49:19.453Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:50:22.551Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T04:50:51.910Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T17:03:11.617Z] user.bind_instance.request {"user_id":8,"instance_name":"rhz","provided_token":true}
+[2025-10-31T17:03:11.623Z] user.bind_instance.updated {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:03:23.656Z] user.bind_instance.request {"user_id":8,"instance_name":"rhz","provided_token":true}
+[2025-10-31T17:03:23.661Z] user.bind_instance.updated {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:31:11.839Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:31:41.901Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:31:52.741Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:33:44.368Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:34:03.227Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:36:27.531Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T17:38:39.481Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T18:52:40.251Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T18:54:18.936Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T18:54:53.133Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T18:55:44.266Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T18:57:12.615Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T19:05:22.985Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T19:05:57.085Z] send_carousel.manual_mode {"user_id":8,"instance_name":"rhz","token_saved":true}
+[2025-10-31T23:11:18.548Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T23:11:18.556Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-10-31T23:11:22.449Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-10-31T23:11:22.453Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-01T04:53:38.771Z] user.bind_instance.request {"user_id":12,"instance_name":"wer","provided_token":true}
+[2025-11-01T04:53:38.777Z] user.bind_instance.updated {"user_id":12,"instance_name":"wer","token_saved":true}
+[2025-11-01T04:53:43.261Z] user.bind_instance.request {"user_id":12,"instance_name":"wer","provided_token":true}
+[2025-11-01T04:53:43.270Z] user.bind_instance.updated {"user_id":12,"instance_name":"wer","token_saved":true}
+[2025-11-04T02:43:46.097Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:43:46.105Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:43:48.881Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:43:48.885Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:45:38.454Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:49:19.549Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:49:19.553Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:49:23.621Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:49:23.627Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:51:42.904Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:51:42.909Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:51:47.812Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:51:47.819Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:52:09.140Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:52:09.144Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T02:52:14.100Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T02:52:14.106Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:51:10.020Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T05:51:10.024Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:51:11.387Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T05:51:11.393Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:54:37.119Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T05:54:37.122Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:54:47.730Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T05:54:47.736Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:56:49.977Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T05:56:49.979Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:56:55.793Z] user.ensure_instance.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:56:55.798Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-04T05:56:56.548Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:57:09.819Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-04T05:57:10.488Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:57:17.756Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-04T05:57:17.760Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-04T05:57:17.763Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-04T05:57:17.764Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-04T05:57:17.766Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-11-04T05:59:15.228Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T05:59:15.236Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:59:16.958Z] user.ensure_instance.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:59:16.964Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-04T05:59:17.604Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:59:30.831Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-04T05:59:31.474Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T05:59:38.674Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-04T05:59:38.678Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-04T05:59:38.680Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-04T05:59:38.681Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-04T05:59:38.683Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\3.json"}
+[2025-11-04T06:00:30.373Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:00:30.377Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:00:32.693Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:00:32.698Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:01:18.235Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:01:18.240Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:01:24.427Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:01:24.432Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:02:11.243Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:02:25.918Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:03:11.191Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:03:52.488Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:03:52.491Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:03:55.572Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:03:55.575Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:04:53.131Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:07:34.800Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:07:34.806Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:07:43.351Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:07:43.357Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:09:18.282Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:09:18.288Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:09:19.384Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:09:19.390Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:09:22.179Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:09:22.183Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:09:58.427Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:12:13.425Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:12:13.431Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:12:15.022Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-04T06:12:15.027Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:12:59.914Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:13:14.062Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:13:24.701Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:13:38.007Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:14:28.668Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:15:07.851Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:15:23.104Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:16:23.664Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-04T06:16:36.251Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}

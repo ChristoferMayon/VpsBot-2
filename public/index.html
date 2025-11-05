@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UNLOCK CENTER — PREMIUM — Whatsapp Sender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { inter: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#E6F1FF', 100: '#CCE3FF', 200: '#99C6FF', 300: '#66A8FF', 400: '#338BFF', 500: '#006DFF',
+              600: '#0058CC', 700: '#004399', 800: '#002E66', 900: '#001933'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html, body { height: 100%; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    :root { --green-soft: #ffffff; --green-dark: #ffffff; }
+    /* Cor padrão branca para toda tipografia */
+    body, body * { color: #ffffff !important; }
+    /* Títulos e elementos em destaque também brancos para máxima nitidez */
+    h1, h2, h3, h4, .font-semibold { color: #ffffff !important; }
+    /* Placeholders em branco translúcido */
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.6) !important; }
+    /* Links em branco */
+    a { color: #ffffff !important; }
+
+    /* EXCEÇÃO: texto editável dos cartões deve ser branco normal */
+    .card-editor textarea,
+    .card-editor input,
+    .card-editor select {
+      color: #ffffff !important;
+    }
+    /* Fundo dos selects dos cartões na cor do painel */
+    .card-editor select { background-color: rgba(255,255,255,0.1) !important; }
+    .card-editor textarea::placeholder,
+    .card-editor input::placeholder {
+      color: rgba(255,255,255,0.6) !important;
+    }
+    /* Botão Enviar Carrossel em verde neon forte com texto legível */
+    .btn-neon {
+      background-color: #39FF14; /* neon forte */
+      color: #0a0a0a !important; /* texto preto para máximo contraste */
+    }
+    .btn-neon:hover { filter: brightness(1.1); }
+    .btn-neon:focus { outline: 2px solid rgba(0,0,0,0.2); outline-offset: 2px; }
+    /* Fundo dos selects principais do painel na cor do painel */
+    #countryDDI, #carouselTemplate { background-color: rgba(255,255,255,0.1) !important; }
+    /* Cor do painel também quando abre a lista de opções dos selects */
+    #countryDDI option,
+    #carouselTemplate option,
+    .card-editor select option {
+      background-color: rgba(255,255,255,0.1) !important;
+      color: #ffffff !important;
+    }
+    /* Custom Select (para estilizar a lista aberta com a cor do painel) */
+    .custom-select { position: relative; }
+    .custom-select .custom-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background-color: rgba(255,255,255,0.1);
+      color: #ffffff;
+      cursor: pointer;
+    }
+    .custom-select .custom-options {
+      position: absolute;
+      z-index: 50;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      max-height: 192px;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,0.2);
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+    /* Portal: quando a lista de opções é renderizada no body */
+    .custom-options {
+      position: fixed;
+      z-index: 10000;
+      max-height: 240px;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,0.2);
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+    .custom-options .option-item,
+    .custom-select .option-item {
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .custom-options .option-item:hover,
+    .custom-options .option-item[aria-selected="true"],
+    .custom-select .option-item:hover,
+    .custom-select .option-item[aria-selected="true"] {
+      background-color: rgba(255,255,255,0.18);
+    }
+    .custom-select .hidden-select { display: none; }
+    
+    /* SweetAlert customizado com fundo verde */
+    .swal2-container .swal-red-custom.swal2-popup,
+    .swal-red-custom .swal2-popup,
+    .swal2-popup.swal-red-custom {
+      background-color: #16a34a !important; /* Fundo verde forte */
+      background: #16a34a !important;
+      border: 2px solid #dc2626 !important; /* Borda vermelha */
+      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3) !important;
+    }
+    .swal-red-custom .swal2-title,
+    .swal2-popup.swal-red-custom .swal2-title {
+      color: #ffffff !important; /* Título branco */
+      font-weight: bold !important;
+    }
+    .swal-red-custom .swal2-content,
+    .swal2-popup.swal-red-custom .swal2-content {
+      color: #ffffff !important; /* Texto branco */
+    }
+    .swal-red-custom .swal2-confirm,
+    .swal2-popup.swal-red-custom .swal2-confirm {
+      background-color: #dc2626 !important; /* Botão vermelho */
+      border: none !important;
+      color: #ffffff !important;
+      font-weight: bold !important;
+    }
+    .swal-red-custom .swal2-confirm:hover,
+    .swal2-popup.swal-red-custom .swal2-confirm:hover {
+      background-color: #b91c1c !important; /* Hover mais escuro */
+    }
+    
+    /* Spinner de carregamento */
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="min-h-full bg-gradient-to-br from-slate-900 via-slate-950 to-black text-slate-100" style="background:#000 url('/image/OIG3.jpg') center / cover no-repeat fixed;">
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-white/10 border-b border-white/20">
+    <div class="max-w-6xl mx-auto px-2 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <img src="/image/apple1.png"
+             alt="Unlock Center Logo"
+             class="h-8 w-auto object-contain rounded-none drop-shadow" />
+        <div>
+          <div class="font-semibold text-sm sm:text-base md:text-lg leading-tight">UNLOCK CENTER</div>
+          <div class="text-[10px] sm:text-xs text-white/60 leading-tight">PREMIUM — Whatsapp Sender</div>
+        </div>
+      </div>
+      <nav id="main-tabs" class="flex items-center gap-1 sm:gap-2 overflow-x-auto flex-nowrap ml-auto justify-end">
+      <div id="credits-badge" class="px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-none border border-sky-400/50 bg-sky-500/10 text-sky-400 text-xs sm:text-xs md:text-sm font-semibold leading-[1.2] inline-flex items-center shrink-0 transition-colors hover:bg-sky-500/20" style="display:none;">Créditos: 0</div>
+          <button data-tab="carousel" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">Sender</button>
+      <button data-tab="text" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">Texto</button>
+      <a href="/qr.html" class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]">QR</a>
+         <button id="admin-tab-btn" class="shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]" style="display:none;">Admin</button>
+        <button id="logout-btn" class="shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-red-400/40 bg-red-500/20 hover:bg-red-500/30 text-red-200 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400/30 hover:shadow hover:shadow-red-500/20 active:translate-y-[1px]" style="display:none;">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+    <!-- Carrossel -->
+    <section id="tab-carousel" class="space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-1 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 shadow">
+          <h2 class="text-xl font-semibold">Destino</h2>
+          <p class="text-sm text-white/70 mb-4">Defina DDI e telefone do cliente.</p>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-sm text-white/80 mb-1" for="countryDDI">DDI do País</label>
+              <select id="countryDDI" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white focus:ring-2 focus:ring-white/30 focus:border-white/30"></select>
+            </div>
+            <div>
+              <label class="block text-sm text-white/80 mb-1" for="numero">Telefone (sem DDI)</label>
+              <input id="numero" type="text" placeholder="Ex: 11999999999" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30" />
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 shadow">
+          <h2 class="text-xl font-semibold">Série e Template</h2>
+          <p class="text-sm text-white/70 mb-4">Selecione uma série usando as chips abaixo ou pelo select.</p>
+          <div id="series-nav" class="flex flex-wrap gap-2 mb-3"></div>
+          <select id="carouselTemplate" onchange="loadCarouselTemplate()" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white focus:ring-2 focus:ring-white/30 focus:border-white/30">
+            <option value="">-- Selecione a Série do iPhone --</option>
+          </select>
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="mensagemGeral" class="block text-sm text-white/80 mb-1">Mensagem Geral</label>
+              <textarea id="mensagemGeral" rows="2" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30"></textarea>
+            </div>
+            <div>
+              <label for="delayMessage" class="block text-sm text-white/80 mb-1">Atraso (seg)</label>
+              <input id="delayMessage" type="number" min="1" max="15" placeholder="Ex: 5" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 shadow">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold">Cartões do Envio</h3>
+          <button class="tab-btn shrink-0 px-2 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 text-xs sm:text-xs md:text-sm leading-[1.2] whitespace-nowrap tracking-tight rounded-none border border-emerald-400/40 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 hover:shadow hover:shadow-emerald-500/20 active:translate-y-[1px]" onclick="addCarouselCard()">+ Adicionar Cartão</button>
+        </div>
+        <div id="carousel-cards-container" class="mt-5 space-y-6"></div>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <button onclick="enviarCarrossel()" class="w-full py-3 btn-neon font-bold rounded-none shadow hover:brightness-110 md:col-span-2">Enviar mensagem</button>
+          <button id="ai-validate" class="hidden w-full py-3 bg-white/10 text-white font-semibold rounded-none shadow hover:bg-white/20">Validação Inteligente</button>
+        </div>
+        <div id="log" class="mt-6 p-4 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm whitespace-pre-wrap overflow-x-auto"></div>
+        <div class="mt-6" style="display:none;">
+          <details class="bg-white/5 border border-white/20 rounded-xl p-4">
+            <summary class="cursor-pointer text-sm font-semibold">Documentação UAZAPI — Enviar Carrossel</summary>
+            <div class="mt-3 text-sm space-y-3">
+              <p>Este endpoint permite enviar um carrossel com imagens e botões interativos. Funciona de maneira igual ao endpoint <code>/send/menu</code> com <code>type: carousel</code>, porém usando outro formato de payload.</p>
+              <p><strong>Campos comuns</strong>: suporta os opcionais da tag "Enviar Mensagem": <code>delay</code>, <code>readchat</code>, <code>readmessages</code>, <code>replyid</code>, <code>mentions</code>, <code>forward</code>, <code>track_source</code>, <code>track_id</code>, <code>placeholders</code> e envio para grupos.</p>
+              <p><strong>Estrutura do Payload</strong></p>
+              <pre class="bg-black/40 p-3 overflow-x-auto">{
+  "number": "5511999999999",
+  "text": "Texto principal",
+  "carousel": [
+    {
+      "text": "Texto do cartão",
+      "image": "URL da imagem",
+      "buttons": [
+        { "id": "resposta1", "text": "Texto do botão", "type": "REPLY" }
+      ]
+    }
+  ],
+  "delay": 1000,
+  "readchat": true
+}</pre>
+              <p><strong>Tipos de Botões</strong></p>
+              <ul class="list-disc pl-5">
+                <li><strong>REPLY</strong>: envia o valor de <code>id</code> como resposta ao chat</li>
+                <li><strong>URL</strong>: abre a URL; <code>id</code> deve conter a URL completa</li>
+                <li><strong>COPY</strong>: copia o texto; <code>id</code> é o texto a copiar</li>
+                <li><strong>CALL</strong>: inicia uma chamada; <code>id</code> é o número</li>
+              </ul>
+              <p><strong>Exemplo de Botões</strong></p>
+              <pre class="bg-black/40 p-3 overflow-x-auto">{
+  "buttons": [
+    { "id": "Sim, quero comprar!", "text": "Confirmar Compra", "type": "REPLY" },
+    { "id": "https://exemplo.com/produto", "text": "Ver Produto", "type": "URL" },
+    { "id": "CUPOM20", "text": "Copiar Cupom", "type": "COPY" },
+    { "id": "5511999999999", "text": "Falar com Vendedor", "type": "CALL" }
+  ]
+}</pre>
+              <p><strong>Exemplo Completo</strong></p>
+              <pre class="bg-black/40 p-3 overflow-x-auto">{
+  "number": "5511999999999",
+  "text": "Nossos Produtos em Destaque",
+  "carousel": [
+    {
+      "text": "Smartphone XYZ\nO mais avançado smartphone da linha",
+      "image": "https://exemplo.com/produto1.jpg",
+      "buttons": [
+        { "id": "SIM_COMPRAR_XYZ", "text": "Comprar Agora", "type": "REPLY" },
+        { "id": "https://exemplo.com/xyz", "text": "Ver Detalhes", "type": "URL" }
+      ]
+    },
+    {
+      "text": "Cupom de Desconto\nGanhe 20% OFF em qualquer produto",
+      "image": "https://exemplo.com/cupom.jpg",
+      "buttons": [
+        { "id": "DESCONTO20", "text": "Copiar Cupom", "type": "COPY" },
+        { "id": "5511999999999", "text": "Falar com Vendedor", "type": "CALL" }
+      ]
+    }
+  ],
+  "delay": 0,
+  "readchat": true
+}</pre>
+              <p><strong>Request Body</strong></p>
+              <ul class="list-disc pl-5">
+                <li><code>number</code> (string, required) — formato internacional. Ex: "5511999999999"</li>
+                <li><code>text</code> (string, required) — texto principal da mensagem</li>
+                <li><code>carousel</code> (array, required) — cartões do carrossel</li>
+                <li><code>track_source</code> (string) — origem. Ex: "chatwoot"</li>
+                <li><code>track_id</code> (string) — ID de rastreamento. Ex: "msg_123456789"</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Texto -->
+    <section id="tab-text" class="hidden space-y-8">
+      <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 shadow">
+        <h2 class="text-xl font-semibold">Enviar Texto Simples</h2>
+        <p class="text-sm text-white/70 mb-4">Use para testes e mensagens rápidas.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="textPhone" class="block text-sm text-white/80 mb-1">Telefone (com DDI, sem +)</label>
+            <input id="textPhone" type="text" placeholder="Ex: 5511999999999" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30" />
+          </div>
+          <div>
+            <label for="textMessage" class="block text-sm text-white/80 mb-1">Mensagem</label>
+            <textarea id="textMessage" rows="2" placeholder="Digite sua mensagem..." class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30"></textarea>
+          </div>
+        </div>
+        <div class="mt-4">
+          <button onclick="sendSimpleText()" class="px-4 py-2 bg-emerald-600 text-white rounded-none shadow hover:bg-emerald-700">Enviar Texto</button>
+        </div>
+        <div id="textLog" class="mt-6 p-4 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm whitespace-pre-wrap overflow-x-auto"></div>
+      </div>
+    </section>
+
+
+    <!-- QR Code -->
+    <section id="tab-qr" class="hidden space-y-8">
+      <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 shadow">
+        <h2 class="text-xl font-semibold">Painel de QR Code</h2>
+        <p class="text-sm text-white/70 mb-4">Crie, conecte e visualize QR/Paircode da instância diretamente.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="qr-instance" class="block text-sm text-white/80 mb-1">Nome da Instância</label>
+            <input id="qr-instance" type="text" placeholder="Ex: cliente 2" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30" />
+          </div>
+          <div>
+            <label for="qr-token" class="block text-sm text-white/80 mb-1">Token da Instância (opcional)</label>
+            <input id="qr-token" type="text" placeholder="Preenchido ao criar instância (quando disponível)" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30" />
+          </div>
+          <div>
+            <label for="qr-phone" class="block text-sm text-white/80 mb-1">Telefone para Paircode (E.164, opcional)</label>
+            <input id="qr-phone" type="text" placeholder="Ex: 5511999999999" class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/30" />
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <button class="w-full px-4 py-2 bg-slate-200 text-slate-900 font-semibold rounded-none shadow hover:bg-white" onclick="qrCreateInstance()">Criar Instância</button>
+          <button class="w-full px-4 py-2 bg-sky-500 text-white font-semibold rounded-none shadow hover:bg-sky-600" onclick="qrConnectInstance()">Conectar Instância</button>
+          <button class="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-none shadow hover:bg-indigo-600" onclick="qrGetStatus()">Obter Status</button>
+          <button id="btn-generate-qr" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700">Gerar QR Code</button>
+          <button id="btn-force-qr" class="w-full px-4 py-2 bg-amber-500 text-white rounded-xl shadow hover:bg-amber-600">Forçar novo QR</button>
+          <button class="w-full px-4 py-2 bg-zinc-800 text-white rounded-xl shadow hover:bg-zinc-700" onclick="qrCopyPaircode()">Copiar Paircode</button>
+          <button id="btn-disconnect-instance" class="w-full px-4 py-2 bg-red-600 text-white rounded-xl shadow hover:bg-red-700">Desconectar Conta</button>
+          <div class="md:col-span-3 text-xs text-white/60">Use “Desconectar Conta” para sair do WhatsApp desta instância e conectar outro número. Após desconectar, clique em “Obter QR” e escaneie com o novo telefone.</div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          <div>
+            <div class="border border-white/20 bg-white/10 p-4 rounded-xl flex items-center justify-center min-h-[260px]">
+              <img id="qr-image" alt="QR Code" class="max-w-full h-auto" style="display:none;" />
+              <div id="qr-placeholder" class="text-sm text-white/60">QR Code não gerado ainda.</div>
+            </div>
+            <div class="mt-3">
+              <label class="block text-sm text-white/80 mb-1">Paircode</label>
+              <input id="paircodeDisplay" type="text" readonly class="w-full px-3 py-2 bg-white/5 border border-white/20 rounded-none text-white" />
+            </div>
+          </div>
+          <div>
+            <div id="qr-log" class="p-4 bg-white/10 rounded-xl border border-white/20 text-slate-200 text-sm whitespace-pre-wrap overflow-x-auto"></div>
+            <div id="qr-status" class="mt-3 text-sm text-white/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="/js/carousel_script_new.js"></script>
+  <script>
+    // Tabs
+    const tabs = document.querySelectorAll('#main-tabs .tab-btn');
+    const sections = {
+      carousel: document.getElementById('tab-carousel'),
+      text: document.getElementById('tab-text'),
+      qr: document.getElementById('tab-qr'),
+      
+    };
+    function activateTab(name) {
+      tabs.forEach(btn => {
+        const isActive = btn.dataset.tab === name;
+        try {
+          btn.classList.remove('bg-white/10','bg-white/5','bg-emerald-500/20','bg-emerald-500/30');
+          btn.classList.add(isActive ? 'bg-emerald-500/30' : 'bg-emerald-500/20');
+        } catch (_) {
+          // Fallback para navegadores antigos
+          const base = btn.className.replace(/\b(bg-(white|emerald)-\d+\/\d+|bg-white\/(5|10))\b/g,'').trim();
+          btn.className = base + ' ' + (isActive ? 'bg-emerald-500/30' : 'bg-emerald-500/20');
+        }
+      });
+      Object.entries(sections).forEach(([k, el]) => {
+        el.classList.toggle('hidden', k !== name);
+      });
+      if (name === 'qr') {
+        initUserInstanceQrTab().catch(() => {});
+      }
+    }
+    tabs.forEach(btn => btn.addEventListener('click', () => activateTab(btn.dataset.tab)));
+    // Ativa aba via parâmetro de URL (?tab=carousel|text|qr) ou por padrão 'carousel'
+    (function activateInitialTab(){
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const fromParam = (params.get('tab') || '').trim();
+        const valid = ['carousel','text','qr'];
+        const initial = valid.includes(fromParam) ? fromParam : 'carousel';
+        activateTab(initial);
+      } catch (_) {
+        activateTab('carousel');
+      }
+    })();
+
+    // Exibir aba Admin apenas para contas administrativas
+    (function setupAdminTab() {
+      const btnAdmin = document.getElementById('admin-tab-btn');
+      if (!btnAdmin) return;
+      const isAdmin = Boolean(localStorage.getItem('adminToken')) || (localStorage.getItem('authRole') === 'admin');
+      btnAdmin.style.display = isAdmin ? 'inline-flex' : 'none';
+      btnAdmin.addEventListener('click', () => {
+        // Redireciona para o painel administrativo completo
+        window.location.href = '/admin.html';
+      });
+    })();
+
+    // Exibir e configurar botão de Logout quando houver sessão (admin ou usuário)
+    (function setupLogoutButton() {
+      const btnLogout = document.getElementById('logout-btn');
+      if (!btnLogout) return;
+      const hasSession = Boolean(localStorage.getItem('adminToken')) || Boolean(localStorage.getItem('authToken'));
+      btnLogout.style.display = hasSession ? 'inline-flex' : 'none';
+      btnLogout.addEventListener('click', () => {
+        try {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('authRole');
+          localStorage.removeItem('authUser');
+        } catch (e) {}
+        // Após sair, direciona para a tela de login
+        window.location.href = '/login.html';
+      });
+    })();
+
+    // Exibe créditos no cabeçalho ao lado do logo
+    (async function setupCreditsBadge() {
+      const badge = document.getElementById('credits-badge');
+      if (!badge) return;
+      const authRole = localStorage.getItem('authRole') || '';
+      const authToken = localStorage.getItem('authToken') || '';
+      const adminToken = localStorage.getItem('adminToken') || '';
+      const isAdminRole = authRole === 'admin';
+      const sessionToken = adminToken || authToken;
+      if (!sessionToken && !isAdminRole) {
+        badge.style.display = 'none';
+        return;
+      }
+      // Fallback imediato com cache (vale para admin e usuário)
+      const cached = Number(localStorage.getItem('authCredits') || 0);
+      if (!Number.isNaN(cached)) {
+        badge.textContent = 'Créditos: ' + cached;
+        badge.style.display = 'inline-flex';
+      }
+      // Atualiza via backend usando o token disponível (admin ou usuário)
+      try {
+        if (!sessionToken) throw new Error('Sem token de sessão');
+        const apiBase = (window.APP_API && window.APP_API.proxyBaseUrl) ? window.APP_API.proxyBaseUrl : window.location.origin;
+        const res = await fetch(apiBase.replace(/\/$/, '') + '/me', { headers: { 'Authorization': 'Bearer ' + sessionToken } });
+        if (!res.ok) return;
+        const data = await res.json();
+        const credits = Number(data?.user?.credits || 0);
+        badge.textContent = 'Créditos: ' + credits;
+        try { localStorage.setItem('authCredits', String(credits)); } catch (_) {}
+      } catch (_) {
+        // Mantém o valor em cache; se não havia cache, mostra 0
+        if (!cached) {
+          badge.textContent = 'Créditos: 0';
+          badge.style.display = 'inline-flex';
+        }
+      }
+    })();
+
+    // Chips de séries sincronizadas com o select do template
+    function renderSeriesNav() {
+      const container = document.getElementById('series-nav');
+      if (!container || !window.carouselTemplates) return;
+      container.innerHTML = '';
+      window.carouselTemplates.forEach(t => {
+        const chip = document.createElement('button');
+        chip.className = 'px-3 py-1 rounded-none border border-white/20 bg-white/5 hover:bg-white/10 text-sm';
+        chip.textContent = t.name;
+        chip.onclick = () => {
+          const sel = document.getElementById('carouselTemplate');
+          sel.value = t.id;
+          loadCarouselTemplate();
+        };
+        container.appendChild(chip);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', renderSeriesNav);
+
+    // Validação Inteligente (cliente) — aceita links sem https e verifica formato
+    function isUrlLike(value) {
+      if (!value) return false;
+      const v = String(value).trim();
+      if (/^https?:\/\//i.test(v)) return true; // http/https explícito
+      if (/^www\./i.test(v)) return true; // www.
+      // domínio simples com TLD
+      if (/^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(v)) return true;
+      return false;
+    }
+
+    document.getElementById('ai-validate').addEventListener('click', () => {
+      const issues = [];
+      const cardEditors = document.querySelectorAll('.card-editor');
+      cardEditors.forEach(cardEditor => {
+        const cardId = cardEditor.getAttribute('data-card-id');
+        const img = document.getElementById(`card-image-${cardId}`).value.trim();
+        if (!img || !isUrlLike(img)) {
+          issues.push(`Cartão #${cardId}: imagem deve ser um link válido (pode ser sem https).`);
+        }
+        const buttonEditors = cardEditor.querySelectorAll('.button-editor');
+        buttonEditors.forEach((_, i) => {
+          const type = document.getElementById(`button-type-${cardId}-${i}`).value;
+          const label = document.getElementById(`button-label-${cardId}-${i}`).value.trim();
+          if (!label) issues.push(`Cartão #${cardId} Botão #${i+1}: falta label.`);
+          if (type === 'URL') {
+            const url = document.getElementById(`button-url-${cardId}-${i}`).value.trim();
+            if (!url || !isUrlLike(url)) {
+              issues.push(`Cartão #${cardId} Botão #${i+1}: informe um link válido (pode ser sem https).`);
+            }
+          } else if (type === 'CALL') {
+            const phone = document.getElementById(`button-phone-${cardId}-${i}`).value.trim();
+            if (!phone || !/^\d{10,15}$/.test(phone)) {
+              issues.push(`Cartão #${cardId} Botão #${i+1}: informe um telefone válido com DDI (somente dígitos).`);
+            }
+          } else if (type === 'COPY') {
+            const copyText = document.getElementById(`button-copy-${cardId}-${i}`).value.trim();
+            if (!copyText) {
+              issues.push(`Cartão #${cardId} Botão #${i+1}: informe o texto para copiar (ex: CUPOM20).`);
+            }
+          }
+        });
+      });
+      const log = document.getElementById('log');
+      if (issues.length === 0) {
+        log.innerText = '✅ Validação Inteligente: nenhum problema encontrado.';
+      } else {
+        log.innerText = '⚠️ Validação Inteligente encontrou itens:\n' + issues.map(i => '- ' + i).join('\n');
+      }
+    });
+
+    // Config de API dinâmica via APP_API (api_config.json)
+    const __api = window.APP_API || null;
+    const __base = (__api && __api.proxyBaseUrl) ? __api.proxyBaseUrl : window.location.origin;
+    const __sendTextUrl = (__api && __api.urls && __api.urls.sendText) ? __api.urls.sendText : `${__base}/send-simple-text`;
+    const __configureWebhookUrl = (__api && __api.urls && __api.urls.configureWebhook) ? __api.urls.configureWebhook : `${__base}/configure-webhook`;
+    const __getQrUrl = `${__base}/get-qr-code`;
+    console.log('[API Index] URLs:', { __sendTextUrl, __configureWebhookUrl });
+
+    // Inicializa aba de QR por usuário: não cria automaticamente; só mostra status
+    async function initUserInstanceQrTab() {
+      try {
+        const authToken = localStorage.getItem('authToken') || '';
+        if (!authToken) return; // sem sessão do usuário
+        const instInput = document.getElementById('qr-instance');
+        const tokenInput = document.getElementById('qr-token');
+        const statusEl = document.getElementById('qr-status');
+        // Busca perfil para preencher nome de instância, sem criar
+        const meResp = await fetch(`${__base}/me`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+        const meData = await meResp.json().catch(() => ({}));
+        if (meResp.ok && meData && meData.user) {
+          const name = meData.user.instance_name || '';
+          if (name && instInput) instInput.value = name;
+        }
+        // Consulta status da instância do usuário e atualiza indicador
+        const st = await fetch(`${__base}/user/instance-status`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+        const stData = await st.json().catch(() => ({}));
+        if (st.ok && stData && stData.status) {
+          const connected = Boolean(stData.status.connected);
+          if (connected) {
+            if (statusEl) statusEl.textContent = '✅ WhatsApp conectado. Você pode enviar mensagens agora.';
+            const img = document.getElementById('qr-image');
+            const placeholderEl = document.getElementById('qr-placeholder');
+            if (img) img.style.display = 'none';
+            if (placeholderEl) placeholderEl.style.display = '';
+          } else {
+            if (statusEl) statusEl.textContent = 'Aguardando conexão. Gere o QR e escaneie no WhatsApp.';
+          }
+        }
+      } catch (e) {
+        console.warn('[initUserInstanceQrTab] falha:', e);
+      }
+    }
+
+    // Envio de texto simples na nova página (com tratamento de Content-Type)
+    async function sendSimpleText() {
+      const phone = document.getElementById('textPhone').value.trim();
+      const message = document.getElementById('textMessage').value.trim();
+      const log = document.getElementById('textLog');
+      if (!phone || !message) {
+        log.innerText = '❌ Informe telefone e mensagem.';
+        return;
+      }
+      try {
+        log.innerText = 'Enviando texto simples...';
+        const authToken = localStorage.getItem('authToken');
+        const response = await fetch(__sendTextUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+          },
+          body: JSON.stringify({ phone, message })
+        });
+        const contentType = response.headers.get('content-type') || '';
+        let data;
+        if (contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          const rawText = await response.text();
+          log.innerText = '⚠️ Resposta não-JSON recebida do proxy.\n' +
+            `Status: ${response.status} ${response.statusText}\n` +
+            `Content-Type: ${contentType}\n` +
+            `Corpo bruto:\n${rawText}`;
+          console.warn('Resposta não-JSON do proxy (texto):', { status: response.status, contentType, rawText });
+          return;
+        }
+        if (response.ok) {
+          log.innerText = '✅ Sua mensagem foi enviada com sucesso — Unlock Center agradece';
+          try {
+            Swal.fire({
+              icon: 'success',
+              title: 'Mensagem enviada!',
+              text: 'Seu texto foi enviado com sucesso.',
+              confirmButtonText: 'Ok',
+              customClass: { popup: 'swal-red-custom' }
+            });
+          } catch (e) {
+            console.warn('SweetAlert2 não pôde ser carregado ou chamado:', e);
+          }
+        } else {
+          log.innerText = '❌ Erro ao enviar texto:\n' + JSON.stringify(data, null, 2);
+        }
+      } catch (error) {
+        log.innerText = '❌ Erro de conexão com o proxy:\n' + error.message;
+      }
+    }
+
+    // Configuração de webhook com tratamento de Content-Type
+    async function configureWebhook() {
+      const publicUrl = document.getElementById('publicUrl').value.trim();
+      const log = document.getElementById('webhookLog');
+      if (!publicUrl) {
+        log.innerText = '❌ Informe a URL pública.';
+        return;
+      }
+      try {
+        log.innerText = 'Configurando webhook...';
+        const response = await fetch(__configureWebhookUrl, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ publicUrl })
+        });
+        const contentType = response.headers.get('content-type') || '';
+        let data;
+        if (contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          const rawText = await response.text();
+          log.innerText = '⚠️ Resposta não-JSON recebida do proxy.\n' +
+            `Status: ${response.status} ${response.statusText}\n` +
+            `Content-Type: ${contentType}\n` +
+            `Corpo bruto:\n${rawText}`;
+          console.warn('Resposta não-JSON do proxy (webhook):', { status: response.status, contentType, rawText });
+          return;
+        }
+        if (response.ok) {
+          log.innerText = '✅ Webhook configurado:\n' + JSON.stringify(data, null, 2);
+        } else {
+          log.innerText = '❌ Erro ao configurar webhook:\n' + JSON.stringify(data, null, 2);
+        }
+      } catch (error) {
+        log.innerText = '❌ Erro de conexão com o proxy:\n' + error.message;
+      }
+    }
+
+    // --- Utilitários de QR na aba do Index ---
+    function qrLog(msg) {
+      const logEl = document.getElementById('qr-log');
+      const ts = new Date().toISOString();
+      logEl.textContent += `\n[${ts}] ${msg}`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function extractTokenFromPayload(data) {
+      const candidates = [
+        data?.token,
+        data?.raw?.token,
+        data?.raw?.data?.token,
+        data?.raw?.instance?.token,
+        data?.instance?.token,
+        data?.status?.token
+      ].filter((v) => typeof v === 'string' && v.trim());
+      return candidates.length ? candidates[0] : '';
+    }
+
+    function extractQrFromPayload(data) {
+      const info = data?.info || {};
+      const status = data?.status || {};
+      const candidates = [
+        data?.qrCode, data?.qrcode, data?.qr, data?.base64,
+        info?.qrCode, info?.qrcode, info?.qr, info?.base64,
+        status?.qrCode, status?.qrcode, status?.qr, status?.base64,
+        // Suporte a respostas que retornam URL direta da imagem
+        data?.url, info?.url, status?.url, status?.qr_url,
+        // Suporte a nomes alternativos de imagem/base64 no status
+        status?.qr_image, status?.qr_image_base64,
+        data?.raw?.instance?.qrcode,
+        data?.raw?.instance?.qr_image,
+        data?.raw?.status?.qrcode,
+        data?.raw?.status?.qr_image,
+        data?.raw?.qrcode,
+        // Variedades aninhadas sob raw.data
+        data?.raw?.data?.qrCode,
+        data?.raw?.data?.qrcode,
+        data?.raw?.data?.qr,
+        data?.raw?.data?.base64,
+        data?.raw?.data?.url,
+        data?.raw?.data?.qr_image,
+        data?.raw?.data?.qr_image_base64
+      ].filter((v) => typeof v === 'string' && v.trim());
+      return candidates.length ? candidates[0] : '';
+    }
+
+    function extractPaircodeFromPayload(data) {
+      const status = data?.status || {};
+      const candidates = [
+        data?.paircode, status?.paircode, data?.instance?.paircode,
+        data?.raw?.instance?.paircode, data?.raw?.paircode
+      ].filter((v) => typeof v === 'string' && v.trim());
+      return candidates.length ? candidates[0] : '';
+    }
+
+    function renderQrFromPayload(payload) {
+      try {
+        // Preferir campos explícitos de formato quando presentes
+        let qr = '';
+        if (typeof payload?.format === 'string') {
+          const fmt = payload.format.toLowerCase();
+          if (fmt === 'url' && typeof payload?.url === 'string' && payload.url.trim()) {
+            qr = payload.url.trim();
+          } else if ((fmt === 'base64' || fmt === 'dataurl') && typeof payload?.qr === 'string' && payload.qr.trim()) {
+            qr = payload.qr.trim();
+          }
+        }
+        if (!qr) {
+          qr = extractQrFromPayload(payload);
+        }
+        const pair = extractPaircodeFromPayload(payload);
+        const img = document.getElementById('qr-image');
+        const statusEl = document.getElementById('qr-status');
+        const placeholderEl = document.getElementById('qr-placeholder');
+        const pairEl = document.getElementById('paircodeDisplay');
+        if (pair) {
+          pairEl.value = pair;
+        }
+        if (qr) {
+          let src = qr;
+          if (typeof src === 'string' && !src.startsWith('data:image') && !src.startsWith('http')) {
+            src = `data:image/png;base64,${src}`;
+          }
+          img.src = src;
+          // Log de carregamento/erro da imagem do QR
+          img.onload = () => {
+            qrLog('Imagem de QR carregada com sucesso.');
+          };
+          img.onerror = (e) => {
+            qrLog(`Falha ao carregar imagem do QR: ${e?.message || 'erro desconhecido'}`);
+          };
+          img.style.display = '';
+          if (placeholderEl) placeholderEl.style.display = 'none';
+          statusEl.textContent = 'QR atualizado. Escaneie no WhatsApp para parear.';
+          try {
+            qrLog('Payload recebido para QR: ' + JSON.stringify(payload));
+          } catch (_) {}
+        } else {
+          img.style.display = 'none';
+          if (placeholderEl) placeholderEl.style.display = '';
+          statusEl.textContent = 'QR não encontrado no payload. Use Status ou Forçar QR.';
+          try {
+            qrLog('Payload sem QR detectável: ' + JSON.stringify(payload));
+          } catch (_) {}
+        }
+      } catch (e) {
+        qrLog(`Erro ao renderizar QR: ${e.message}`);
+      }
+    }
+
+    async function qrCreateInstance() {
+      const name = document.getElementById('qr-instance').value.trim();
+      if (!name) { qrLog('Informe o nome da instância.'); return; }
+      try {
+        const response = await fetch(`${__base}/create-instance`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`);
+        const token = extractTokenFromPayload(data);
+        if (token) {
+          document.getElementById('qr-token').value = token;
+          qrLog('Instância criada e token preenchido.');
+        } else {
+          qrLog('Instância criada, mas token não retornado. Verifique o backend.');
+        }
+        // Novo: gerar/mostrar QR automaticamente após criar instância
+        try {
+          // Renderiza QR/Paircode se já veio na resposta de criação
+          renderQrFromPayload(data);
+          // Em qualquer caso, força um novo QR para garantir visibilidade imediata
+          await qrGetQr(true);
+          qrLog('QR solicitado automaticamente após criação. Escaneie para conectar.');
+        } catch (e) {
+          qrLog(`Aviso: falha ao gerar QR automaticamente: ${e.message}. Use os botões abaixo.`);
+        }
+      } catch (e) {
+        qrLog(`Erro ao criar instância: ${e.message}`);
+      }
+    }
+
+    async function qrConnectInstance() {
+      const phone = document.getElementById('qr-phone').value.trim();
+      const statusEl = document.getElementById('qr-status');
+      const authToken = localStorage.getItem('authToken') || '';
+      if (!authToken) { qrLog('Faça login para conectar sua instância.'); return; }
+      try {
+        const response = await fetch(`${__base}/user/connect-instance`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
+          },
+          body: JSON.stringify({ phone })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`);
+        qrLog('Conexão iniciada. Renderizando QR/Paircode do retorno...');
+        renderQrFromPayload(data);
+        // Inicia polling leve até conectar, então redireciona para tela de envio
+        let tries = 0;
+        const poll = setInterval(async () => {
+          tries++;
+          try {
+            const st = await fetch(`${__base}/user/instance-status`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+            const stData = await st.json().catch(() => ({}));
+            if (st.ok && stData && stData.status && stData.status.connected) {
+              clearInterval(poll);
+              if (statusEl) statusEl.textContent = '✅ Conectado! Redirecionando para a tela de envio...';
+              // Atualiza campos visuais se necessário
+              try {
+                const meResp = await fetch(`${__base}/me`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+                const meData = await meResp.json().catch(() => ({}));
+                if (meResp.ok && meData && meData.user && meData.user.instance_name) {
+                  const instInput = document.getElementById('qr-instance');
+                  if (instInput) instInput.value = meData.user.instance_name;
+                }
+              } catch (_) {}
+              // Redireciona para a aba de envio de texto
+              activateTab('text');
+            }
+          } catch (_) {}
+          if (tries > 30) clearInterval(poll); // ~30 tentativas
+        }, 2000);
+      } catch (e) {
+        qrLog(`Erro ao conectar instância: ${e.message}`);
+      }
+    }
+
+    async function qrGetStatus() {
+      const authToken = localStorage.getItem('authToken') || '';
+      if (!authToken) { qrLog('Faça login para consultar o status.'); return; }
+      try {
+        const response = await fetch(`${__base}/user/instance-status`, { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`);
+        qrLog('Status obtido. Atualizando exibição...');
+        renderQrFromPayload(data);
+      } catch (e) {
+        qrLog(`Erro ao obter status: ${e.message}`);
+      }
+    }
+
+    async function qrGetQr(force) {
+      const authToken = localStorage.getItem('authToken') || '';
+      if (!authToken) { qrLog('Faça login para obter o QR.'); return; }
+      const url = new URL(`${__base}/user/get-qr-code`);
+      url.searchParams.set('force', force ? 'true' : 'false');
+      try {
+        const response = await fetch(url.toString(), { method: 'GET', headers: { 'Authorization': 'Bearer ' + authToken } });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`);
+        qrLog(force ? 'Novo QR solicitado (force=true).' : 'QR solicitado.');
+        renderQrFromPayload(data);
+      } catch (e) {
+        qrLog(`Erro ao obter QR: ${e.message}`);
+      }
+    }
+
+    function qrCopyPaircode() {
+      const val = document.getElementById('paircodeDisplay').value;
+      if (!val) { qrLog('Nenhum paircode para copiar.'); return; }
+      navigator.clipboard.writeText(val).then(() => {
+        qrLog('Paircode copiado para área de transferência.');
+      }).catch((e) => qrLog(`Falha ao copiar: ${e.message}`));
+    }
+
+    // Botões para obter/forçar QR: ao obter, conectamos e já forçamos QR
+    document.getElementById('btn-generate-qr').addEventListener('click', () => qrConnectThenForceQr());
+    document.getElementById('btn-force-qr').addEventListener('click', () => qrGetQr(true));
+
+    // Desconectar instância e tentar gerar novo QR
+    async function disconnectInstance() {
+      const statusEl = document.getElementById('qr-status');
+      const imgEl = document.getElementById('qr-image');
+      const placeholderEl = document.getElementById('qr-placeholder');
+      const log = document.getElementById('qr-log');
+      const instance = document.getElementById('qr-instance').value.trim();
+      if (!instance) {
+        statusEl.textContent = 'Informe o nome da instância para desconectar.';
+        return;
+      }
+      statusEl.textContent = `Desconectando instância "${instance}"...`;
+      imgEl.style.display = 'none';
+      placeholderEl.style.display = '';
+      log.textContent = '';
+      try {
+        const response = await fetch(`${__base}/disconnect-instance`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ instance })
+        });
+        const contentType = response.headers.get('content-type') || '';
+        let data;
+        if (contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          const rawText = await response.text();
+          log.textContent = '⚠️ Resposta não-JSON recebida do proxy.\n' +
+            `Status: ${response.status} ${response.statusText}\n` +
+            `Content-Type: ${contentType}\n` +
+            `Corpo bruto:\n${rawText}`;
+          statusEl.textContent = 'Falha ao desconectar instância';
+          // Mesmo com resposta inesperada, tenta reconectar e forçar novo QR
+          statusEl.textContent = 'Tentando reconectar e forçar novo QR...';
+          await qrConnectThenForceQr();
+          return;
+        }
+        if (response.ok && data) {
+          const ok = Boolean(data.success || data.status === 'disconnected' || data.reason);
+          if (ok) {
+            statusEl.textContent = 'Instância desconectada (ou já sem conexão) — reconectando e forçando novo QR...';
+            await qrConnectThenForceQr();
+          } else {
+            statusEl.textContent = 'Falha ao desconectar instância — tentando reconectar e forçar novo QR...';
+            log.textContent = JSON.stringify(data, null, 2);
+            await qrConnectThenForceQr();
+          }
+        } else {
+          statusEl.textContent = `Erro ao desconectar (HTTP ${response.status}) — tentando reconectar e forçar novo QR...`;
+          log.textContent = JSON.stringify(data || {}, null, 2);
+          await qrConnectThenForceQr();
+        }
+      } catch (error) {
+        statusEl.textContent = 'Erro de conexão ao desconectar — tentando reconectar e forçar novo QR...';
+        log.textContent = '❌ Erro de conexão com o proxy:\n' + error.message;
+        await qrConnectThenForceQr();
+      }
+    }
+
+    // Conecta a instância e em seguida força geração de QR
+    async function qrConnectThenForceQr() {
+      const authToken = localStorage.getItem('authToken') || '';
+      const phone = document.getElementById('qr-phone').value.trim();
+      if (!authToken) { qrLog('Faça login para conectar sua instância.'); return; }
+      try {
+        const response = await fetch(`${__base}/user/connect-instance`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+          body: JSON.stringify({ phone })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`);
+        qrLog('Conexão solicitada. Tentando forçar QR...');
+        renderQrFromPayload(data);
+      } catch (e) {
+        qrLog(`Aviso: conexão não concluída imediatamente: ${e.message}. Prosseguindo com force QR.`);
+      }
+      try {
+        await qrGetQr(true);
+      } catch (_) {}
+    }
+    document.getElementById('btn-disconnect-instance').addEventListener('click', disconnectInstance);
+
+   // Link direto para página de QR já está no elemento <a href="/qr.html">
+  </script>
+
+  <!-- Banner de status em tempo real (via Socket.IO) -->
+  <div id="rt-banner" style="
+    display:none;
+    position:fixed;
+    left:16px; right:16px; bottom:16px;
+    z-index:9999;
+    background:#10b981; /* emerald-500 */
+    color:#063;
+    border:1px solid #059669; /* emerald-600 */
+    border-radius:10px;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+    padding:12px 14px;
+    font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  ">
+    <div id="rt-banner-text" style="font-weight:600; color:#012d1f; margin-bottom:6px;">Conectado com sucesso</div>
+    <div id="rt-banner-sub" style="font-size:13px; opacity:.85; margin-bottom:8px;">Instância conectada.</div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button id="rt-banner-close" style="
+        background:#065f46; color:#ecfdf5; border:0; padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:600;">
+        Fechar
+      </button>
+      <button id="rt-banner-go" style="
+        background:#34d399; color:#064e3b; border:0; padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:600;">
+        Ir para envio
+      </button>
+    </div>
+  </div>
+
+  <!-- Socket.IO client para eventos de conexão da instância -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    (function initRealtimeBanner(){
+      const el = (id) => document.getElementById(id);
+      const banner = el('rt-banner');
+      const textEl = el('rt-banner-text');
+      const subEl = el('rt-banner-sub');
+      const btnClose = el('rt-banner-close');
+      const btnGo = el('rt-banner-go');
+
+      function showBanner(msg, sub){
+        if (textEl) textEl.textContent = msg || 'Conectado com sucesso';
+        if (subEl) subEl.textContent = sub || '';
+        if (banner) banner.style.display = '';
+      }
+      function hideBanner(){ if (banner) banner.style.display = 'none'; }
+
+      if (btnClose) btnClose.addEventListener('click', hideBanner);
+      if (btnGo) btnGo.addEventListener('click', function(){
+        try { if (typeof activateTab === 'function') return activateTab('text'); } catch(_) {}
+        window.location.href = '/painel/envio';
+      });
+
+      (async function connectSocket(){
+        try {
+          const authToken = (localStorage.getItem('authToken') || '').trim();
+          if (!authToken) return; // não logado
+          let uid = null;
+          try {
+            const r = await fetch('/me', { headers: { 'Authorization': 'Bearer ' + authToken } });
+            const j = await r.json().catch(() => ({}));
+            uid = j?.user?.id || null;
+          } catch (_) {}
+          if (!uid) return;
+
+          // Inicia Socket.IO (se disponível no backend)
+          let ioClient = null;
+          try { ioClient = io(); } catch (e) { console.warn('[Socket.IO] indisponível no frontend:', e?.message || String(e)); return; }
+          // registra este usuário para receber evento genérico
+          try { ioClient.emit('register', { user_id: uid }); } catch (_) {}
+
+          const evt = `instance_connected:${uid}`;
+          const handleConnected = async (payload) => {
+            try {
+              const details = { instance: '', deviceName: '', phone: '' };
+              try {
+                const s = await fetch('/user/instance-status', { headers: { 'Authorization': 'Bearer ' + authToken } });
+                const d = await s.json().catch(() => ({}));
+                details.instance = (d?.instance_name || d?.instance || '');
+                details.deviceName = (d?.deviceName || d?.status?.deviceName || '');
+                details.phone = (d?.phoneNumber || d?.status?.phoneNumber || '');
+              } catch (_) {}
+              const parts = [];
+              if (details.instance) parts.push(`Instância: ${details.instance}`);
+              if (details.deviceName) parts.push(`Dispositivo: ${details.deviceName}`);
+              if (details.phone) parts.push(`Número: ${details.phone}`);
+              showBanner('WhatsApp conectado', parts.join(' • '));
+            } catch (e) {
+              showBanner('WhatsApp conectado', 'Conexão confirmada.');
+            }
+          };
+          ioClient.on(evt, handleConnected);
+          // também ouvir evento genérico direcionado via registro
+          ioClient.on('instance_connected', handleConnected);
+          console.log('[Socket.IO] ouvindo', evt);
+        } catch (e) {
+          console.warn('[RealtimeBanner] falhou:', e?.message || String(e));
+        }
+      })();
+    })();
+  </script>
+
+  <script>
+    // Pré-preenche o campo "Nome da Instância" com o username do usuário logado
+    (async function prefillInstanceNameFromUser(){
+      try {
+        const input = document.getElementById('qr-instance');
+        if (!input) return;
+        if (input.value && input.value.trim()) return; // já preenchido pelo usuário
+        const token = (localStorage.getItem('authToken') || '').trim();
+        if (!token) return;
+        const r = await fetch('/me', { headers: { 'Authorization': 'Bearer ' + token } });
+        const j = await r.json().catch(() => ({}));
+        const username = (j && j.user && j.user.username) ? String(j.user.username).trim() : '';
+        if (username) input.value = username;
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>

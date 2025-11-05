@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel Administrativo</title>
+  <style>
+    :root { --bg:#0f172a; --panel:#111827; --panel-weak:#1b2433; --muted:#6b7280; --primary:#10B981; --danger:#ef4444; --text:#e5e7eb; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 16px; background: #0b1220; border-bottom: 1px solid #1f2937; }
+    header h1 { margin: 0; font-size: 20px; }
+    main { padding: 16px; max-width: 1100px; margin: 0 auto; }
+    .card { background: var(--panel); border: 1px solid #1f2937; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+    .row { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 768px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+    label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 13px; }
+    input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #374151; background: #0b1220; color: var(--text); }
+    button { cursor: pointer; border: 0; border-radius: 8px; padding: 10px 14px; font-weight: 600; }
+    .btn { background: #1f2937; color: var(--text); }
+    .btn-primary { background: var(--primary); color: #03281f; }
+    .btn-danger { background: var(--danger); color: #13080a; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid #1f2937; padding: 10px; text-align: left; font-size: 14px; }
+    th { color: var(--muted); font-weight: 600; }
+    .muted { color: var(--muted); font-size: 12px; }
+    .tag { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: #0b1220; border: 1px solid #374151; }
+    .tag.green { color: #16a34a; border-color: #14532d; }
+    .tag.red { color: #ef4444; border-color: #7f1d1d; }
+    .tag.blue { color: #3b82f6; border-color: #1e3a8a; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal { background: var(--panel); border: 1px solid #1f2937; border-radius: 10px; padding: 16px; width: 90%; max-width: 420px; }
+    
+    /* Responsividade para tabela de usuários */
+    @media (max-width: 767px) {
+      .users-table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .users-table { min-width: 700px; font-size: 12px; }
+      .users-table th, .users-table td { padding: 8px 6px; white-space: nowrap; }
+      .users-table .actions { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 2px; 
+        min-width: 160px; 
+        align-items: stretch;
+      }
+      .users-table .actions button { 
+        font-size: 9px; 
+        padding: 4px 6px; 
+        white-space: nowrap; 
+        border-radius: 3px;
+        min-height: 24px;
+        text-align: center;
+        line-height: 1.2;
+      }
+      .users-table .tag { font-size: 10px; padding: 1px 6px; }
+      .users-table .muted { font-size: 10px; }
+    }
+    
+    /* Melhorias gerais para mobile */
+    @media (max-width: 480px) {
+      main { padding: 12px; }
+      .card { padding: 12px; margin-bottom: 12px; }
+      .users-table { font-size: 11px; }
+      .users-table th, .users-table td { padding: 6px 4px; }
+      .users-table .actions { 
+        min-width: 140px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+      .users-table .actions button { 
+        font-size: 8px; 
+        padding: 3px 4px; 
+        min-height: 22px;
+        border-radius: 2px;
+      }
+      .grid-3 { grid-template-columns: 1fr; }
+      .row-2 { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .actions button { margin-bottom: 4px; }
+    }
+    
+    /* Estilos adicionais para melhor UX mobile */
+    @media (max-width: 767px) {
+      header { padding: 12px; }
+      header h1 { font-size: 18px; }
+      .modal { width: 95%; padding: 12px; }
+      input, select { font-size: 16px; } /* Evita zoom no iOS */
+    }
+    
+    /* Estilos para funcionalidade de expansão dos usuários */
+    .user-row {
+      transition: background-color 0.2s ease;
+    }
+    
+    .user-row:hover {
+      background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    .user-row.expanded {
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+    
+    .expand-indicator {
+      text-align: center;
+      width: 40px;
+    }
+    
+    .expand-arrow {
+      font-size: 12px;
+      color: #666;
+      transition: transform 0.2s ease;
+    }
+    
+    .user-actions-row {
+      background-color: var(--panel-weak);
+    }
+    /* Permite que o conteúdo dentro da linha expandida quebre linha normalmente */
+    .user-actions-row td {
+      white-space: normal !important;
+    }
+    
+    .user-actions-container {
+      padding: 15px;
+      border-top: 1px solid #1f2937;
+      background: var(--panel-weak);
+    }
+    
+    .user-actions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+    
+    .user-actions-grid button {
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 4px;
+      min-height: 32px;
+      transition: all 0.2s ease;
+      white-space: nowrap; /* Mantém lado a lado */
+      line-height: 1.2;
+      text-align: center;
+      min-width: 110px;
+    }
+    /* Cores mais visíveis para os botões nas abas expandidas */
+    .user-actions-grid button.btn,
+    .admin-actions button.btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid #334155;
+      color: var(--text);
+    }
+    .user-actions-grid button.btn:hover,
+    .admin-actions button.btn:hover {
+      background: rgba(255,255,255,0.12);
+      filter: brightness(1.05);
+    }
+    
+    /* Responsividade para expansão em mobile */
+    @media (max-width: 767px) {
+      .user-row {
+        cursor: pointer;
+      }
+      
+      .user-row:active {
+        background-color: rgba(0, 123, 255, 0.15);
+      }
+      
+      .user-actions-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      
+      .user-actions-grid button {
+        font-size: 11px;
+        padding: 6px 8px;
+        min-height: 28px;
+        touch-action: manipulation; /* Melhora responsividade ao toque */
+      }
+      
+      .user-actions-container {
+        padding: 12px;
+      }
+      
+      .expand-indicator {
+        width: 30px;
+        padding: 8px;
+      }
+      
+      .expand-arrow {
+        font-size: 14px;
+      }
+      
+      /* Adicionar indicação visual de que a linha é clicável */
+      .user-row td:first-child::before {
+        content: "👆 ";
+        font-size: 10px;
+        opacity: 0.6;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .user-actions-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      
+      .user-actions-grid button {
+        font-size: 10px;
+        padding: 5px 6px;
+        min-height: 26px;
+        min-width: 92px;
+      }
+      
+      .user-actions-container {
+        padding: 10px;
+      }
+    }
+
+    /* Layout horizontal específico para admins */
+    .admin-actions {
+      display: flex !important;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+    .admin-actions button {
+      white-space: nowrap;
+      min-width: 110px;
+      font-size: 10px;
+      padding: 4px 6px;
+      min-height: 24px;
+    }
+    @media (max-width: 767px) {
+      .admin-actions { gap: 4px; }
+      .admin-actions button { min-width: 100px; font-size: 9px; padding: 4px 5px; min-height: 22px; }
+    }
+    @media (max-width: 480px) {
+      .admin-actions { gap: 3px; }
+      .admin-actions button { min-width: 92px; font-size: 8px; padding: 3px 4px; min-height: 20px; }
+    }
+    
+    /* Melhorias específicas para botões de ação em mobile */
+    @media (max-width: 480px) {
+      .users-table .actions button.btn-primary,
+      .user-actions-grid button.btn-primary {
+        background: var(--primary);
+        color: #03281f;
+        font-weight: 600;
+      }
+      .users-table .actions button.btn-danger,
+      .user-actions-grid button.btn-danger {
+        background: var(--danger);
+        color: #13080a;
+        font-weight: 600;
+      }
+      .users-table .actions button:hover,
+      .user-actions-grid button:hover {
+        opacity: 0.8;
+        transform: scale(0.98);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Painel Administrativo</h1>
+    <div class="muted">Gerencie usuários, acesso e uso do WhatsApp</div>
+    <div style="margin-top:8px">
+      <button class="btn" onclick="window.location.href='/index.html'">Voltar ao Painel</button>
+    </div>
+  </header>
+  <main>
+    <section class="card" id="admin-login-card">
+      <h2 style="margin:0 0 8px">Login do Administrador</h2>
+      <div class="row row-2">
+        <div>
+          <label>Usuário</label>
+          <input id="admin-user" placeholder="admin" />
+        </div>
+        <div>
+          <label>Senha</label>
+          <input id="admin-pass" type="password" placeholder="••••••" />
+        </div>
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn-primary" onclick="adminLogin()">Entrar</button>
+        <button class="btn" onclick="adminLogout()">Sair</button>
+        <span id="admin-login-status" class="muted"></span>
+      </div>
+      <div class="muted" style="margin-top:8px">Dica: usuário inicial é semeado via `ADMIN_USERNAME`/`ADMIN_PASSWORD` (padrão admin/admin em dev, altere em produção).</div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin:0 0 8px">Criar Usuário</h2>
+      <div class="grid grid-3">
+        <div>
+          <label>Usuário</label>
+          <input id="new-username" placeholder="usuario" />
+        </div>
+        <div>
+          <label>Senha</label>
+          <input id="new-password" type="password" placeholder="••••••" />
+        </div>
+        <div>
+          <label>Tipo de conta</label>
+          <select id="new-role">
+            <option value="user">Usuário</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+        <div>
+          <label>Validade (dias, máx 30)</label>
+          <input id="new-days" type="number" min="1" max="30" value="30" />
+        </div>
+        <div>
+          <label>Créditos iniciais</label>
+          <input id="new-credits" type="number" min="0" value="0" />
+        </div>
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn-primary" onclick="createUser()">Adicionar</button>
+        <span id="create-status" class="muted"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin:0 0 8px">Usuários</h2>
+      <div class="actions" style="margin-bottom:8px">
+        <button class="btn" onclick="loadUsers()">Atualizar lista</button>
+        <span id="list-status" class="muted"></span>
+      </div>
+      <div class="users-table-container" style="overflow:auto;">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuário</th>
+              <th>Ativo</th>
+              <th>Validade</th>
+              <th>Créditos</th>
+              <th>Mensagens</th>
+              <th style="width: 40px;">⚙️</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Alterar Senha -->
+  <div id="password-modal" class="modal-backdrop">
+    <div class="modal">
+      <h3 style="margin:0 0 8px">Alterar senha</h3>
+      <label>Nova senha</label>
+      <input id="password-modal-input" type="password" placeholder="••••••" />
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="closePasswordModal()">Cancelar</button>
+        <button class="btn-primary" onclick="submitPasswordModal()">Salvar</button>
+      </div>
+      <div id="password-modal-status" class="muted" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <!-- Modal Definir Créditos (apenas admin) -->
+  <div id="credits-modal" class="modal-backdrop">
+    <div class="modal">
+      <h3 style="margin:0 0 8px">Definir créditos (admin)</h3>
+      <label>Adicionar créditos</label>
+      <input id="credits-modal-input" type="number" min="0" step="1" value="0" />
+      <div class="muted" id="credits-modal-info" style="margin-top:6px"></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="closeCreditsModal()">Cancelar</button>
+        <button class="btn-primary" onclick="submitCreditsModal()">Salvar</button>
+      </div>
+      <div id="credits-modal-status" class="muted" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <!-- Modal Transferir Créditos (usuário) -->
+  <div id="transfer-modal" class="modal-backdrop">
+    <div class="modal">
+      <h3 style="margin:0 0 8px">Transferir créditos para usuário</h3>
+      <label>Quantidade a transferir</label>
+      <input id="transfer-modal-input" type="number" min="1" step="1" value="1" />
+      <div class="muted" id="transfer-modal-info" style="margin-top:6px"></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="closeTransferModal()">Cancelar</button>
+        <button class="btn-primary" onclick="submitTransferModal()">Transferir</button>
+      </div>
+      <div id="transfer-modal-status" class="muted" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <!-- Modal Adicionar Dias (usuário) -->
+  <div id="add-days-modal" class="modal-backdrop">
+    <div class="modal">
+      <h3 style="margin:0 0 8px">Adicionar dias de painel</h3>
+      <label>Quantidade de dias (máx 30)</label>
+      <input id="add-days-modal-input" type="number" min="1" max="30" step="1" value="1" />
+      <div class="muted" id="add-days-modal-info" style="margin-top:6px"></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="closeAddDaysModal()">Cancelar</button>
+        <button class="btn-primary" onclick="submitAddDaysModal()">Adicionar</button>
+      </div>
+      <div id="add-days-modal-status" class="muted" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <!-- Modal Alterar Nome de Usuário (apenas admin) -->
+  <div id="username-modal" class="modal-backdrop">
+    <div class="modal">
+      <h3 style="margin:0 0 8px">Alterar nome de usuário (admin)</h3>
+      <label>Novo nome</label>
+      <input id="username-modal-input" type="text" placeholder="novo-usuario" />
+      <div class="muted" id="username-modal-info" style="margin-top:6px"></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="closeUsernameModal()">Cancelar</button>
+        <button class="btn-primary" onclick="submitUsernameModal()">Salvar</button>
+      </div>
+      <div id="username-modal-status" class="muted" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = (window.API_BASE || (window.location.port === '3002' ? 'http://127.0.0.1:3001' : window.location.origin)).replace(/\/$/, '');
+    function fmtDate(ts) {
+      if (!ts) return '-';
+      const d = new Date(Number(ts));
+      return d.toLocaleString('pt-BR');
+    }
+    function daysLeft(ts) {
+      if (!ts) return '-';
+      const diff = Number(ts) - Date.now();
+      if (diff <= 0) return 'expirado';
+      return Math.ceil(diff / (24*60*60*1000)) + 'd';
+    }
+    function getAdminToken() {
+      const adminToken = localStorage.getItem('adminToken');
+      if (adminToken) return adminToken;
+      const role = localStorage.getItem('authRole');
+      const userToken = localStorage.getItem('authToken');
+      if (role === 'admin' && userToken) return userToken;
+      return '';
+    }
+    function setAdminStatus(text) { document.getElementById('admin-login-status').textContent = text || ''; }
+    function setListStatus(text) { document.getElementById('list-status').textContent = text || ''; }
+    function setCreateStatus(text) { document.getElementById('create-status').textContent = text || ''; }
+
+    async function adminLogin() {
+      const username = document.getElementById('admin-user').value.trim();
+      const password = document.getElementById('admin-pass').value.trim();
+      setAdminStatus('Entrando...');
+      try {
+        const res = await fetch(apiBase + '/admin/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Falha no login');
+        localStorage.setItem('adminToken', data.token);
+        setAdminStatus('Conectado como ' + (data.user?.username || username));
+      } catch (e) {
+        setAdminStatus('Erro: ' + e.message);
+      }
+    }
+    function adminLogout() {
+      localStorage.removeItem('adminToken');
+      setAdminStatus('Desconectado');
+    }
+
+    async function createUser() {
+      const token = getAdminToken();
+      if (!token) { setCreateStatus('Faça login como admin.'); return; }
+      const username = document.getElementById('new-username').value.trim();
+      const password = document.getElementById('new-password').value.trim();
+      const role = String(document.getElementById('new-role')?.value || 'user');
+      const days = Number(document.getElementById('new-days').value || 30);
+      const credits = Math.max(0, Number(document.getElementById('new-credits')?.value || 0));
+      setCreateStatus('Criando...');
+      try {
+        const res = await fetch(apiBase + '/admin/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ username, password, role, days, credits })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Falha ao criar usuário');
+        setCreateStatus('Usuário criado (id ' + data.id + ')');
+        loadUsers();
+      } catch (e) { setCreateStatus('Erro: ' + e.message); }
+    }
+
+    // Ajusta validade quando o papel for admin (admins não possuem validade)
+    (function setupRoleDaysToggle(){
+      try {
+        const roleSel = document.getElementById('new-role');
+        const daysInput = document.getElementById('new-days');
+        const update = () => {
+          const isAdmin = String(roleSel.value || 'user') === 'admin';
+          if (daysInput) {
+            daysInput.disabled = isAdmin;
+            daysInput.title = isAdmin ? 'Administradores não possuem validade' : '';
+          }
+        };
+        if (roleSel) {
+          roleSel.addEventListener('change', update);
+          update();
+        }
+      } catch (_) {}
+    })();
+
+    async function loadUsers() {
+      const token = getAdminToken();
+      if (!token) { setListStatus('Faça login como admin.'); return; }
+      setListStatus('Carregando...');
+      try {
+        const res = await fetch(apiBase + '/admin/users', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Falha ao listar usuários');
+        renderUsers(data.users || []);
+        setListStatus('');
+      } catch (e) { setListStatus('Erro: ' + e.message); }
+    }
+
+    function renderUsers(users) {
+      const tbody = document.getElementById('users-tbody');
+      tbody.innerHTML = '';
+      const adminCount = Array.isArray(users) ? users.filter(x => String(x.role) === 'admin').length : 0;
+      users.forEach(u => {
+        // Linha principal do usuário (clicável)
+        const tr = document.createElement('tr');
+        tr.className = 'user-row';
+        tr.setAttribute('data-user-id', u.id);
+        tr.innerHTML = `
+          <td>${u.id}</td>
+          <td>${u.username} <span class="tag ${u.role === 'admin' ? 'blue' : ''}">${u.role === 'admin' ? 'admin' : 'usuário'}</span></td>
+          <td>${u.active ? '<span class="tag green">ativo</span>' : '<span class="tag red">inativo</span>'}</td>
+          <td>${fmtDate(u.expires_at)} <span class="muted">(${daysLeft(u.expires_at)})</span></td>
+          <td>${typeof u.credits === 'number' ? u.credits : 0}</td>
+          <td>${u.message_count}</td>
+          <td class="expand-indicator">
+            <span class="expand-arrow">▼</span>
+          </td>
+        `;
+        
+        // Linha expansível com as ações
+        const expandRow = document.createElement('tr');
+        expandRow.className = 'user-actions-row';
+        expandRow.style.display = 'none';
+        expandRow.innerHTML = `
+          <td colspan="7">
+            <div class="user-actions-container">
+              <div class="user-actions-grid" id="actions-${u.id}"></div>
+            </div>
+          </td>
+        `;
+        
+        // Adicionar evento de clique na linha principal
+        tr.addEventListener('click', () => toggleUserActions(u.id));
+        tr.style.cursor = 'pointer';
+        
+        // Criar botões de ação
+        const actionsContainer = expandRow.querySelector(`#actions-${u.id}`);
+        // Para admins, vamos aplicar uma classe específica para layout horizontal
+        if (String(u.role) === 'admin') {
+          actionsContainer.classList.add('admin-actions');
+        }
+        
+        if (String(u.role) !== 'admin') {
+          actionsContainer.appendChild(actionBtn('Ativar', () => updateUser(u.id, { active: 1 })));
+          actionsContainer.appendChild(actionBtn('Inativar', () => updateUser(u.id, { active: 0 })));
+        }
+        actionsContainer.appendChild(actionBtn('Alterar senha', () => openPasswordModal(u.id)));
+        
+        if (String(u.role) === 'admin') {
+          actionsContainer.appendChild(actionBtn('Definir créditos', () => openCreditsModal(u.id, Number(u.credits || 0))));
+          actionsContainer.appendChild(actionBtn('Alterar nome', () => openUsernameModal(u.id, String(u.username || ''))));
+        } else {
+          actionsContainer.appendChild(actionBtn('Definir créditos', () => openTransferModal(u.id, Number(u.credits || 0))));
+          actionsContainer.appendChild(actionBtn('Adicionar dias', () => openAddDaysModal(u.id, Number(u.expires_at || 0))));
+        }
+        
+        if (String(u.role) !== 'admin') {
+          actionsContainer.appendChild(actionBtn('Zerar créditos', () => updateUser(u.id, { credits: 0 })));
+          actionsContainer.appendChild(actionBtn('Remover usuário', () => deleteUser(u.id), 'btn-danger'));
+        } else {
+          if (adminCount >= 2) {
+            actionsContainer.appendChild(actionBtn('Remover usuário', () => deleteUser(u.id), 'btn-danger'));
+          }
+        }
+        
+        tbody.appendChild(tr);
+        tbody.appendChild(expandRow);
+      });
+    }
+
+    function actionBtn(text, handler, cls='btn') {
+      const b = document.createElement('button');
+      b.className = cls; b.textContent = text; b.onclick = handler; return b;
+    }
+
+    function toggleUserActions(userId) {
+      const userRow = document.querySelector(`tr[data-user-id="${userId}"]`);
+      const actionsRow = userRow.nextElementSibling;
+      const arrow = userRow.querySelector('.expand-arrow');
+      
+      if (actionsRow.style.display === 'none') {
+        // Fechar todas as outras linhas abertas
+        document.querySelectorAll('.user-actions-row').forEach(row => {
+          row.style.display = 'none';
+        });
+        document.querySelectorAll('.expand-arrow').forEach(arr => {
+          arr.textContent = '▼';
+          arr.parentElement.parentElement.classList.remove('expanded');
+        });
+        
+        // Abrir a linha atual
+        actionsRow.style.display = 'table-row';
+        arrow.textContent = '▲';
+        userRow.classList.add('expanded');
+      } else {
+        // Fechar a linha atual
+        actionsRow.style.display = 'none';
+        arrow.textContent = '▼';
+        userRow.classList.remove('expanded');
+      }
+    }
+
+    async function updateUser(id, payload) {
+      const token = getAdminToken();
+      if (!token) { alert('Faça login como admin'); return; }
+      try {
+        const res = await fetch(apiBase + '/admin/users/' + id, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Falha na atualização');
+        loadUsers();
+      } catch (e) { alert('Erro: ' + e.message); }
+    }
+
+    // Modal Transferir Créditos (usuário)
+    let transferModalUserId = null;
+    let transferModalUserCredits = 0;
+    function openTransferModal(userId, currentCredits) {
+      transferModalUserId = userId;
+      transferModalUserCredits = Number(currentCredits || 0);
+      const input = document.getElementById('transfer-modal-input');
+      const status = document.getElementById('transfer-modal-status');
+      const info = document.getElementById('transfer-modal-info');
+      status.textContent = '';
+      input.value = '1';
+      info.textContent = 'Créditos atuais do usuário: ' + transferModalUserCredits + '. Isso debita do admin.';
+      document.getElementById('transfer-modal').style.display = 'flex';
+      setTimeout(() => { try { input.focus(); } catch(_){} }, 0);
+    }
+    function closeTransferModal() {
+      transferModalUserId = null;
+      transferModalUserCredits = 0;
+      document.getElementById('transfer-modal').style.display = 'none';
+    }
+    async function submitTransferModal() {
+      const input = document.getElementById('transfer-modal-input');
+      const status = document.getElementById('transfer-modal-status');
+      const amount = Math.max(0, Number(input.value || 0));
+      if (!amount) { status.textContent = 'Informe um valor maior que 0'; return; }
+      status.textContent = 'Transferindo...';
+      try {
+        await transferCredits(transferModalUserId, amount);
+        closeTransferModal();
+      } catch (e) {
+        status.textContent = 'Erro: ' + (e?.message || e);
+      }
+    }
+
+    async function transferCredits(id, amount) {
+      const token = getAdminToken();
+      if (!token) { alert('Faça login como admin'); return; }
+      try {
+        const res = await fetch(apiBase + '/admin/users/' + id + '/transfer-credits', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ amount })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const msg = data?.error || 'Falha na transferência';
+          alert(msg);
+          return;
+        }
+        loadUsers();
+      } catch (e) {
+        alert('Erro: ' + e.message);
+      }
+    }
+
+    // Modal Adicionar Dias (usuário)
+    let addDaysModalUserId = null;
+    let addDaysModalCurrentExp = 0;
+    function openAddDaysModal(userId, currentExpTs) {
+      addDaysModalUserId = userId;
+      addDaysModalCurrentExp = Number(currentExpTs || 0);
+      const input = document.getElementById('add-days-modal-input');
+      const status = document.getElementById('add-days-modal-status');
+      const info = document.getElementById('add-days-modal-info');
+      status.textContent = '';
+      input.value = '1';
+      const now = Date.now();
+      const base = addDaysModalCurrentExp && addDaysModalCurrentExp > now ? addDaysModalCurrentExp : now;
+      info.textContent = 'Validade atual: ' + (addDaysModalCurrentExp ? new Date(addDaysModalCurrentExp).toLocaleString('pt-BR') : 'não definida/expirada') + '. Isto soma dias ao prazo.';
+      document.getElementById('add-days-modal').style.display = 'flex';
+      setTimeout(() => { try { input.focus(); } catch(_){} }, 0);
+    }
+    function closeAddDaysModal() {
+      addDaysModalUserId = null;
+      addDaysModalCurrentExp = 0;
+      document.getElementById('add-days-modal').style.display = 'none';
+    }
+    async function submitAddDaysModal() {
+      const input = document.getElementById('add-days-modal-input');
+      const status = document.getElementById('add-days-modal-status');
+      const days = Math.max(1, Math.min(30, Number(input.value || 0)));
+      if (!days) { status.textContent = 'Informe de 1 a 30 dias'; return; }
+      status.textContent = 'Atualizando...';
+      try {
+        await addDays(addDaysModalUserId, days);
+        closeAddDaysModal();
+      } catch (e) {
+        status.textContent = 'Erro: ' + (e?.message || e);
+      }
+    }
+    async function addDays(id, days) {
+      const token = getAdminToken();
+      if (!token) { alert('Faça login como admin'); return; }
+      try {
+        const res = await fetch(apiBase + '/admin/users/' + id + '/add-days', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ days })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data?.error || 'Falha ao adicionar dias');
+          return;
+        }
+        loadUsers();
+      } catch (e) {
+        alert('Erro: ' + e.message);
+      }
+    }
+
+    // Modal de Alterar Senha
+    let passwordModalUserId = null;
+    function openPasswordModal(userId) {
+      passwordModalUserId = userId;
+      const input = document.getElementById('password-modal-input');
+      const status = document.getElementById('password-modal-status');
+      status.textContent = '';
+      input.value = '';
+      document.getElementById('password-modal').style.display = 'flex';
+      setTimeout(() => { try { input.focus(); } catch(_){} }, 0);
+    }
+    function closePasswordModal() {
+      passwordModalUserId = null;
+      document.getElementById('password-modal').style.display = 'none';
+    }
+    async function submitPasswordModal() {
+      const input = document.getElementById('password-modal-input');
+      const status = document.getElementById('password-modal-status');
+      const p = (input.value || '').trim();
+      if (!p) { status.textContent = 'Informe uma senha.'; return; }
+      status.textContent = 'Atualizando...';
+      try {
+        await updateUser(passwordModalUserId, { password: p });
+        closePasswordModal();
+      } catch (e) {
+        status.textContent = 'Erro: ' + (e?.message || e);
+      }
+    }
+
+    // Modal Definir Créditos (admin)
+    let creditsModalUserId = null;
+    let creditsModalCurrent = 0;
+    function openCreditsModal(userId, currentCredits) {
+      creditsModalUserId = userId;
+      creditsModalCurrent = Number(currentCredits || 0);
+      const input = document.getElementById('credits-modal-input');
+      const status = document.getElementById('credits-modal-status');
+      const info = document.getElementById('credits-modal-info');
+      status.textContent = '';
+      input.value = '0';
+      info.textContent = 'Créditos atuais: ' + creditsModalCurrent + ' | Informe quanto deseja adicionar.';
+      document.getElementById('credits-modal').style.display = 'flex';
+      setTimeout(() => { try { input.focus(); } catch(_){} }, 0);
+    }
+    function closeCreditsModal() {
+      creditsModalUserId = null;
+      creditsModalCurrent = 0;
+      document.getElementById('credits-modal').style.display = 'none';
+    }
+    async function submitCreditsModal() {
+      const input = document.getElementById('credits-modal-input');
+      const status = document.getElementById('credits-modal-status');
+      const add = Math.max(0, Number(input.value || 0));
+      status.textContent = 'Atualizando...';
+      const next = Math.max(0, creditsModalCurrent + add);
+      try {
+        await updateUser(creditsModalUserId, { credits: next });
+        closeCreditsModal();
+      } catch (e) {
+        status.textContent = 'Erro: ' + (e?.message || e);
+      }
+    }
+
+    // Modal Alterar Nome de Usuário (admin)
+    let usernameModalUserId = null;
+    let usernameModalCurrent = '';
+    function openUsernameModal(userId, currentUsername) {
+      usernameModalUserId = userId;
+      usernameModalCurrent = String(currentUsername || '');
+      const input = document.getElementById('username-modal-input');
+      const status = document.getElementById('username-modal-status');
+      const info = document.getElementById('username-modal-info');
+      status.textContent = '';
+      input.value = usernameModalCurrent;
+      info.textContent = 'Nome atual: ' + usernameModalCurrent;
+      document.getElementById('username-modal').style.display = 'flex';
+      setTimeout(() => { try { input.focus(); } catch(_){} }, 0);
+    }
+    function closeUsernameModal() {
+      usernameModalUserId = null;
+      usernameModalCurrent = '';
+      document.getElementById('username-modal').style.display = 'none';
+    }
+    async function submitUsernameModal() {
+      const input = document.getElementById('username-modal-input');
+      const status = document.getElementById('username-modal-status');
+      const name = String((input.value || '').trim());
+      if (!name || name.length < 3) { status.textContent = 'Informe ao menos 3 caracteres'; return; }
+      status.textContent = 'Atualizando...';
+      try {
+        await updateUser(usernameModalUserId, { username: name });
+        closeUsernameModal();
+        try {
+          const authRole = localStorage.getItem('authRole') || '';
+          if (authRole === 'admin') localStorage.setItem('authUser', name);
+        } catch (_) {}
+      } catch (e) {
+        status.textContent = 'Erro: ' + (e?.message || e);
+      }
+    }
+
+    async function deleteUser(id) {
+      const token = getAdminToken();
+      if (!token) { alert('Faça login como admin'); return; }
+      if (!confirm('Remover usuário #' + id + '?')) return;
+      try {
+        const res = await fetch(apiBase + '/admin/users/' + id, {
+          method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Falha ao remover');
+        loadUsers();
+      } catch (e) { alert('Erro: ' + e.message); }
+    }
+
+    // Auto-login dev se ADMIN_USERNAME/PASSWORD padrão
+    (function autoFill() {
+      document.getElementById('admin-user').value = 'admin';
+    })();
+
+    // Se já houver sessão de admin (adminToken ou authToken com role=admin), oculta login e carrega a lista
+    (function setupAdminSessionUI() {
+      const token = getAdminToken();
+      const loginCard = document.getElementById('admin-login-card');
+      const username = localStorage.getItem('authUser') || '';
+      const role = localStorage.getItem('authRole') || '';
+      if (token && role === 'admin') {
+        if (loginCard) loginCard.style.display = 'none';
+        setAdminStatus('Conectado como ' + (username || 'admin'));
+        // Carrega usuários automaticamente
+        try { loadUsers(); } catch (_) {}
+      }
+    })();
+  </script>
+</body>
+</html>

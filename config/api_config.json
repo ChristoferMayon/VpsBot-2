@@ -1,0 +1,8 @@
+{
+  "proxyBaseUrl": "",
+  "endpoints": {
+    "sendCarousel": "/send-carousel-message",
+    "sendText": "/send-simple-text",
+    "configureWebhook": "/configure-webhook"
+  }
+}
