@@ -1,10 +1,6 @@
+// 🔐 Apple Smart Fix — cria a pasta /data automaticamente para o Railway
 import fs from "fs";
-
-const dataDir = "/data";
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
-
+import path from "path";
 
 const fs = require('fs');
 const path = require('path');
