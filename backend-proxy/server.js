@@ -104,7 +104,7 @@ instore.readStore();
 const dotenvPath = path.join(__dirname, '.env');
 require('dotenv').config({ path: dotenvPath });
 
-const app = express();
+
 // Desabilita cabeçalho de identificação do framework
 app.disable('x-powered-by');
 // Confiar no proxy (para req.secure e cookies secure atrás de proxy)
