@@ -1,6 +1,15 @@
 // 🔐 Apple Smart Fix — cria a pasta /data automaticamente para o Railway
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
+
+const dbPath = process.env.DB_FILE || "/data/data.json";
+const dataDir = path.dirname(dbPath);
+
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+  console.log(`[Setup] Pasta criada: ${dataDir}`);
+}
+
 
 const fs = require('fs');
 const path = require('path');
