@@ -1,6 +1,6 @@
 :root { --bg:#0f172a; --panel:#111827; --muted:#6b7280; --primary:#10B981; --danger:#ef4444; --text:#e5e7eb; }
 * { box-sizing: border-box; }
-body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; background: #000 url('/image/OIG3.jpg') center / cover no-repeat fixed; color: var(--text); }
+body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; background: #000 url('../image/OIG3.jpg') center / cover no-repeat fixed; color: var(--text); }
 header { padding: 16px; background: rgba(17,24,39,0.25); border-bottom: 1px solid rgba(255,255,255,0.12); position: sticky; top:0; z-index:10; backdrop-filter: blur(6px) saturate(120%); -webkit-backdrop-filter: blur(6px) saturate(120%); }
 header .wrap { max-width: 960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 header .brand { display:flex; align-items:center; gap:10px; }

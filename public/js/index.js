@@ -65,7 +65,7 @@ try {
   const isAdmin = Boolean(localStorage.getItem('adminToken')) || (localStorage.getItem('authRole') === 'admin');
   btnAdmin.style.display = isAdmin ? 'inline-flex' : 'none';
   btnAdmin.addEventListener('click', () => {
-    window.location.href = '/admin.html';
+window.location.href = 'admin.html';
   });
 })();
 
@@ -83,7 +83,7 @@ try {
       localStorage.removeItem('authUser');
     } catch (e) {}
     try { window.authFetch('/logout', { method: 'POST' }); } catch (_) {}
-    window.location.href = '/login.html';
+window.location.href = 'login.html';
   });
 })();
 

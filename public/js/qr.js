@@ -111,8 +111,8 @@
       detailsText = parts.join(' • ');
     } catch (_) {}
     const go = () => {
-      try { if (window.qrFlowLog) window.qrFlowLog('qr.flow.redirect_start', { source: 'qr.js', target: '/index.html?tab=carousel', instName }); } catch (_) {}
-      window.location.href = '/index.html?tab=carousel';
+try { if (window.qrFlowLog) window.qrFlowLog('qr.flow.redirect_start', { source: 'qr.js', target: 'index.html?tab=carousel', instName }); } catch (_) {}
+window.location.href = 'index.html?tab=carousel';
     };
     try {
       connectedAlertShown = true;
@@ -364,7 +364,7 @@
             clearInterval(poll);
             if (statusEl) statusEl.textContent = '✅ WhatsApp conectado. Você pode enviar mensagens.';
             const goBtn = byId('btnGoSend');
-            if (goBtn) { goBtn.style.display = ''; goBtn.onclick = () => { window.location.href = '/index.html'; }; }
+if (goBtn) { goBtn.style.display = ''; goBtn.onclick = () => { window.location.href = 'index.html'; }; }
             try { if (window.qrFlowLog) window.qrFlowLog('qr.flow.poll_connected', { source: 'qr.js', tries }); } catch (_) {}
             if (!connectedAlertShown) handleAuthSuccessRedirect();
           }
@@ -642,7 +642,7 @@
     const goBtn = byId('btnGoSend');
     if (goBtn) {
       goBtn.style.display = 'none';
-      goBtn.addEventListener('click', () => { try { stopInstanceSse(); } catch (_) {} window.location.href = '/index.html'; });
+goBtn.addEventListener('click', () => { try { stopInstanceSse(); } catch (_) {} window.location.href = 'index.html'; });
     }
     const bind = (id, fn) => { const el = byId(id); if (el) el.addEventListener('click', fn); };
     bind('btnGenerateQr', generateUserQr);
@@ -660,7 +660,7 @@
           const tab = btn.getAttribute('data-tab');
           if (tab === 'qr') return;
           e.preventDefault();
-          window.location.href = '/index.html';
+window.location.href = 'index.html';
         });
       });
     } catch (_) {}

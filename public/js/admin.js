@@ -414,7 +414,7 @@
   window.addEventListener('DOMContentLoaded', () => {
     // Botões principais
     const backBtn = document.getElementById('back-btn');
-    if (backBtn) backBtn.addEventListener('click', () => { window.location.href = '/index.html'; });
+if (backBtn) backBtn.addEventListener('click', () => { window.location.href = 'index.html'; });
     const loginBtn = document.getElementById('admin-login-btn');
     if (loginBtn) loginBtn.addEventListener('click', adminLogin);
     const logoutBtn = document.getElementById('admin-logout-btn');

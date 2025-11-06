@@ -133,7 +133,7 @@ a { color: #ffffff !important; }
 }
 
 /* Fundo do app (substitui inline style do body) */
-body.app-bg { background: #000 url('/image/OIG3.jpg') center / cover no-repeat fixed; }
+body.app-bg { background: #000 url('../image/OIG3.jpg') center / cover no-repeat fixed; }
 
 /* Configure webhook log message types */
 .success { color: #22c55e; }

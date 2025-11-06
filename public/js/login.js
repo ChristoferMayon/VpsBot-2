@@ -48,7 +48,7 @@
       }
       setStatus('Conectado: ' + (data.user?.username || username));
       // Redireciona para a página de envio (aba do Carrossel)
-      const target = '/index.html?tab=carousel';
+const target = 'index.html?tab=carousel';
       setTimeout(() => { window.location.href = target; }, 650);
     } catch (e) {
       console.error('[LoginDebug] error:', e);
@@ -63,7 +63,7 @@
     const hasRole = Boolean(localStorage.getItem('authRole'));
     if (hasRole) {
       setStatus('Sessão detectada. Redirecionando para o painel...');
-      setTimeout(() => { window.location.href = '/index.html'; }, 800);
+setTimeout(() => { window.location.href = 'index.html'; }, 800);
     }
   }
 
