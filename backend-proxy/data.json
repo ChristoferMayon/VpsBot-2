@@ -6,13 +6,13 @@
       "password_hash": "$2a$10$Bq0woRMdOW.XXpRB3mg6QOAtSb/ToKUWtavSL1UB.Lm6tq.b4Gh2e",
       "role": "admin",
       "expires_at": 1764365838470,
-      "message_count": 63,
+      "message_count": 64,
       "active": 1,
       "created_at": 1761773838470,
-      "updated_at": 1762301079089,
+      "updated_at": 1762404378391,
       "credits": 2948,
       "instance_name": "admin",
-      "instance_token": "f83396e5-331b-41ce-9979-8fe015018c1b"
+      "instance_token": "45a6ae31-1e89-4b2f-9288-014c9625cb0e"
     },
     {
       "id": 16,
@@ -27,7 +27,19 @@
       "updated_at": 1762301230688,
       "instance_name": "rhz",
       "instance_token": "cab00daa-db09-424b-a285-83ec693672a0"
+    },
+    {
+      "id": 17,
+      "username": "cliente",
+      "password_hash": "$2a$10$nNJZcpyQOUa1GMK25zL3weffxwCLOjw.A/MGK1NhrXFcyGHzwJy/K",
+      "role": "user",
+      "expires_at": 1764996069153,
+      "message_count": 0,
+      "credits": 0,
+      "active": 1,
+      "created_at": 1762404069153,
+      "updated_at": 1762404069153
     }
   ],
-  "seq": 16
+  "seq": 17
 }

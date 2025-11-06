@@ -392,3 +392,13 @@
 [2025-11-05T00:06:24.408Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
 [2025-11-06T02:18:48.864Z] INIT {"message":"binding log ready"}
 [2025-11-06T02:20:14.532Z] INIT {"message":"binding log ready"}
+[2025-11-06T04:34:08.440Z] INIT {"message":"binding log ready"}
+[2025-11-06T04:39:11.047Z] INIT {"message":"binding log ready"}
+[2025-11-06T04:43:53.578Z] INIT {"message":"binding log ready"}
+[2025-11-06T04:45:18.130Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-06T04:45:18.136Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-06T04:45:20.256Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-06T04:45:20.261Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-06T04:49:59.113Z] INIT {"message":"binding log ready"}
+[2025-11-06T04:54:23.227Z] INIT {"message":"binding log ready"}
+[2025-11-06T04:56:31.641Z] INIT {"message":"binding log ready"}

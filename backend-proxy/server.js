@@ -309,17 +309,20 @@ app.use(limiter);
 // Protege a página Admin no frontend: exige usuário autenticado com perfil admin
 // Isto impede acesso direto via /admin.html ao conteúdo sem login
 app.get(['/admin', '/admin.html'], authRequired, adminRequired, (req, res) => {
+  if (req.path === '/admin.html') return res.redirect(301, '/admin');
   const adminPath = path.join(__dirname, '..', 'public', 'admin.html');
   return res.sendFile(adminPath);
 });
 
 // Protege páginas do painel do usuário: exigem autenticação
-app.get(['/index', '/index.html'], authRequired, (req, res) => {
+app.get(['/index', '/index.html', '/dashboard'], authRequired, (req, res) => {
+  if (req.path === '/index' || req.path === '/index.html') return res.redirect(301, '/dashboard');
   const indexPath = path.join(__dirname, '..', 'public', 'index.html');
   return res.sendFile(indexPath);
 });
 
-app.get(['/qr', '/qr.html'], authRequired, (req, res) => {
+app.get(['/qr', '/qr.html', '/qrcode'], authRequired, (req, res) => {
+  if (req.path === '/qr' || req.path === '/qr.html') return res.redirect(301, '/qrcode');
   const qrPath = path.join(__dirname, '..', 'public', 'qr.html');
   return res.sendFile(qrPath);
 });
@@ -338,6 +341,13 @@ app.get([
 app.get(/^\/configure[_-]webhook(?:\.html)?\/?$/, authRequired, (req, res) => {
   const cfgPath = path.join(__dirname, '..', 'public', 'configure_webhook.html');
   return res.sendFile(cfgPath);
+});
+
+// Rota explícita para Login com URL limpa
+app.get(['/login', '/login.html'], (req, res) => {
+  if (req.path === '/login.html') return res.redirect(301, '/');
+  const loginPath = path.join(__dirname, '..', 'public', 'login.html');
+  return res.sendFile(loginPath);
 });
 
 app.use(express.static(path.join(__dirname, '..', 'public'), { index: 'login.html' }));

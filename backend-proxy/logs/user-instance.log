@@ -801,3 +801,13 @@
 [2025-11-05T00:06:36.138Z] user.instance_status.persist_upsert_ok {"user_id":16}
 [2025-11-05T00:06:36.140Z] user.instance_status.persist_file_ok {"user_id":16,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\painel-whatsapp-frontend-main\\instances\\16.json"}
 [2025-11-05T00:07:03.157Z] send_carousel.manual_mode {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-06T04:45:18.130Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-06T04:45:18.136Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-06T04:45:20.256Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-06T04:45:20.261Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-06T04:45:40.799Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":false}
+[2025-11-06T04:45:40.801Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-06T04:45:40.802Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-06T04:45:40.803Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-06T04:45:40.804Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-06T04:46:10.404Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}

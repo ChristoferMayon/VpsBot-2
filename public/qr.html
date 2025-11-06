@@ -159,7 +159,7 @@
       connectedAlertShown = true;
       try { stopInstanceSse(); } catch (_) {}
       try { localStorage.setItem('justAuthenticated', '1'); } catch (_) {}
-      const go = () => { try { if (window.qrFlowLog) qrFlowLog('qr.flow.redirect', { page: 'qr.html', target: 'carousel' }); } catch (_) {} window.location.href = '/index.html?tab=carousel'; };
+      const go = () => { try { if (window.qrFlowLog) qrFlowLog('qr.flow.redirect', { page: 'qrcode', target: 'carousel' }); } catch (_) {} window.location.href = '/dashboard'; };
       if (window.Swal && typeof Swal.fire === 'function') {
         try { if (window.qrFlowLog) qrFlowLog('qr.flow.alert.trigger', { page: 'qr.html', method: 'sse_or_poll' }); } catch (_) {}
         Swal.fire({

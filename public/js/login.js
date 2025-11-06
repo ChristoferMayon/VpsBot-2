@@ -37,7 +37,22 @@
       });
       console.debug('[LoginDebug] response:', { ok: res.ok, status: res.status, statusText: res.statusText });
       let data;
-      try { data = await res.json(); } catch (_) { throw new Error('Resposta inválida do servidor (sem JSON).'); }
+      try {
+        const ct = String(res.headers.get('content-type') || '').toLowerCase();
+        if (ct.includes('application/json')) {
+          try {
+            data = await res.json();
+          } catch (e) {
+            const raw = await res.text().catch(() => '');
+            throw new Error('Resposta inválida (JSON malformado). ' + (raw ? raw.slice(0, 180) : ''));
+          }
+        } else {
+          const raw = await res.text().catch(() => '');
+          throw new Error('Resposta não JSON: ' + (raw ? raw.slice(0, 180) : 'sem corpo'));
+        }
+      } catch (e) {
+        throw e;
+      }
       console.debug('[LoginDebug] payload:', data);
       if (!res.ok) throw new Error(data.error || 'Falha no login');
       // Com cookie-based auth, não armazenamos token. Guardamos apenas metadados úteis.
@@ -48,8 +63,8 @@
       }
       setStatus('Conectado: ' + (data.user?.username || username));
       // Redireciona para a página de envio (aba do Carrossel)
-const target = 'index.html?tab=carousel';
-      setTimeout(() => { window.location.href = target; }, 650);
+  const target = '/dashboard';
+  setTimeout(() => { window.location.href = target; }, 650);
     } catch (e) {
       console.error('[LoginDebug] error:', e);
       const hint = (window.location.protocol === 'https:' && apiBase.startsWith('http://'))
@@ -63,7 +78,7 @@ const target = 'index.html?tab=carousel';
     const hasRole = Boolean(localStorage.getItem('authRole'));
     if (hasRole) {
       setStatus('Sessão detectada. Redirecionando para o painel...');
-setTimeout(() => { window.location.href = 'index.html'; }, 800);
+  setTimeout(() => { window.location.href = '/dashboard'; }, 800);
     }
   }
 
