@@ -306,6 +306,57 @@ try {
   }
 })();
 
+// ---- Expiry badge (dias restantes) ----
+(function(){
+(async function setupExpiryBadge() {
+  const badge = document.getElementById('expiry-badge');
+  if (!badge) return;
+  const role = localStorage.getItem('authRole') || '';
+  const hasSession = Boolean(role);
+  if (!hasSession) { badge.style.display = 'none'; return; }
+
+  function setBadgeStyleDanger() {
+    try {
+      badge.classList.remove('border-amber-400/50','bg-amber-500/10','text-amber-300');
+      badge.classList.add('border-red-400/40','bg-red-500/20','text-red-200');
+    } catch (_) {}
+  }
+  function setBadgeStyleWarn() {
+    try {
+      badge.classList.remove('border-red-400/40','bg-red-500/20','text-red-200');
+      badge.classList.add('border-amber-400/50','bg-amber-500/10','text-amber-300');
+    } catch (_) {}
+  }
+
+  // Oculta para administradores (sem prazo de expiração)
+  if (role === 'admin') { badge.style.display = 'none'; return; }
+
+  try {
+    const apiBase = (window.APP_API && window.APP_API.proxyBaseUrl) ? window.APP_API.proxyBaseUrl : window.location.origin;
+    const res = await window.authFetch(apiBase.replace(/\/$/, '') + '/me', { method: 'GET' });
+    if (!res.ok) { badge.textContent = 'Dias restantes: --'; badge.style.display = 'inline-flex'; return; }
+    const data = await res.json();
+    const expTs = Number(data?.user?.expires_at || 0);
+    if (!expTs) { badge.textContent = 'Dias restantes: --'; setBadgeStyleWarn(); badge.style.display = 'inline-flex'; return; }
+    const diff = expTs - Date.now();
+    if (diff <= 0) {
+      badge.textContent = 'Acesso expirado';
+      setBadgeStyleDanger();
+      badge.style.display = 'inline-flex';
+      return;
+    }
+    const days = Math.ceil(diff / (24*60*60*1000));
+    badge.textContent = 'Dias restantes: ' + days;
+    setBadgeStyleWarn();
+    badge.style.display = 'inline-flex';
+  } catch (_) {
+    badge.textContent = 'Dias restantes: --';
+    setBadgeStyleWarn();
+    badge.style.display = 'inline-flex';
+  }
+})();
+})();
+
   function renderSeriesNav() {
     const container = document.getElementById('series-nav');
     if (!container || !window.carouselTemplates) return;

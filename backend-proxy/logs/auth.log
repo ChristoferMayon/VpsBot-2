@@ -164,3 +164,15 @@
 [2025-11-05T00:04:24.268Z] user.login.success {"id":3,"username":"admin"}
 [2025-11-05T00:05:54.616Z] user.login.request {"ip":"::1","origin":"https://localhost:3001","protocol":"https","body":{"username":"rhz","password":"***"}}
 [2025-11-05T00:05:54.684Z] user.login.success {"id":16,"username":"rhz"}
+[2025-11-06T02:20:30.693Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"admin","password":"***"}}
+[2025-11-06T02:20:30.774Z] user.login.fail {"username":"admin","reason":"password_mismatch"}
+[2025-11-06T02:20:39.086Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"admin","password":"***"}}
+[2025-11-06T02:20:39.156Z] user.login.success {"id":3,"username":"admin"}
+[2025-11-06T02:20:51.753Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"rhz","password":"***"}}
+[2025-11-06T02:20:51.820Z] user.login.fail {"username":"rhz","reason":"password_mismatch"}
+[2025-11-06T02:20:56.168Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"rhz","password":"***"}}
+[2025-11-06T02:20:56.236Z] user.login.success {"id":16,"username":"rhz"}
+[2025-11-06T02:23:18.907Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"rhz","password":"***"}}
+[2025-11-06T02:23:18.977Z] user.login.success {"id":16,"username":"rhz"}
+[2025-11-06T02:23:49.753Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"admin","password":"***"}}
+[2025-11-06T02:23:49.821Z] user.login.success {"id":3,"username":"admin"}

@@ -390,3 +390,5 @@
 [2025-11-05T00:06:20.863Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
 [2025-11-05T00:06:24.402Z] BIND_REQUEST {"user_id":16,"instance_name":"rhz","providedToken":true}
 [2025-11-05T00:06:24.408Z] BIND_UPDATED {"user_id":16,"instance_name":"rhz","token_saved":true}
+[2025-11-06T02:18:48.864Z] INIT {"message":"binding log ready"}
+[2025-11-06T02:20:14.532Z] INIT {"message":"binding log ready"}
