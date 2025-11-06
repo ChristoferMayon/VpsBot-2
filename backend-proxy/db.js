@@ -2,12 +2,23 @@ const fs = require('fs');
 const path = require('path');
 
 let state = null;
+
 function getDbPath() {
   const file = process.env.DB_FILE || 'data.json';
-  return path.join(__dirname, file);
+  return path.isAbsolute(file) ? file : path.join(__dirname, file);
 }
+
+function ensureDir(p) {
+  const dir = path.dirname(p);
+  if (!fs.existsSync(dir)) {
+    console.log(`[db] Diretório não existe, criando: ${dir}`);
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
 function load() {
   const p = getDbPath();
+  ensureDir(p);
   try {
     if (fs.existsSync(p)) {
       const raw = fs.readFileSync(p, 'utf8');
@@ -17,11 +28,14 @@ function load() {
       fs.writeFileSync(p, JSON.stringify(state, null, 2));
     }
   } catch (e) {
+    console.error('[db] Erro ao carregar o banco:', e);
     state = { users: [], seq: 0 };
   }
 }
+
 function save() {
   const p = getDbPath();
+  ensureDir(p);
   fs.writeFileSync(p, JSON.stringify(state, null, 2));
 }
 
@@ -36,29 +50,56 @@ function init() {
     const now = Date.now();
     const expires_at = null; // Admin sem expiração
     const id = ++state.seq;
-    state.users.push({ id, username, password_hash, role: 'admin', expires_at, message_count: 0, credits: 0, active: 1, created_at: now, updated_at: now });
+    state.users.push({
+      id,
+      username,
+      password_hash,
+      role: 'admin',
+      expires_at,
+      message_count: 0,
+      credits: 0,
+      active: 1,
+      created_at: now,
+      updated_at: now
+    });
     save();
-    console.log(`[db] Admin semeado: ${username} (expiração indeterminada)`);
+    console.log(`[db] Admin criado: ${username} (sem expiração)`);
   }
 }
 
+// As demais funções permanecem as mesmas:
 function createUser({ username, password_hash, role = 'user', expires_at, credits = 0, active = 1 }) {
   const now = Date.now();
   if (state.users.some(u => u.username === username)) throw new Error('Usuário já existe');
   const id = ++state.seq;
-  state.users.push({ id, username: String(username), password_hash: String(password_hash), role: String(role), expires_at: expires_at || null, message_count: 0, credits: Number(credits) || 0, active: Number(active ? 1 : 0), created_at: now, updated_at: now });
+  state.users.push({
+    id,
+    username: String(username),
+    password_hash: String(password_hash),
+    role: String(role),
+    expires_at: expires_at || null,
+    message_count: 0,
+    credits: Number(credits) || 0,
+    active: Number(active ? 1 : 0),
+    created_at: now,
+    updated_at: now
+  });
   save();
   return id;
 }
+
 function listUsers() {
   return state.users.map(u => ({ ...u }));
 }
+
 function findUserByUsername(username) {
   return state.users.find(u => u.username === String(username)) || null;
 }
+
 function findUserById(id) {
   return state.users.find(u => u.id === Number(id)) || null;
 }
+
 function updateUser(id, fields) {
   const u = findUserById(id);
   if (!u) return null;
@@ -68,7 +109,6 @@ function updateUser(id, fields) {
   if (typeof fields.role === 'string') u.role = fields.role;
   if (typeof fields.expires_at !== 'undefined') u.expires_at = fields.expires_at || null;
   if (typeof fields.active !== 'undefined') u.active = Number(fields.active ? 1 : 0);
-  // Suporte a campos de instância utilizados pelo servidor
   if (typeof fields.instance_name === 'string') u.instance_name = fields.instance_name;
   if (typeof fields.instance_token === 'string') u.instance_token = fields.instance_token;
   if (typeof fields.credits !== 'undefined') {
@@ -79,10 +119,15 @@ function updateUser(id, fields) {
   save();
   return { ...u };
 }
+
 function deleteUser(id) {
   const idx = state.users.findIndex(u => u.id === Number(id));
-  if (idx >= 0) { state.users.splice(idx, 1); save(); }
+  if (idx >= 0) {
+    state.users.splice(idx, 1);
+    save();
+  }
 }
+
 function incrementMessageCount(id, delta) {
   const u = findUserById(id);
   if (!u) return;
@@ -90,10 +135,12 @@ function incrementMessageCount(id, delta) {
   u.updated_at = Date.now();
   save();
 }
+
 function getCredits(id) {
   const u = findUserById(id);
   return Number(u?.credits || 0);
 }
+
 function addCredits(id, delta) {
   const u = findUserById(id);
   if (!u) return null;
@@ -104,6 +151,7 @@ function addCredits(id, delta) {
   save();
   return next;
 }
+
 function consumeCredit(id) {
   const u = findUserById(id);
   if (!u) return false;
@@ -114,11 +162,25 @@ function consumeCredit(id) {
   save();
   return true;
 }
+
 function isExpired(user) {
-  if (String(user?.role) === 'admin') return false; // Admin nunca expira
+  if (String(user?.role) === 'admin') return false;
   const exp = Number(user?.expires_at || 0);
   if (!exp) return false;
   return Date.now() > exp;
 }
 
-module.exports = { init, createUser, listUsers, findUserByUsername, findUserById, updateUser, deleteUser, incrementMessageCount, isExpired, getCredits, addCredits, consumeCredit };
+module.exports = {
+  init,
+  createUser,
+  listUsers,
+  findUserByUsername,
+  findUserById,
+  updateUser,
+  deleteUser,
+  incrementMessageCount,
+  isExpired,
+  getCredits,
+  addCredits,
+  consumeCredit
+};
