@@ -93,9 +93,26 @@ function loadHttpsOptionsIfAvailable() {
     return null;
   }
 }
-
-const httpsOptions = loadHttpsOptionsIfAvailable();
-const server = httpsOptions ? https.createServer(httpsOptions, app) : http.createServer(app);
+// Detecta ambiente Railway e ajusta servidor (HTTP em Railway, HTTPS local se disponível)
+const isRailway = Boolean(process.env.RAILWAY_ENVIRONMENT || process.env.PORT);
+let server;
+let serverProto;
+if (isRailway) {
+  console.log('[INFO] Ambiente Railway detectado. Usando HTTP.');
+  server = http.createServer(app);
+  serverProto = 'http';
+} else {
+  const httpsOptions = loadHttpsOptionsIfAvailable();
+  if (httpsOptions) {
+    console.log('[HTTPS] Certificados encontrados. Inicializando HTTPS local.');
+    server = https.createServer(httpsOptions, app);
+    serverProto = 'https';
+  } else {
+    console.warn('[WARN] Certificados HTTPS não encontrados. Revertendo para HTTP.');
+    server = http.createServer(app);
+    serverProto = 'http';
+  }
+}
 // Socket.IO para eventos em tempo real (instance_connected:{user_id})
 let io = null;
 // Mapa user_id -> socket.id para emissão direcionada
@@ -1894,7 +1911,7 @@ app.get('*', (req, res) => {
 });
 
 server.listen(port, () => {
-    const proto = httpsOptions ? 'https' : 'http';
+    const proto = serverProto || (isRailway ? 'http' : 'http');
     console.log(`Proxy e frontend rodando na porta ${port} (${proto})`);
 });
 
