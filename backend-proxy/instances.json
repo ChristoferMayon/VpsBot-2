@@ -24,12 +24,12 @@
     {
       "user_id": 3,
       "instance_name": "admin",
-      "instance_token": "45a6ae31-1e89-4b2f-9288-014c9625cb0e",
+      "instance_token": "84c67af8-c617-4184-9ed5-443cc6945d97",
       "provider": "uazapi",
       "connected": true,
       "status": {
         "connected": true,
-        "loggedIn": false,
+        "loggedIn": true,
         "paircode": null,
         "qrcode": null,
         "deviceName": null,
@@ -37,7 +37,7 @@
         "connectedAt": null
       },
       "created_at": "2025-10-30T00:51:57.634Z",
-      "updated_at": "2025-11-06T04:45:40.799Z",
+      "updated_at": "2025-11-08T00:31:58.348Z",
       "meta": {
         "created_raw_keys": [
           "connected",

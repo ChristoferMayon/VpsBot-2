@@ -402,3 +402,11 @@
 [2025-11-06T04:49:59.113Z] INIT {"message":"binding log ready"}
 [2025-11-06T04:54:23.227Z] INIT {"message":"binding log ready"}
 [2025-11-06T04:56:31.641Z] INIT {"message":"binding log ready"}
+[2025-11-08T00:30:23.866Z] INIT {"message":"binding log ready"}
+[2025-11-08T00:31:02.397Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-08T00:31:02.401Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-08T00:31:04.875Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-08T00:31:04.879Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-08T00:38:34.837Z] INIT {"message":"binding log ready"}
+[2025-11-08T00:39:53.088Z] INIT {"message":"binding log ready"}
+[2025-11-08T00:52:15.179Z] INIT {"message":"binding log ready"}
