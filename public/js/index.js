@@ -93,7 +93,9 @@ try {
   const bind = (id, fnName) => {
     const el = byId(id);
     if (!el) return;
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
+      try { if (e && typeof e.preventDefault === 'function') e.preventDefault(); } catch (_) {}
+      try { if (e && typeof e.stopPropagation === 'function') e.stopPropagation(); } catch (_) {}
       try {
         const fn = window[fnName];
         if (typeof fn === 'function') return fn();
@@ -750,7 +752,7 @@ try {
     if (placeholderEl) placeholderEl.style.display = '';
     if (log) log.textContent = '';
     try {
-      const response = await window.authFetch(`${__base}/disconnect-instance`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: { instance } });
+      const response = await window.authFetch(`${__base}/disconnect-instance`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: { instance }, keepalive: true });
       const contentType = response.headers.get('content-type') || '';
       let data;
       if (contentType.includes('application/json')) {
@@ -900,5 +902,5 @@ try {
   const discBtn = document.getElementById('btn-disconnect-instance');
   if (genBtn) genBtn.addEventListener('click', () => qrConnectThenForceQr());
   if (forceBtn) forceBtn.addEventListener('click', () => qrGetQr(true));
-  if (discBtn) discBtn.addEventListener('click', () => disconnectInstance());
+  if (discBtn) discBtn.addEventListener('click', (e) => { try { if (e && typeof e.preventDefault === 'function') e.preventDefault(); } catch (_) {} ; try { if (e && typeof e.stopPropagation === 'function') e.stopPropagation(); } catch (_) {} ; disconnectInstance(); });
 })();

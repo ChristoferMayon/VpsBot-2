@@ -874,3 +874,35 @@
 [2025-11-04T20:56:53.066Z] RAW {"keys":["connected_instances","info","status"]}
 [2025-11-04T20:57:42.194Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
 [2025-11-04T20:58:09.174Z] RAW {"keys":["connected_instances","info","status"]}
+[2025-11-11T15:56:40.278Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-11T15:56:49.120Z] AUTO_DISCONNECT {"instance":"caba881999-gmail-com","reason":"connected_without_qr"}
+[2025-11-11T15:56:49.876Z] AUTO_DISCONNECT_ERROR {"instance":"caba881999-gmail-com","details":"Credenciais ausentes: defina PROV_TOKEN ou informe tokenOverride"}
+[2025-11-11T15:56:49.878Z] STATUS {"connected":true,"instanceName":"caba881999-gmail-com"}
+[2025-11-11T21:11:11.887Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-11T21:11:18.654Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-11T21:11:20.999Z] AUTO_DISCONNECT {"instance":"caba881999-gmail-com","reason":"connected_without_qr"}
+[2025-11-11T21:11:27.878Z] AUTO_DISCONNECT {"instance":"admin","reason":"connected_without_qr"}
+[2025-11-11T21:11:29.434Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-11T21:11:38.728Z] AUTO_DISCONNECT {"instance":"caba881999-gmail-com","reason":"connected_without_qr"}
+[2025-11-11T21:11:41.332Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-11T21:11:50.061Z] AUTO_DISCONNECT {"instance":"caba881999-gmail-com","reason":"connected_without_qr"}
+[2025-11-11T21:12:39.790Z] AUTO_DISCONNECT_ERROR {"instance":"caba881999-gmail-com","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-11T21:12:39.791Z] STATUS {"connected":true,"instanceName":"caba881999-gmail-com"}
+[2025-11-11T21:12:47.504Z] AUTO_DISCONNECT_ERROR {"instance":"admin","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-11T21:12:47.505Z] STATUS {"connected":true,"instanceName":"admin"}
+[2025-11-11T21:12:58.279Z] AUTO_DISCONNECT_ERROR {"instance":"caba881999-gmail-com","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-11T21:12:58.280Z] STATUS {"connected":true,"instanceName":"caba881999-gmail-com"}
+[2025-11-11T21:13:08.857Z] AUTO_DISCONNECT_ERROR {"instance":"caba881999-gmail-com","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-11T21:13:08.858Z] STATUS {"connected":true,"instanceName":"caba881999-gmail-com"}
+[2025-11-12T01:46:22.870Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-12T01:46:31.671Z] AUTO_DISCONNECT {"instance":"caba881999-gmail-com","reason":"connected_without_qr"}
+[2025-11-12T01:48:22.296Z] AUTO_DISCONNECT_ERROR {"instance":"caba881999-gmail-com","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-12T01:48:22.297Z] STATUS {"connected":true,"instanceName":"caba881999-gmail-com"}
+[2025-11-12T02:04:35.519Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-12T02:04:52.502Z] REQUEST {"provider":"uazapi","force":true,"instance":"admin"}
+[2025-11-12T02:04:54.886Z] AUTO_DISCONNECT {"instance":"admin","reason":"connected_without_qr"}
+[2025-11-12T02:05:01.625Z] AUTO_DISCONNECT {"instance":"caba881999-gmail-com","reason":"connected_without_qr"}
+[2025-11-12T02:06:12.717Z] AUTO_DISCONNECT_ERROR {"instance":"admin","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-12T02:06:12.717Z] STATUS {"connected":true,"instanceName":"admin"}
+[2025-11-12T02:06:19.513Z] AUTO_DISCONNECT_ERROR {"instance":"caba881999-gmail-com","details":"Falha ao desconectar instância da UAZAPI: Method Not Allowed."}
+[2025-11-12T02:06:19.513Z] STATUS {"connected":true,"instanceName":"caba881999-gmail-com"}

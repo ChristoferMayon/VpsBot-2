@@ -821,3 +821,336 @@
 [2025-11-08T00:31:58.354Z] user.instance_status.persist_upsert_ok {"user_id":3}
 [2025-11-08T00:31:58.356Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
 [2025-11-08T00:32:24.609Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:54:58.543Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T15:54:58.552Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:55:19.211Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T15:55:19.219Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:55:46.090Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":false}
+[2025-11-11T15:55:46.095Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T15:55:46.098Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T15:55:46.099Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T15:55:46.101Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T15:56:15.364Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T15:56:15.368Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T15:56:15.371Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T15:56:15.372Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T15:56:15.374Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T15:56:39.957Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T15:56:39.966Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:56:50.061Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T15:56:50.064Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T15:56:50.066Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T15:56:50.067Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T15:56:50.069Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T15:56:50.199Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T15:56:50.202Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T15:56:50.206Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T15:56:50.208Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T15:56:50.210Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T15:57:00.485Z] user.ensure_instance.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:57:00.492Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-11T15:57:01.377Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:57:10.469Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-11T15:57:11.233Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T15:57:22.354Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T15:57:22.357Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T15:57:22.359Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T15:57:22.359Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T15:57:22.361Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T16:13:40.425Z] user.instance_status.error {"user_id":3,"message":"Request failed with status code 401"}
+[2025-11-11T16:13:57.519Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T16:13:57.528Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T16:13:59.484Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T16:13:59.486Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T16:14:16.980Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":false}
+[2025-11-11T16:14:16.983Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T16:14:16.985Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T16:14:16.985Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T16:14:16.986Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T16:14:40.236Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T16:14:59.380Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T16:14:59.383Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T16:14:59.385Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T16:14:59.385Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T16:14:59.386Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T16:15:38.172Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T16:15:38.176Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T16:15:38.177Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T16:15:38.178Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T16:15:38.179Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T16:21:10.689Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T16:21:10.691Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T16:21:10.693Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T16:21:10.693Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T16:21:10.694Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:38:57.720Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T20:38:57.725Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T20:39:03.687Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T20:39:03.693Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T20:39:18.587Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T20:39:18.593Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T20:39:30.862Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T20:39:30.866Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T20:41:52.917Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":false,"loggedIn":false,"has_qr":false}
+[2025-11-11T20:41:52.920Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"disconnected"}
+[2025-11-11T20:41:52.923Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"disconnected"}
+[2025-11-11T20:41:52.924Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:41:52.926Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:42:32.732Z] user.bind_instance.request {"user_id":3,"instance_name":"adminn","provided_token":true}
+[2025-11-11T20:42:32.737Z] user.bind_instance.updated {"user_id":3,"instance_name":"adminn","token_saved":true}
+[2025-11-11T20:43:17.438Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T20:43:17.444Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T20:43:24.903Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T20:43:24.905Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T20:43:24.906Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T20:43:24.906Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:24.907Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:43:27.632Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T20:43:27.634Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T20:43:27.635Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T20:43:27.636Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:27.636Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:43:29.019Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T20:43:29.020Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T20:43:29.021Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T20:43:29.021Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:29.022Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:43:29.794Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T20:43:29.795Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T20:43:29.796Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T20:43:29.796Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:29.797Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:43:30.423Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T20:43:30.425Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T20:43:30.426Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T20:43:30.427Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:30.428Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:43:30.878Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T20:43:30.880Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T20:43:30.882Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T20:43:30.882Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:30.883Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T20:43:40.762Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T20:43:40.772Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T20:43:41.561Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":false,"loggedIn":false,"has_qr":false}
+[2025-11-11T20:43:41.564Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"disconnected"}
+[2025-11-11T20:43:41.566Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"disconnected"}
+[2025-11-11T20:43:41.567Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T20:43:41.568Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:01:10.169Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:01:10.172Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:01:46.098Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:01:46.100Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:01:46.102Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:01:46.102Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:01:46.103Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:01:59.594Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:01:59.595Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:01:59.596Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:01:59.596Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:01:59.597Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:02:01.480Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:02:01.482Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:02:01.483Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:02:01.483Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:02:01.484Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:02:02.206Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:02:02.208Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:02:02.209Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:02:02.209Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:02:02.210Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:02:03.899Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:02:03.903Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:02:03.905Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:02:03.905Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:02:03.907Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:02:04.043Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:02:04.044Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:02:04.045Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:02:04.045Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:02:04.046Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:02:04.575Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:02:04.576Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:02:04.577Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:02:04.577Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:02:04.578Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:03:58.065Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":false,"loggedIn":false,"has_qr":false}
+[2025-11-11T21:03:58.068Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"disconnected"}
+[2025-11-11T21:03:58.071Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"disconnected"}
+[2025-11-11T21:03:58.072Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:03:58.074Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:08:08.965Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:08:08.969Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:08:39.331Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:08:39.336Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:09:52.010Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":false}
+[2025-11-11T21:09:52.012Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:09:52.014Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:09:52.015Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:09:52.016Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:10:17.956Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:10:37.016Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:10:37.020Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:10:37.022Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:10:37.023Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:10:37.025Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:11:11.595Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:11:11.600Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:11:18.351Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:11:18.356Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:11:23.748Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:11:23.749Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:11:23.750Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:11:23.751Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:11:23.751Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:11:29.151Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:11:29.155Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:11:38.198Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:11:38.200Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:11:38.200Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:11:38.201Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:11:38.201Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:11:41.019Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:11:41.025Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:12:04.773Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:12:04.782Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:34:43.543Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:34:43.550Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:34:47.654Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:34:47.660Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:35:41.408Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:35:41.410Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:35:41.412Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:35:41.412Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:35:41.413Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:37:14.983Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:37:14.987Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:37:16.620Z] user.ensure_instance.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:37:16.634Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-11T21:37:17.374Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:37:34.785Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":false}
+[2025-11-11T21:37:35.527Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:37:46.582Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:37:46.584Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:37:46.585Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:37:46.585Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:37:46.586Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:37:58.240Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":false,"has_qr":true}
+[2025-11-11T21:37:58.243Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:37:58.245Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:37:58.246Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:37:58.247Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:38:24.187Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:38:24.191Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:38:24.304Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-11T21:38:24.306Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-11T21:39:03.842Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:39:03.844Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:39:03.845Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:39:03.845Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:39:03.847Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:39:18.695Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:39:18.698Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:39:18.700Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:39:18.700Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:39:18.701Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:40:01.432Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:40:01.434Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:40:01.435Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:40:01.436Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:40:01.436Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:40:02.588Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:40:02.590Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:40:02.591Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:40:02.591Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:40:02.591Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-11T21:40:37.773Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-11T21:40:37.776Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-11T21:40:37.777Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-11T21:40:37.777Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-11T21:40:37.778Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:40:41.359Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T01:40:41.363Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T01:40:42.522Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T01:40:42.525Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T01:40:56.947Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:40:56.950Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:40:56.952Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:40:56.952Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:40:56.954Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:41:35.664Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T01:45:55.673Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T01:46:22.563Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T01:46:22.567Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T01:46:28.891Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:46:28.894Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:46:28.895Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:46:28.896Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:46:28.897Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:48:22.467Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:48:22.469Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:48:22.470Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:48:22.471Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:48:22.472Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:48:22.805Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:48:22.807Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:48:22.808Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:48:22.808Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:48:22.809Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:50:29.241Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:50:29.243Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:50:29.245Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:50:29.246Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:50:29.247Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:50:53.776Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:50:53.779Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:50:53.780Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:50:53.781Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:50:53.782Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:51:22.874Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:51:22.875Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:51:22.877Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:51:22.877Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:51:22.878Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T01:51:34.313Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T01:51:34.315Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T01:51:34.318Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T01:51:34.318Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T01:51:34.319Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T02:04:26.066Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T02:04:26.070Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T02:04:26.071Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T02:04:26.071Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T02:04:26.072Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T02:04:35.203Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T02:04:35.211Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:04:41.985Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T02:04:41.991Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:05:24.221Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:06:23.950Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:06:43.503Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:07:36.110Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:08:58.833Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:11:06.752Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:12:13.266Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:13:13.304Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:13:37.446Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:14:29.850Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:15:09.223Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:19:31.980Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:20:11.973Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:20:49.736Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:22:26.433Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:25:00.707Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:30:47.018Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T02:44:00.786Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T03:50:36.569Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T03:50:36.576Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T03:50:37.917Z] user.bind_instance.request {"user_id":3,"instance_name":"admin","provided_token":true}
+[2025-11-12T03:50:37.921Z] user.bind_instance.updated {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T03:50:53.329Z] user.instance_status.provider_status {"user_id":3,"instance_name":"admin","connected":true,"loggedIn":true,"has_qr":false}
+[2025-11-12T03:50:53.332Z] user.instance_status.persist_attempt {"user_id":3,"instance_id":"admin","token_saved":true,"state":"connected"}
+[2025-11-12T03:50:53.334Z] instances_db.upsert {"user_id":3,"instance_id":"admin","has_token":true,"status":"connected"}
+[2025-11-12T03:50:53.334Z] user.instance_status.persist_upsert_ok {"user_id":3}
+[2025-11-12T03:50:53.335Z] user.instance_status.persist_file_ok {"user_id":3,"out_path":"C:\\Users\\Christofer Mayon\\Desktop\\painel mxer\\VpsBot-2\\instances\\3.json"}
+[2025-11-12T03:51:24.645Z] send_carousel.manual_mode {"user_id":3,"instance_name":"admin","token_saved":true}

@@ -1,0 +1,10 @@
+[2025-11-11T15:57:01.387Z] CONNECT_REQUEST {"user_id":3,"instance_name":"admin","has_token":true,"body_keys":[]}
+[2025-11-11T15:57:01.388Z] CONNECT_CALL {"user_id":3,"instance":"admin","has_token":true}
+[2025-11-11T15:57:01.456Z] CONNECT_RESP_SUMMARY {"user_id":3,"instance":"admin","resp_keys":["instance","status"]}
+[2025-11-11T15:57:01.457Z] CONNECT_FORCE_QR_ATTEMPT {"user_id":3,"instance":"admin"}
+[2025-11-11T15:57:10.461Z] CONNECT_STARTED_NO_QR {"user_id":3,"instance":"admin"}
+[2025-11-11T21:37:17.381Z] CONNECT_REQUEST {"user_id":3,"instance_name":"admin","has_token":true,"body_keys":[]}
+[2025-11-11T21:37:17.383Z] CONNECT_CALL {"user_id":3,"instance":"admin","has_token":true}
+[2025-11-11T21:37:25.528Z] CONNECT_RESP_SUMMARY {"user_id":3,"instance":"admin","resp_keys":["connected","instance","jid","loggedIn"]}
+[2025-11-11T21:37:25.531Z] CONNECT_FORCE_QR_ATTEMPT {"user_id":3,"instance":"admin"}
+[2025-11-11T21:37:34.775Z] CONNECT_STARTED_NO_QR {"user_id":3,"instance":"admin"}

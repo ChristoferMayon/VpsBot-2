@@ -1367,25 +1367,31 @@ app.post('/configure-webhook', authRequired, adminRequired, async (req, res) => 
 app.post('/disconnect-instance', authRequired, instanceWriteLimiter, async (req, res) => {
   try {
     if (!provider.disconnectInstance) {
+      try { const { logDisconnect } = require('./logger'); logDisconnect('disconnect.unsupported', { user_id: req.user?.id || null, provider: provider?.name || 'unknown' }); } catch (_) {}
       return res.status(400).json({ error: 'Provider atual não suporta desconexão de instância' });
     }
     const rawInstance = (req.body && req.body.instance) ? String(req.body.instance).trim() : '';
     const instance = sanitizeInstanceName(rawInstance);
     if (!instance || !isValidInstanceName(instance)) {
+      try { const { logDisconnect } = require('./logger'); logDisconnect('disconnect.invalid_name', { user_id: req.user?.id || null, raw: rawInstance, normalized: instance }); } catch (_) {}
       return res.status(400).json({ error: 'Nome da instância inválido. Use 3–32 chars [a-z0-9-], sem começar/terminar com hífen.' });
     }
     if (!instance) {
+      try { const { logDisconnect } = require('./logger'); logDisconnect('disconnect.missing_instance', { user_id: req.user?.id || null, body_keys: Object.keys(req.body || {}) }); } catch (_) {}
       return res.status(400).json({ error: 'Informe o nome da instância em "instance"' });
     }
+    try { const { logDisconnect } = require('./logger'); logDisconnect('disconnect.request', { user_id: req.user?.id || null, username: req.user?.username || null, instance, ip: req.ip, origin: req.headers.origin, referer: req.headers.referer }); } catch (_) {}
     const data = await provider.disconnectInstance({ instance });
     const ok = Boolean(
       data?.success ||
       (typeof data?.status === 'string' && data.status.toLowerCase().includes('disconnected')) ||
       (typeof data?.message === 'string' && data.message.toLowerCase().includes('disconnect'))
     );
+    try { const { logDisconnect } = require('./logger'); logDisconnect('disconnect.response', { user_id: req.user?.id || null, instance, ok, data_keys: Object.keys(data || {}), status: data?.status || null, message: data?.message || null, success: data?.success || null }); } catch (_) {}
     return res.json({ success: ok, raw: data });
   } catch (error) {
     console.error('[disconnect-instance] Erro via provider:', error.response?.data || error.message);
+    try { const { logDisconnect } = require('./logger'); logDisconnect('disconnect.error', { user_id: req.user?.id || null, instance: req.body?.instance || null, status: error?.response?.status || null, data: error?.response?.data || null, message: error?.message || String(error) }); } catch (_) {}
     res.status(error.response ? error.response.status : 500).json({
       error: 'Erro ao desconectar instância via provider',
       details: error.response ? error.response.data : error.message
@@ -1916,7 +1922,11 @@ app.get('/qr-events', async (req, res) => {
 // --- FIM: Obter QR Code ---
 
 // Para rotas não encontradas (fallback para a página de login)
-app.get('*', (req, res) => {
+// Fallback para rotas não encontradas (mas deixe /csrf-token passar para o handler dedicado)
+app.get('*', (req, res, next) => {
+    try {
+      if (req.path === '/csrf-token') return next();
+    } catch (_) {}
     res.sendFile(path.join(__dirname, '..', 'public', 'login.html'));
 });
 

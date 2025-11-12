@@ -206,7 +206,7 @@ window.location.href = '/dashboard';
         instanceName = stData?.instance_name || stData?.instanceName || stData?.instance || '';
       } catch (_) {}
       if (!instanceName) { if (statusEl) statusEl.textContent = 'Não foi possível identificar a instância do usuário.'; return; }
-      const resp = await authFetch('/disconnect-instance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: { instance: instanceName } });
+      const resp = await authFetch('/disconnect-instance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: { instance: instanceName }, keepalive: true });
       const data = await asJson(resp);
       log(`POST /disconnect-instance (${resp.status})`, data);
       if (resp.ok && data && data.success) {
@@ -644,7 +644,15 @@ if (goBtn) { goBtn.style.display = ''; goBtn.onclick = () => { window.location.h
       goBtn.style.display = 'none';
 goBtn.addEventListener('click', () => { try { stopInstanceSse(); } catch (_) {} window.location.href = '/dashboard'; });
     }
-    const bind = (id, fn) => { const el = byId(id); if (el) el.addEventListener('click', fn); };
+    const bind = (id, fn) => {
+      const el = byId(id);
+      if (!el) return;
+      el.addEventListener('click', (e) => {
+        try { if (e && typeof e.preventDefault === 'function') e.preventDefault(); } catch (_) {}
+        try { if (e && typeof e.stopPropagation === 'function') e.stopPropagation(); } catch (_) {}
+        try { fn(); } catch (_) {}
+      });
+    };
     bind('btnGenerateQr', generateUserQr);
     bind('btnDisconnect', disconnectUserInstance);
     bind('btnCreateInstance', createNamedInstance);

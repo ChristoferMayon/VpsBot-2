@@ -160,7 +160,7 @@ UAZAPI_ADMIN_QR_PATH=/admin/sessions/:name/qr
 UAZAPI_ADMIN_QR_METHOD=GET
 UAZAPI_ADMIN_QR_FORCE=true
 
-# Logout por instância (admin): POST sem placeholder, chaves "session,name"
+# Logout por instância (admin): POST/PUT sem placeholder, chaves "session,name"
 UAZAPI_ADMIN_DISCONNECT_PATH=/admin/logout
 UAZAPI_ADMIN_DISCONNECT_METHOD=POST
 UAZAPI_ADMIN_DISCONNECT_KEYS=session,name
@@ -169,8 +169,12 @@ UAZAPI_ADMIN_DISCONNECT_KEYS=session,name
 Como funciona:
 
 - Se `UAZAPI_ADMIN_*` estiverem definidos, o provider prioriza esses caminhos com cabeçalhos admin.
-- Se a rota tiver `:name`/`{name}`, o provider substitui pelo nome pedido; caso contrário, adiciona o nome nas chaves configuradas (query para `GET`, corpo para `POST`).
+- Se a rota tiver `:name`/`{name}`, o provider substitui pelo nome pedido; caso contrário, adiciona o nome nas chaves configuradas (query para `GET`, corpo para `POST`/`PUT`).
 - Se o override falhar, o provider segue tentando os caminhos padrão pré-configurados.
+
+Nota sobre método:
+
+- `UAZAPI_ADMIN_DISCONNECT_METHOD` aceita `POST`, `PUT` ou `GET`. Alguns servidores UAZAPI utilizam `PUT` para operações de logout/reset; o adapter tentará, além do método preferido, variações em `POST`, `PUT`, `GET` e `DELETE` para maximizar compatibilidade.
 - Para rotas de instância (`/instance/connect`, `/instance/status`), o provider primeiro resolve o `token` da instância pelo nome usando rotas administrativas e então usa o header `token` correto.
 
 ## Observações

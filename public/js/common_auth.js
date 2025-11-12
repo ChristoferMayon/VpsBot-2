@@ -60,7 +60,7 @@
   async function qrFlowLog(event, details) {
     try {
       const payload = { event, details };
-      await authFetch('/ui/qr-flow-log', { method: 'POST', body: payload });
+      await authFetch('/ui/qr-flow-log', { method: 'POST', body: payload, keepalive: true });
     } catch (_) { /* silencia erros de log no cliente */ }
   }
   window.qrFlowLog = qrFlowLog;

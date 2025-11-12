@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { logDisconnect } = require('../logger');
 
 function requireEnv(keys) {
   const missing = keys.filter((k) => !process.env[k]);
@@ -19,34 +20,22 @@ function authHeaders(options = {}) {
   const useAdmin = Boolean(options && options.admin);
   const overrideToken = String(options && options.tokenOverride || '').trim();
 
-  // Seleciona o token a ser enviado no header 'token'
-  // Prioridade: overrideToken > defaultToken > (adminToken quando admin)
-  const tokenForHeader = overrideToken || defaultToken || (useAdmin ? adminToken : '');
+  const headers = { 'Content-Type': 'application/json' };
 
-  // Validação flexível: somente exige PROV_TOKEN quando necessário
-  // - Se for admin e houver adminToken, permite seguir sem PROV_TOKEN
-  // - Se não for admin e não houver overrideToken nem PROV_TOKEN, falha
-  if (!tokenForHeader) {
-    if (useAdmin && adminToken) {
-      // ok, seguimos só com adminToken
-    } else {
-      throw new Error('Credenciais ausentes: defina PROV_TOKEN ou informe tokenOverride');
+  if (useAdmin) {
+    if (!adminToken) {
+      throw new Error('Credenciais ausentes: defina PROV_ADMIN_TOKEN para chamadas administrativas');
     }
-  }
-
-  const headers = {
-    token: tokenForHeader,
-    'Content-Type': 'application/json',
-  };
-
-  // Authorization: usa admin quando solicitado e disponível; caso contrário usa o token selecionado
-  if (useAdmin && adminToken) {
     headers['admintoken'] = adminToken;
-    // Alguns servidores UAZAPI exigem cabeçalhos específicos para token de cliente admin
     headers['Client-Token'] = adminToken;
     headers['X-Client-Token'] = adminToken;
     headers['Authorization'] = `Bearer ${adminToken}`;
   } else {
+    const tokenForHeader = overrideToken || defaultToken;
+    if (!tokenForHeader) {
+      throw new Error('Credenciais ausentes: defina PROV_TOKEN ou informe tokenOverride');
+    }
+    headers['token'] = tokenForHeader;
     headers['Authorization'] = `Bearer ${tokenForHeader}`;
   }
 
@@ -217,12 +206,31 @@ async function disconnectInstance({ instance }) {
   const base = getBaseUrl();
   const adminHeaders = authHeaders({ admin: true });
   const name = String(instance || '').trim();
+  const reqTimeoutMs = parseInt(String(process.env.UAZAPI_REQUEST_TIMEOUT_MS || '8000'), 10);
+  const disableTokenResolve = String(process.env.UAZAPI_DISABLE_TOKEN_RESOLVE || '').toLowerCase() === 'true';
+  // Helper: decide value for override key based on semantics
+  function valueForOverrideKey(k, nameVal, instTokenVal) {
+    const key = String(k || '');
+    // Common session id aliases should use instance token when available
+    if (/^session(?:[_-]?id)?$/i.test(key) || key === 'sessionId') {
+      return instTokenVal || nameVal;
+    }
+    return nameVal;
+  }
+  try { logDisconnect('provider.disconnect.start', { instance: name, base }); } catch (_) {}
   // Resolve token da instância para tentar rotas não-admin que exigem header 'token'
   let instToken = '';
-  try {
-    instToken = await resolveInstanceToken(name);
-  } catch (_) {
-    // fallback opcional ao PROV_TOKEN quando resolução falhar e não estiver desativado
+  if (!disableTokenResolve) {
+    try {
+      instToken = await resolveInstanceToken(name);
+    } catch (_) {
+      // fallback opcional ao PROV_TOKEN quando resolução falhar e não estiver desativado
+      const disableGlobalFallback = String(process.env.UAZAPI_DISABLE_GLOBAL_FALLBACK || '').toLowerCase() === 'true';
+      if (!disableGlobalFallback) {
+        instToken = String(process.env.PROV_TOKEN || '').trim();
+      }
+    }
+  } else {
     const disableGlobalFallback = String(process.env.UAZAPI_DISABLE_GLOBAL_FALLBACK || '').toLowerCase() === 'true';
     if (!disableGlobalFallback) {
       instToken = String(process.env.PROV_TOKEN || '').trim();
@@ -232,43 +240,67 @@ async function disconnectInstance({ instance }) {
   // Overrides via .env (prioridade antes dos candidatos padrão)
   const ovPath = process.env.UAZAPI_ADMIN_DISCONNECT_PATH || process.env.UAZAPI_DISCONNECT_PATH;
   const ovMethod = String(process.env.UAZAPI_ADMIN_DISCONNECT_METHOD || process.env.UAZAPI_DISCONNECT_METHOD || 'POST').toUpperCase();
-  const ovKeys = getKeysEnv('UAZAPI_ADMIN_DISCONNECT_KEYS', ['instance', 'name', 'session', 'sessionId', 'instanceName']);
+  const useAdminOverride = Boolean(process.env.UAZAPI_ADMIN_DISCONNECT_PATH);
+  const ovKeys = useAdminOverride
+    ? getKeysEnv('UAZAPI_ADMIN_DISCONNECT_KEYS', ['instance', 'name', 'session', 'sessionId', 'instanceName'])
+    : getKeysEnv('UAZAPI_DISCONNECT_KEYS', ['instance', 'name', 'session', 'sessionId', 'instanceName', 'session_id']);
+  const strictOverride = String(process.env.UAZAPI_STRICT_OVERRIDE || '').toLowerCase() === 'true';
   if (ovPath) {
     try {
       let path = expandPathWithInstance(ovPath, name);
       let url = `${base}${path}`;
       const useAdminOverride = Boolean(process.env.UAZAPI_ADMIN_DISCONNECT_PATH);
       const headers = useAdminOverride ? adminHeaders : instanceHeaders;
-      const preferredOrder = ovMethod === 'GET' ? ['GET','POST','DELETE'] : ovMethod === 'DELETE' ? ['DELETE','POST','GET'] : ['POST','GET','DELETE'];
+      // Suporte estendido a PUT para servidores que exigem atualização via PUT
+      const preferredOrder = strictOverride
+        ? [ovMethod]
+        : (
+          ovMethod === 'GET' ? ['GET','POST','PUT','DELETE'] :
+          ovMethod === 'DELETE' ? ['DELETE','POST','PUT','GET'] :
+          ovMethod === 'PUT' ? ['PUT','POST','GET','DELETE'] : ['POST','PUT','GET','DELETE']
+        );
       let lastErr;
       for (const method of preferredOrder) {
         try {
+          try { logDisconnect('provider.disconnect.try_override', { method, url, useAdminOverride }); } catch (_) {}
           if (method === 'GET' || method === 'DELETE') {
             let tryUrl = url;
             const params = new URLSearchParams();
             for (const k of ovKeys) {
-              if (name) params.set(k, name);
+              if (name) params.set(k, valueForOverrideKey(k, name, instToken));
             }
             params.set('action', 'logout');
             const qs = params.toString();
             if (qs) tryUrl += (tryUrl.includes('?') ? '&' : '?') + qs;
-            const response = method === 'GET' ? await axios.get(tryUrl, { headers }) : await axios.delete(tryUrl, { headers });
+            const response = method === 'GET' ? await axios.get(tryUrl, { headers, timeout: reqTimeoutMs }) : await axios.delete(tryUrl, { headers, timeout: reqTimeoutMs });
+            try { logDisconnect('provider.disconnect.success_override', { method, url: tryUrl, status: response?.status }); } catch (_) {}
             return response.data;
           } else {
             const payload = { action: 'logout' };
             for (const k of ovKeys) {
-              if (name) payload[k] = name;
+              if (name) payload[k] = valueForOverrideKey(k, name, instToken);
             }
-            const response = await axios.post(url, payload, { headers });
+            const response = method === 'POST'
+              ? await axios.post(url, payload, { headers, timeout: reqTimeoutMs })
+              : await axios.put(url, payload, { headers, timeout: reqTimeoutMs });
+            try { logDisconnect('provider.disconnect.success_override', { method, url, status: response?.status }); } catch (_) {}
             return response.data;
           }
         } catch (e) {
           lastErr = e;
+          try { logDisconnect('provider.disconnect.fail_override', { method, url, status: e?.response?.status, data: e?.response?.data, message: e?.message }); } catch (_) {}
           // Continua tentando próximos métodos em caso de 405/404 ou outros
         }
       }
       if (lastErr) throw lastErr;
     } catch (errOv) {
+      try { logDisconnect('provider.disconnect.override_exhausted', { path: ovPath, method: ovMethod, message: errOv?.message, status: errOv?.response?.status }); } catch (_) {}
+      const disableDefaultCandidates = String(process.env.UAZAPI_DISABLE_DEFAULT_CANDIDATES || '').toLowerCase() === 'true';
+      if (disableDefaultCandidates) {
+        try { logDisconnect('provider.disconnect.candidates_disabled', { instance: name }); } catch (_) {}
+        const msg = `Override falhou e candidatos padrão desativados (status ${errOv?.response?.status || errOv?.code || 'n/a'})`;
+        throw new Error(msg);
+      }
       // segue para candidatos padrão se override falhar
     }
   }
@@ -333,20 +365,26 @@ async function disconnectInstance({ instance }) {
     const path = pathTmpl.includes(':name') ? pathTmpl.replace(':name', encodeURIComponent(name)) : pathTmpl;
     const url = `${base}${path}`;
     try {
-      // tenta múltiplas chaves no corpo
+      // tenta múltiplas chaves no corpo com métodos de escrita (POST e PUT)
       let response;
-      for (const key of bodyKeys) {
-        const payload = name ? { [key]: name, action: 'logout' } : { action: 'logout' };
-        try {
-          // Usa headers admin para rotas que começam com /admin, caso contrário usa token da instância
-          const headers = path.startsWith('/admin') ? adminHeaders : instanceHeaders;
-          response = await axios.post(url, payload, { headers });
-          break;
-        } catch (errPostVariant) {
-          lastError = errPostVariant;
+      const headers = path.startsWith('/admin') ? adminHeaders : instanceHeaders;
+      const writeMethods = ['POST', 'PUT'];
+      for (const method of writeMethods) {
+        for (const key of bodyKeys) {
+          const payload = name ? { [key]: name, action: 'logout' } : { action: 'logout' };
+          try {
+            try { logDisconnect(method === 'POST' ? 'provider.disconnect.try_post' : 'provider.disconnect.try_put', { url, bodyKey: key, admin: path.startsWith('/admin') }); } catch (_) {}
+            response = method === 'POST' ? await axios.post(url, payload, { headers, timeout: reqTimeoutMs }) : await axios.put(url, payload, { headers, timeout: reqTimeoutMs });
+            try { logDisconnect(method === 'POST' ? 'provider.disconnect.success_post' : 'provider.disconnect.success_put', { url, status: response?.status }); } catch (_) {}
+            break;
+          } catch (errWriteVariant) {
+            lastError = errWriteVariant;
+            try { logDisconnect(method === 'POST' ? 'provider.disconnect.fail_post_variant' : 'provider.disconnect.fail_put_variant', { url, bodyKey: key, status: errWriteVariant?.response?.status, data: errWriteVariant?.response?.data, message: errWriteVariant?.message }); } catch (_) {}
+          }
         }
+        if (response) break;
       }
-      if (!response) throw lastError || new Error('POST falhou em todas variantes');
+      if (!response) throw lastError || new Error('POST/PUT falhou em todas variantes');
       return response.data;
     } catch (errPost) {
       lastError = errPost;
@@ -360,13 +398,17 @@ async function disconnectInstance({ instance }) {
           params.set('action', 'logout');
           try {
             const headers = path.startsWith('/admin') ? adminHeaders : instanceHeaders;
-            response = await axios.get(`${url}?${params.toString()}`, { headers });
+            const tryUrl = `${url}?${params.toString()}`;
+            try { logDisconnect('provider.disconnect.try_get', { url: tryUrl, admin: path.startsWith('/admin') }); } catch (_) {}
+            response = await axios.get(`${url}?${params.toString()}`, { headers, timeout: reqTimeoutMs });
             break;
           } catch (errGetVariant) {
             lastError = errGetVariant;
+            try { logDisconnect('provider.disconnect.fail_get_variant', { url: `${url}?${params.toString()}`, status: errGetVariant?.response?.status, data: errGetVariant?.response?.data, message: errGetVariant?.message }); } catch (_) {}
           }
         }
         if (!response) throw lastError || new Error('GET falhou em todas variantes');
+        try { logDisconnect('provider.disconnect.success_get', { url: `${url}?${params.toString()}`, status: response?.status }); } catch (_) {}
         return response.data;
       } catch (errGet) {
         lastError = errGet;
@@ -379,13 +421,17 @@ async function disconnectInstance({ instance }) {
             params.set('action', 'logout');
             try {
               const headers = path.startsWith('/admin') ? adminHeaders : instanceHeaders;
-              response = await axios.delete(`${url}?${params.toString()}`, { headers });
+              const tryUrl = `${url}?${params.toString()}`;
+              try { logDisconnect('provider.disconnect.try_delete', { url: tryUrl, admin: path.startsWith('/admin') }); } catch (_) {}
+              response = await axios.delete(`${url}?${params.toString()}`, { headers, timeout: reqTimeoutMs });
               break;
             } catch (errDelVariant) {
               lastError = errDelVariant;
+              try { logDisconnect('provider.disconnect.fail_delete_variant', { url: `${url}?${params.toString()}`, status: errDelVariant?.response?.status, data: errDelVariant?.response?.data, message: errDelVariant?.message }); } catch (_) {}
             }
           }
           if (!response) throw lastError || new Error('DELETE falhou em todas variantes');
+          try { logDisconnect('provider.disconnect.success_delete', { url: `${url}?${params.toString()}`, status: response?.status }); } catch (_) {}
           return response.data;
         } catch (errDel) {
           lastError = errDel;
@@ -394,7 +440,9 @@ async function disconnectInstance({ instance }) {
       }
     }
   }
-  throw new Error(`Falha ao desconectar instância da UAZAPI: ${lastError?.response?.data?.message || lastError?.message || 'erro desconhecido'}`);
+  const errMsg = `Falha ao desconectar instância da UAZAPI: ${lastError?.response?.data?.message || lastError?.message || 'erro desconhecido'}`;
+  try { logDisconnect('provider.disconnect.throw', { instance: name, message: errMsg, status: lastError?.response?.status, data: lastError?.response?.data }); } catch (_) {}
+  throw new Error(errMsg);
 }
 
 module.exports = {

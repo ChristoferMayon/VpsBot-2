@@ -13,6 +13,8 @@ const UI_LOG_FILE = path.join(LOG_DIR, 'ui.log');
 const CONNECT_LOG_FILE = path.join(LOG_DIR, 'connect-instance.log');
 // Novo: Log dedicado ao fluxo de QR/SweetAlert/redirect
 const QR_FLOW_LOG_FILE = path.join(LOG_DIR, 'qr-flow.log');
+// Novo: Log de desconexão de instância
+const DISCONNECT_LOG_FILE = path.join(LOG_DIR, 'disconnect-instance.log');
 
 function ensureFile(filePath) {
   try {
@@ -132,7 +134,42 @@ function logQrFlow(event, details = {}) {
   }
 }
 
-module.exports = { logUserInstance, LOG_FILE, logAuth, AUTH_LOG_FILE, logUi, UI_LOG_FILE, logConnect, CONNECT_LOG_FILE, logQrFlow, QR_FLOW_LOG_FILE };
+function sanitizeDisconnectDetails(details = {}) {
+  try {
+    const safe = { ...details };
+    if (safe && typeof safe === 'object') {
+      if (typeof safe.token !== 'undefined') safe.token = '***';
+      if (typeof safe.instance_token !== 'undefined') safe.instance_token = '***';
+      if (safe.headers && typeof safe.headers === 'object') {
+        const sh = { ...safe.headers };
+        if (typeof sh.authorization !== 'undefined') sh.authorization = '***';
+        if (typeof sh['Client-Token'] !== 'undefined') sh['Client-Token'] = '***';
+        if (typeof sh.token !== 'undefined') sh.token = '***';
+        safe.headers = sh;
+      }
+      // Normaliza mensagem/erro longo para evitar logs gigantes
+      if (typeof safe.message === 'string' && safe.message.length > 500) {
+        safe.message = safe.message.slice(0, 500) + '...';
+      }
+    }
+    return safe;
+  } catch (_) {
+    return details;
+  }
+}
+
+function logDisconnect(event, details = {}) {
+  try {
+    ensureFile(DISCONNECT_LOG_FILE);
+    const safe = sanitizeDisconnectDetails(details);
+    const line = `[${new Date().toISOString()}] ${event} ${fmt(safe)}\n`;
+    fs.appendFileSync(DISCONNECT_LOG_FILE, line);
+  } catch (_) {
+    // Ignora erros de log
+  }
+}
+
+module.exports = { logUserInstance, LOG_FILE, logAuth, AUTH_LOG_FILE, logUi, UI_LOG_FILE, logConnect, CONNECT_LOG_FILE, logQrFlow, QR_FLOW_LOG_FILE, logDisconnect, DISCONNECT_LOG_FILE };
 
 // Garante arquivos de log criados no carregamento do módulo
-try { ensureFile(LOG_FILE); ensureFile(AUTH_LOG_FILE); ensureFile(UI_LOG_FILE); ensureFile(CONNECT_LOG_FILE); ensureFile(QR_FLOW_LOG_FILE); } catch (_) {}
+try { ensureFile(LOG_FILE); ensureFile(AUTH_LOG_FILE); ensureFile(UI_LOG_FILE); ensureFile(CONNECT_LOG_FILE); ensureFile(QR_FLOW_LOG_FILE); ensureFile(DISCONNECT_LOG_FILE); } catch (_) {}
