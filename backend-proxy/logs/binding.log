@@ -519,3 +519,32 @@
 [2025-11-12T03:50:36.576Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
 [2025-11-12T03:50:37.917Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
 [2025-11-12T03:50:37.921Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-12T22:08:19.333Z] INIT {"message":"binding log ready"}
+[2025-11-12T22:38:41.752Z] INIT {"message":"binding log ready"}
+[2025-11-12T22:48:43.140Z] INIT {"message":"binding log ready"}
+[2025-11-12T22:55:13.267Z] INIT {"message":"binding log ready"}
+[2025-11-12T22:58:28.682Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:28:08.052Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:32:59.774Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:35:16.064Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:38:39.031Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:40:34.158Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:43:47.298Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:44:07.400Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:47:21.404Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:47:38.527Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:51:32.654Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-13T02:51:32.658Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-13T02:51:35.230Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-13T02:51:35.235Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-13T02:59:07.848Z] INIT {"message":"binding log ready"}
+[2025-11-13T02:59:25.440Z] INIT {"message":"binding log ready"}
+[2025-11-13T03:03:19.503Z] INIT {"message":"binding log ready"}
+[2025-11-13T03:12:46.531Z] INIT {"message":"binding log ready"}
+[2025-11-13T03:13:13.042Z] INIT {"message":"binding log ready"}
+[2025-11-13T03:16:45.546Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-13T03:16:45.550Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-13T03:16:47.162Z] BIND_REQUEST {"user_id":3,"instance_name":"admin","providedToken":true}
+[2025-11-13T03:16:47.164Z] BIND_UPDATED {"user_id":3,"instance_name":"admin","token_saved":true}
+[2025-11-13T03:18:50.878Z] INIT {"message":"binding log ready"}
+[2025-11-13T03:19:36.698Z] INIT {"message":"binding log ready"}

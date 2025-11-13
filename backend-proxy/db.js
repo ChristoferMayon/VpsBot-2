@@ -68,7 +68,7 @@ function init() {
 }
 
 // As demais funções permanecem as mesmas:
-function createUser({ username, password_hash, role = 'user', expires_at, credits = 0, active = 1 }) {
+function createUser({ username, password_hash, role = 'user', expires_at, credits = 0, active = 1, chat_id }) {
   const now = Date.now();
   if (state.users.some(u => u.username === username)) throw new Error('Usuário já existe');
   const id = ++state.seq;
@@ -81,6 +81,7 @@ function createUser({ username, password_hash, role = 'user', expires_at, credit
     message_count: 0,
     credits: Number(credits) || 0,
     active: Number(active ? 1 : 0),
+    chat_id: typeof chat_id === 'string' && chat_id.trim() ? String(chat_id).trim() : null,
     created_at: now,
     updated_at: now
   });
@@ -111,6 +112,7 @@ function updateUser(id, fields) {
   if (typeof fields.active !== 'undefined') u.active = Number(fields.active ? 1 : 0);
   if (typeof fields.instance_name === 'string') u.instance_name = fields.instance_name;
   if (typeof fields.instance_token === 'string') u.instance_token = fields.instance_token;
+  if (typeof fields.chat_id === 'string') u.chat_id = fields.chat_id;
   if (typeof fields.credits !== 'undefined') {
     const val = Math.max(0, Number(fields.credits));
     u.credits = val;

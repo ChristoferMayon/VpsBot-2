@@ -19,6 +19,8 @@ const instore = require('./instance_store');
 instore.readStore();
 const dotenvPath = path.join(__dirname, '.env');
 require('dotenv').config({ path: dotenvPath });
+const telegram = require('./utils/telegram');
+telegram.start();
 
 const app = express();
 // Desabilita cabeçalho de identificação do framework
@@ -185,7 +187,8 @@ app.use(cors({
     return callback(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-ui-log-key']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-ui-log-key', 'X-CSRF-Token', 'X-XSRF-Token', 'csrf-token', 'xsrf-token', 'X-Requested-With'],
+  credentials: true
 }));
 
 // Redireciona HTTP para HTTPS quando habilitado (atrás de proxy respeita req.secure)
@@ -356,6 +359,23 @@ app.use('/config', express.static(path.join(__dirname, '..', 'config')));
 
 app.use(morgan('combined'));
 
+const mongoose = require('mongoose');
+try {
+  const uri = process.env.MONGO_URI || '';
+  if (uri) {
+    mongoose.connect(uri).then(() => {
+      console.log('[MongoDB] Conectado com sucesso');
+    }).catch((err) => {
+      console.warn('[MongoDB] Falha na conexão, continuando sem Mongo:', err?.message || String(err));
+    });
+    try { mongoose.connection.on('error', (e) => console.warn('[MongoDB] erro:', e?.message || String(e))); } catch (_) {}
+  }
+} catch (_) {}
+try {
+  const authRoutes = require('./routes/auth');
+  app.use('/auth', authRoutes);
+} catch (_) {}
+
 // Middleware simples para proteger rotas com uma API Key
 function requireApiKey(req, res, next) {
   try {
@@ -510,7 +530,7 @@ app.post('/admin/login', authLimiter, async (req, res) => {
     const isHttps = Boolean(req.secure || (req.protocol === 'https'));
     res.cookie('auth_token', token, { httpOnly: true, secure: isHttps, sameSite: 'strict', path: '/' });
     ensureCsrfCookie(req, res);
-    res.json({ success: true, user: { id: user.id, username: user.username, role: user.role } });
+    res.json({ success: true, token, user: { id: user.id, username: user.username, role: user.role } });
   } catch (error) {
     try { const { logAuth } = require('./logger'); logAuth('admin.login.error', { message: error.message }); } catch (_) {}
     res.status(500).json({ error: 'Falha no login admin', details: error.message });
@@ -534,7 +554,7 @@ app.post('/login', authLimiter, async (req, res) => {
     const isHttps = Boolean(req.secure || (req.protocol === 'https'));
     res.cookie('auth_token', token, { httpOnly: true, secure: isHttps, sameSite: 'strict', path: '/' });
     ensureCsrfCookie(req, res);
-    res.json({ success: true, user: { id: user.id, username: user.username, role: user.role, expires_at: user.expires_at, credits: Number(user.credits || 0), instance_name: user.instance_name || null } });
+    res.json({ success: true, token, user: { id: user.id, username: user.username, role: user.role, expires_at: user.expires_at, credits: Number(user.credits || 0), instance_name: user.instance_name || null } });
   } catch (error) {
     try { const { logAuth } = require('./logger'); logAuth('user.login.error', { message: error.message }); } catch (_) {}
     res.status(500).json({ error: 'Falha no login', details: error.message });
@@ -559,7 +579,7 @@ app.get('/admin/users', authRequired, adminRequired, (req, res) => {
 
 app.post('/admin/users', authRequired, adminRequired, (req, res) => {
   try {
-    const { username, password, role = 'user', days = 30, credits = 0 } = req.body || {};
+    const { username, password, role = 'user', days = 30, credits = 0, chat_id } = req.body || {};
     if (!username || !password) return res.status(400).json({ error: 'Informe username e password' });
     const roleStr = String(role);
     let expires_at = null;
@@ -568,7 +588,7 @@ app.post('/admin/users', authRequired, adminRequired, (req, res) => {
       expires_at = Date.now() + d * 24 * 60 * 60 * 1000;
     }
     const password_hash = bcrypt.hashSync(String(password), 10);
-    const id = userdb.createUser({ username: String(username), password_hash, role: roleStr, expires_at, credits: Number(credits) || 0 });
+    const id = userdb.createUser({ username: String(username), password_hash, role: roleStr, expires_at, credits: Number(credits) || 0, chat_id: typeof chat_id === 'string' ? String(chat_id) : undefined });
     res.json({ success: true, id });
   } catch (error) {
     res.status(500).json({ error: 'Falha ao criar usuário', details: error.message });
@@ -578,7 +598,7 @@ app.post('/admin/users', authRequired, adminRequired, (req, res) => {
 app.put('/admin/users/:id', authRequired, adminRequired, (req, res) => {
   try {
     const id = Number(req.params.id);
-    const { username, password, role, days, active, credits } = req.body || {};
+    const { username, password, role, days, active, credits, chat_id } = req.body || {};
     const curr = userdb.findUserById(id);
     const fields = {};
     if (typeof username === 'string' && username.trim()) {
@@ -592,6 +612,7 @@ app.put('/admin/users/:id', authRequired, adminRequired, (req, res) => {
     if (typeof active !== 'undefined') fields.active = Number(Boolean(active));
     if (typeof password === 'string' && password.trim()) fields.password_hash = bcrypt.hashSync(password, 10);
     if (typeof credits !== 'undefined') fields.credits = Number(credits);
+    if (typeof chat_id === 'string') fields.chat_id = String(chat_id);
     if (typeof days !== 'undefined') {
       const effectiveRole = typeof role === 'string' ? String(role) : String(curr?.role || 'user');
       if (effectiveRole === 'admin') {
@@ -2010,7 +2031,7 @@ app.use((req, res, next) => {
     const method = req.method || 'GET';
     if (!['POST', 'PUT', 'DELETE'].includes(method)) return next();
     const p = req.path || req.url || '';
-    const exempt = ['/login', '/admin/login'];
+    const exempt = ['/login', '/admin/login', '/auth/login', '/auth/verify-otp'];
     if (exempt.includes(p)) return next();
     const cookieToken = req.cookies && (req.cookies['XSRF-TOKEN'] || req.cookies['xsrf-token'] || req.cookies['csrf_token']);
     const headerToken = req.headers['x-csrf-token'] || req.headers['x-xsrf-token'] || req.headers['csrf-token'];

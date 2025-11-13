@@ -67,12 +67,13 @@
     const role = String(document.getElementById('new-role')?.value || 'user');
     const days = Number(document.getElementById('new-days').value || 30);
     const credits = Math.max(0, Number(document.getElementById('new-credits')?.value || 0));
+    const chat_id = String(document.getElementById('new-chat-id')?.value || '').trim();
     setCreateStatus('Criando...');
     try {
       const res = await authFetch(apiBase + '/admin/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: { username, password, role, days, credits }
+        body: { username, password, role, days, credits, chat_id }
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Falha ao criar usuário');
@@ -128,13 +129,14 @@
         <td>${fmtDate(u.expires_at)} <span class="muted">(${daysLeft(u.expires_at)})</span></td>
         <td>${typeof u.credits === 'number' ? u.credits : 0}</td>
         <td>${u.message_count}</td>
+        <td>${u.chat_id ? String(u.chat_id) : '-'}</td>
         <td class="expand-indicator"><span class="expand-arrow">▼</span></td>
       `;
       const expandRow = document.createElement('tr');
       expandRow.className = 'user-actions-row';
       expandRow.style.display = 'none';
       expandRow.innerHTML = `
-        <td colspan="7">
+        <td colspan="8">
           <div class="user-actions-container">
             <div class="user-actions-grid" id="actions-${u.id}"></div>
           </div>
@@ -154,9 +156,11 @@
       if (String(u.role) === 'admin') {
         actionsContainer.appendChild(actionBtn('Definir créditos', () => openCreditsModal(u.id, Number(u.credits || 0))));
         actionsContainer.appendChild(actionBtn('Alterar nome', () => openUsernameModal(u.id, String(u.username || ''))));
+        actionsContainer.appendChild(actionBtn('Alterar chat ID', () => openChatIdModal(u.id, String(u.chat_id || ''))));
       } else {
         actionsContainer.appendChild(actionBtn('Definir créditos', () => openTransferModal(u.id, Number(u.credits || 0))));
         actionsContainer.appendChild(actionBtn('Adicionar dias', () => openAddDaysModal(u.id, Number(u.expires_at || 0))));
+        actionsContainer.appendChild(actionBtn('Alterar chat ID', () => openChatIdModal(u.id, String(u.chat_id || ''))));
       }
       if (String(u.role) !== 'admin') {
         actionsContainer.appendChild(actionBtn('Zerar créditos', () => updateUser(u.id, { credits: 0 })));
@@ -400,6 +404,35 @@
     } catch (e) { alert('Erro: ' + e.message); }
   }
 
+  let chatIdModalUserId = null;
+  let chatIdModalCurrent = '';
+  function openChatIdModal(userId, currentChatId) {
+    chatIdModalUserId = userId;
+    chatIdModalCurrent = String(currentChatId || '');
+    const input = document.getElementById('chatid-modal-input');
+    const status = document.getElementById('chatid-modal-status');
+    const info = document.getElementById('chatid-modal-info');
+    status.textContent = '';
+    input.value = chatIdModalCurrent || '';
+    info.textContent = 'Chat ID atual: ' + (chatIdModalCurrent || '-');
+    document.getElementById('chatid-modal').style.display = 'flex';
+    setTimeout(() => { try { input.focus(); } catch(_){} }, 0);
+  }
+  function closeChatIdModal() {
+    chatIdModalUserId = null;
+    chatIdModalCurrent = '';
+    document.getElementById('chatid-modal').style.display = 'none';
+  }
+  async function submitChatIdModal() {
+    const input = document.getElementById('chatid-modal-input');
+    const status = document.getElementById('chatid-modal-status');
+    const val = String((input.value || '').trim());
+    if (!val) { status.textContent = 'Informe um chat ID'; return; }
+    status.textContent = 'Atualizando...';
+    try { await updateUser(chatIdModalUserId, { chat_id: val }); closeChatIdModal(); }
+    catch (e) { status.textContent = 'Erro: ' + (e?.message || e); }
+  }
+
   function setupAdminSessionUI() {
     const loginCard = document.getElementById('admin-login-card');
     const username = localStorage.getItem('authUser') || '';
@@ -453,6 +486,11 @@ if (backBtn) backBtn.addEventListener('click', () => { window.location.href = '/
     if (unCancel) unCancel.addEventListener('click', closeUsernameModal);
     const unSave = document.getElementById('username-save-btn');
     if (unSave) unSave.addEventListener('click', submitUsernameModal);
+
+    const cidCancel = document.getElementById('chatid-cancel-btn');
+    if (cidCancel) cidCancel.addEventListener('click', closeChatIdModal);
+    const cidSave = document.getElementById('chatid-save-btn');
+    if (cidSave) cidSave.addEventListener('click', submitChatIdModal);
 
     // Auto-preencher usuário admin padrão
     try { const adminUserInput = document.getElementById('admin-user'); if (adminUserInput) adminUserInput.value = 'admin'; } catch(_){}

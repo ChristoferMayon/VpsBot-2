@@ -252,3 +252,13 @@
 [2025-11-12T02:49:34.696Z] user.login.success {"id":3,"username":"admin"}
 [2025-11-12T03:50:16.482Z] user.login.request {"ip":"::1","origin":"http://localhost:3001","protocol":"http","body":{"username":"admin","password":"***"}}
 [2025-11-12T03:50:16.551Z] user.login.success {"id":3,"username":"admin"}
+[2025-11-13T02:41:33.641Z] admin.login.request {"ip":"::ffff:127.0.0.1","protocol":"http","body":{"username":"admin","password":"***"}}
+[2025-11-13T02:41:33.741Z] admin.login.success {"id":3,"username":"admin"}
+[2025-11-13T02:47:56.702Z] user.login.request {"ip":"::ffff:127.0.0.1","protocol":"http","body":{"username":"user1","password":"***"}}
+[2025-11-13T02:47:56.703Z] user.login.fail {"username":"user1","reason":"user_not_found"}
+[2025-11-13T02:48:07.721Z] user.login.request {"ip":"::ffff:127.0.0.1","protocol":"http","body":{"username":"admin","password":"***"}}
+[2025-11-13T02:48:07.833Z] user.login.success {"id":3,"username":"admin"}
+[2025-11-13T02:48:35.227Z] user.login.request {"ip":"::ffff:127.0.0.1","origin":"http://127.0.0.1:3001","protocol":"http","body":{"username":"admin","password":"***"}}
+[2025-11-13T02:48:35.300Z] user.login.success {"id":3,"username":"admin"}
+[2025-11-13T02:52:33.266Z] user.login.request {"ip":"::ffff:127.0.0.1","origin":"http://127.0.0.1:3001","protocol":"http","body":{"username":"teste","password":"***"}}
+[2025-11-13T02:52:33.339Z] user.login.success {"id":18,"username":"teste"}

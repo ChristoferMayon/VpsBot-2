@@ -326,6 +326,10 @@
           <label>Créditos iniciais</label>
           <input id="new-credits" type="number" min="0" value="0" />
         </div>
+        <div>
+          <label>Chat ID (Telegram)</label>
+          <input id="new-chat-id" type="text" placeholder="ex: 123456789" />
+        </div>
       </div>
       <div class="actions" style="margin-top:10px">
         <button id="create-user-btn" class="btn-primary">Adicionar</button>
@@ -349,6 +353,7 @@
               <th>Validade</th>
               <th>Créditos</th>
               <th>Mensagens</th>
+              <th>Chat ID</th>
               <th style="width: 40px;">⚙️</th>
             </tr>
           </thead>
@@ -430,6 +435,20 @@
         <button id="username-save-btn" class="btn-primary">Salvar</button>
       </div>
       <div id="username-modal-status" class="muted" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <div id="chatid-modal" class="modal-backdrop">
+    <div class="modal">
+      <h3 style="margin:0 0 8px">Alterar Chat ID (Telegram)</h3>
+      <label>Novo chat ID</label>
+      <input id="chatid-modal-input" type="text" placeholder="ex: 123456789" />
+      <div class="muted" id="chatid-modal-info" style="margin-top:6px"></div>
+      <div class="actions" style="margin-top:12px">
+        <button id="chatid-cancel-btn" class="btn">Cancelar</button>
+        <button id="chatid-save-btn" class="btn-primary">Salvar</button>
+      </div>
+      <div id="chatid-modal-status" class="muted" style="margin-top:6px"></div>
     </div>
   </div>
 
