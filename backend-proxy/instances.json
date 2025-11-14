@@ -24,7 +24,7 @@
     {
       "user_id": 3,
       "instance_name": "admin",
-      "instance_token": "10964e5e-d76a-4ef1-86fa-46fbad70c54d",
+      "instance_token": "15ad7114-659c-4f32-9a2e-093407af7515",
       "provider": "uazapi",
       "connected": true,
       "status": {
@@ -37,7 +37,7 @@
         "connectedAt": null
       },
       "created_at": "2025-10-30T00:51:57.634Z",
-      "updated_at": "2025-11-13T03:17:04.579Z",
+      "updated_at": "2025-11-14T05:39:30.226Z",
       "meta": {
         "created_raw_keys": [
           "connected",

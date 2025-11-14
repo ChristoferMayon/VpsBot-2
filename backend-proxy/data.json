@@ -6,13 +6,13 @@
       "password_hash": "$2a$10$oCtV9BmeA/.M8LD9UBZIzexcWY41WHSIhPe7tc4YFKyifkUtgDtCG",
       "role": "admin",
       "expires_at": 1764365838470,
-      "message_count": 89,
+      "message_count": 93,
       "active": 1,
       "created_at": 1761773838470,
-      "updated_at": 1763003846254,
+      "updated_at": 1763100808051,
       "credits": 2948,
       "instance_name": "admin",
-      "instance_token": "10964e5e-d76a-4ef1-86fa-46fbad70c54d"
+      "instance_token": "15ad7114-659c-4f32-9a2e-093407af7515"
     },
     {
       "id": 18,

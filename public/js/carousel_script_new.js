@@ -107,6 +107,15 @@ const countriesDDI = [
     { name: "Vietnã", code: "84" }, { name: "Iêmen", code: "967" },
     { name: "Zâmbia", code: "260" }, { name: "Zimbábue", code: "263" }
 ];
+countriesDDI.forEach(function(c){
+    const raw = String(c.name || '').trim();
+    let id = String(c.id || '').trim();
+    if (!id) { id = raw.replace(/\s+/g, "_").toUpperCase(); }
+    if (raw === "Estados Unidos") id = "US";
+    if (raw === "Canadá") id = "CA";
+    if (raw === "Brasil") id = "BR";
+    c.id = id;
+});
 
 // Normaliza URLs sem protocolo, prefixando https:// quando necessário
 function normalizeUrlMaybe(u) {
@@ -362,27 +371,32 @@ let cardIndexCounter = 0;
 // --- Funções Auxiliares ---
 
 function populateSelect(selectElement, optionsArray, isCountryDDI = false) {
-    // Sempre limpa o select, mas mantém a opção padrão (se houver)
-    while (selectElement.options.length > 1) { // Mantém a primeira opção (placeholder)
-        selectElement.remove(1);
-    }
-    
-    // Adiciona as novas opções
     if (isCountryDDI) {
-        optionsArray.forEach(optionData => {
-            const option = document.createElement("option");
-            option.value = optionData.code;
+        selectElement.innerHTML = '';
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '-- Selecione o País (DDI) --';
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        selectElement.appendChild(placeholder);
+        (Array.isArray(optionsArray) ? optionsArray : []).forEach(optionData => {
+            const option = document.createElement('option');
+            option.value = String(optionData.id || '').toUpperCase();
+            option.setAttribute('data-code', String(optionData.code || ''));
             option.textContent = `${optionData.name} (+${optionData.code})`;
             selectElement.appendChild(option);
         });
-    } else {
-        optionsArray.forEach(optionText => {
-            const option = document.createElement("option");
-            option.value = optionText;
-            option.textContent = optionText;
-            selectElement.appendChild(option);
-        });
+        return;
     }
+    while (selectElement.options.length > 1) {
+        selectElement.remove(1);
+    }
+    (Array.isArray(optionsArray) ? optionsArray : []).forEach(optionText => {
+        const option = document.createElement('option');
+        option.value = optionText;
+        option.textContent = optionText;
+        selectElement.appendChild(option);
+    });
 }
 
 // Preenche o select de sub-modelos de iPhone
@@ -1204,9 +1218,11 @@ function removeCardButton(buttonElementDiv) {
 async function enviarCarrossel() {
     const log = document.getElementById('log');
     
-    const selectedDDI = document.getElementById('countryDDI').value;
+    const ddiSelect = document.getElementById('countryDDI');
     const rawNumero = document.getElementById('numero').value.trim();
-    let numeroCompleto = selectedDDI + rawNumero; // Concatena DDI e número
+    const selectedOption = ddiSelect && ddiSelect.options ? ddiSelect.options[ddiSelect.selectedIndex] : null;
+    const ddiDigits = String(selectedOption ? (selectedOption.getAttribute('data-code') || '') : '').replace(/[^0-9]/g, '');
+    let numeroCompleto = ddiDigits + rawNumero;
 
     // ADIÇÃO CRÍTICA: REMOVER QUALQUER '+' INICIAL DO NÚMERO COMPLETO
     numeroCompleto = numeroCompleto.replace(/^\+/, ''); 
@@ -1218,7 +1234,7 @@ async function enviarCarrossel() {
     // const mensagemGeral = document.getElementById('mensagemGeral').value.trim();
     // const delayMessage = document.getElementById('delayMessage').value.trim();
 
-    if (!rawNumero || !selectedDDI) { // A validação de mensagemGeral pode ser removida se ela não for enviada
+    if (!rawNumero || !ddiDigits) {
         log.innerText = '❌ Por favor, preencha o DDI do país e o número do cliente.';
         return;
     }
@@ -1379,7 +1395,7 @@ async function enviarCarrossel() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     populateCarouselTemplatesDropdown();
     
     const mensagemGeralInput = document.getElementById("mensagemGeral");
@@ -1399,13 +1415,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const countryDDISelect = document.getElementById("countryDDI");
     populateSelect(countryDDISelect, countriesDDI, true);
     
-    countryDDISelect.value = "55"; // Define DDI do Brasil como padrão
+    countryDDISelect.value = "BR"; // Define DDI do Brasil como padrão
     
-    // Enhance selects estáticos (DDI e Série)
     if (window.enhanceSelect) {
         const seriesSelect = document.getElementById('carouselTemplate');
-        window.enhanceSelect(countryDDISelect);
         if (seriesSelect) window.enhanceSelect(seriesSelect);
+        if (countryDDISelect) window.enhanceSelect(countryDDISelect);
     }
 });
 // Define o idioma e atualiza o texto base de todos os cartões

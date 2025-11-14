@@ -61,15 +61,56 @@ app.use(helmet.contentSecurityPolicy({
 // Isto mantém o caminho original (/js/carousel_script_new.js), mas entrega o conteúdo de public_seguro.
 const USE_OBFUSCATED_JS = String(process.env.USE_OBFUSCATED_JS || '').toLowerCase() === 'true';
 if (USE_OBFUSCATED_JS) {
+  const terser = require('terser');
+  const srcPath = path.join(__dirname, '..', 'public', 'js', 'carousel_script_new.js');
   const obfPath = path.join(__dirname, '..', 'public_seguro', 'js', 'carousel_script_new.js');
-  app.get('/js/carousel_script_new.js', (req, res, next) => {
+  let obfCache = null;
+  app.get('/js/carousel_script_new.js', async (req, res, next) => {
     try {
-      if (fs.existsSync(obfPath)) {
-        res.type('application/javascript');
-        return res.sendFile(obfPath);
+      if (fs.existsSync(obfPath)) { res.type('application/javascript'); return res.sendFile(obfPath); }
+      if (!fs.existsSync(srcPath)) return next();
+      if (!obfCache) {
+        const code = fs.readFileSync(srcPath, 'utf8');
+        const result = await terser.minify(code, { compress: true, mangle: true });
+        obfCache = (result && result.code) ? result.code : code;
       }
-    } catch (_) {}
-    return next();
+      res.type('application/javascript');
+      return res.send(obfCache);
+    } catch (e) { return next(); }
+  });
+
+  const srcPathIndex = path.join(__dirname, '..', 'public', 'js', 'index.js');
+  const obfPathIndex = path.join(__dirname, '..', 'public_seguro', 'js', 'index.js');
+  let obfCacheIndex = null;
+  app.get('/js/index.js', async (req, res, next) => {
+    try {
+      if (fs.existsSync(obfPathIndex)) { res.type('application/javascript'); return res.sendFile(obfPathIndex); }
+      if (!fs.existsSync(srcPathIndex)) return next();
+      if (!obfCacheIndex) {
+        const code = fs.readFileSync(srcPathIndex, 'utf8');
+        const result = await terser.minify(code, { compress: true, mangle: true });
+        obfCacheIndex = (result && result.code) ? result.code : code;
+      }
+      res.type('application/javascript');
+      return res.send(obfCacheIndex);
+    } catch (e) { return next(); }
+  });
+
+  const srcPathAuth = path.join(__dirname, '..', 'public', 'js', 'common_auth.js');
+  const obfPathAuth = path.join(__dirname, '..', 'public_seguro', 'js', 'common_auth.js');
+  let obfCacheAuth = null;
+  app.get('/js/common_auth.js', async (req, res, next) => {
+    try {
+      if (fs.existsSync(obfPathAuth)) { res.type('application/javascript'); return res.sendFile(obfPathAuth); }
+      if (!fs.existsSync(srcPathAuth)) return next();
+      if (!obfCacheAuth) {
+        const code = fs.readFileSync(srcPathAuth, 'utf8');
+        const result = await terser.minify(code, { compress: true, mangle: true });
+        obfCacheAuth = (result && result.code) ? result.code : code;
+      }
+      res.type('application/javascript');
+      return res.send(obfCacheAuth);
+    } catch (e) { return next(); }
   });
 }
 
